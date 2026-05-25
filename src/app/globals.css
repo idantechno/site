@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Alef:wght@400;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-navy: #062340;
+  --color-coral: #DC5D46;
+  --color-steel: #6091B0;
+  --color-bg: #FFFFFF;
+  --color-surface: #F8F9FA;
+  --color-text: #1a1a2e;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  color: #1a1a2e;
+  font-family: 'Alef', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Heebo', system-ui, sans-serif;
+}
+
+/* ─── Luminous card hover border ─── */
+.card-glow {
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+}
+.card-glow:hover {
+  box-shadow:
+    0 0 0 1.5px rgba(242, 165, 65, 0.45),
+    0 12px 40px -8px rgba(242, 165, 65, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+}
+
+/* Navy card variant (dark bg cards) */
+.card-glow-dark:hover {
+  box-shadow:
+    0 0 0 1.5px rgba(47, 183, 164, 0.35),
+    0 12px 40px -8px rgba(47, 183, 164, 0.2);
+  transform: translateY(-3px);
+}
+
+/* ─── CTA button glow ─── */
+.btn-glow {
+  transition: box-shadow 0.3s ease, opacity 0.2s ease, transform 0.15s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 28px rgba(220, 93, 70, 0.5), 0 6px 16px rgba(220, 93, 70, 0.3);
+}
+.btn-glow:active {
+  transform: scale(0.98);
+}
+
+/* ─── Reduced motion: disable all decorative animations ─── */
+@media (prefers-reduced-motion: reduce) {
+  .card-glow,
+  .card-glow-dark,
+  .btn-glow {
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  canvas[aria-hidden] {
+    display: none;
+  }
+}
