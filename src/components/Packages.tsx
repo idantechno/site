@@ -158,14 +158,12 @@ export default function Packages() {
       />
 
       {/* ── Cinematic banner image ── */}
-      <div
-        className="relative w-full overflow-hidden"
-        style={{ height: "clamp(260px, 38vh, 420px)" }}
-      >
+      <div className="relative w-full overflow-hidden h-[clamp(180px,28vh,320px)] md:h-[clamp(260px,38vh,420px)]">
         <Image
           src="/packages-banner.png"
           alt="הפורטל — השער לעולם הדיגיטלי שלך"
           fill
+          sizes="100vw"
           style={{ objectFit: "cover", objectPosition: "center 55%" }}
         />
         {/* Top fade — into previous section */}

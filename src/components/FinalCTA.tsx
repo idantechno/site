@@ -18,7 +18,7 @@ export default function FinalCTA() {
       {/* Atmospheric orb — left side, fades into navy toward the headline */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <div
-          className="absolute inset-y-0 left-0 w-full lg:w-[58%]"
+          className="absolute inset-y-0 left-0 w-full lg:w-[58%] opacity-45 md:opacity-100"
           style={{
             maskImage:
               "linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 88%)",
@@ -30,6 +30,7 @@ export default function FinalCTA() {
             src="/hero-orb.jpg"
             alt=""
             fill
+            sizes="(max-width: 1024px) 100vw, 58vw"
             style={{ objectFit: "cover", objectPosition: "center left" }}
           />
         </div>
