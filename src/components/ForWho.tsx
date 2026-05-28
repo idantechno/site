@@ -40,10 +40,13 @@ export default function ForWho() {
           alt=""
           fill
           sizes="100vw"
-          style={{
-            objectFit: "cover",
-            objectPosition: "center center",
-          }}
+          className="object-cover opacity-20 md:opacity-70"
+          style={{ objectPosition: "center center" }}
+        />
+        {/* Mobile-only strong darkening — image becomes pure atmospheric texture */}
+        <div
+          className="absolute inset-0 md:hidden"
+          style={{ backgroundColor: "rgba(6,35,64,0.55)" }}
         />
         {/* Vignette — soften edges into navy */}
         <div
