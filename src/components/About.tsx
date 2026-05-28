@@ -34,38 +34,46 @@ export default function About() {
       className="relative overflow-hidden"
       style={{ backgroundColor: "#062340" }}
     >
-      {/* ── Editorial composite hero: illustration (left) + photo (right) ── */}
-      <div className="relative w-full overflow-hidden h-[min(52vh,420px)] md:h-[min(62vh,540px)]">
-        {/* Illustration — left half on desktop, full width on mobile (positioned to show the swirl) */}
-        <div className="absolute inset-y-0 left-0 w-full md:w-1/2 overflow-hidden">
+      {/* ── Editorial composite hero ──
+            Mobile: illustration on top half + photo on bottom half (vertically stacked)
+            Desktop: illustration left + photo right (horizontally split) */}
+      <div className="relative w-full overflow-hidden h-[min(64vh,520px)] md:h-[min(62vh,540px)]">
+        {/* Illustration — top half on mobile, left half on desktop */}
+        <div className="absolute overflow-hidden inset-x-0 top-0 h-[55%] md:inset-y-0 md:left-0 md:right-auto md:w-1/2 md:h-full">
           <Image
             src="/portal-illustration.png"
             alt=""
             fill
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-[32%_center] md:object-[right_center]"
+            className="object-cover object-[35%_center] md:object-[right_center]"
             style={{ opacity: 0.92 }}
           />
         </div>
 
-        {/* Photo — right half on desktop, hidden on mobile (illustration carries) */}
-        <div className="hidden md:block absolute inset-y-0 right-0 w-1/2 overflow-hidden">
+        {/* Photo — bottom half on mobile, right half on desktop */}
+        <div className="absolute overflow-hidden inset-x-0 bottom-0 h-[55%] md:inset-y-0 md:right-0 md:left-auto md:w-1/2 md:h-full">
           <Image
             src="/about-stage.png"
             alt="הסיפור מאחורי Portal Studio"
             fill
             priority
-            sizes="50vw"
-            style={{
-              objectFit: "cover",
-              objectPosition: "center 32%",
-              opacity: 0.65,
-            }}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover object-[center_28%]"
+            style={{ opacity: 0.62 }}
           />
         </div>
 
-        {/* Seam blend — soft gradient over the center where the two images meet */}
+        {/* Seam blend — mobile (horizontal where top meets bottom) */}
+        <div
+          className="md:hidden absolute inset-x-0 top-[42%] bottom-[42%] pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(6,35,64,0.7) 40%, rgba(6,35,64,0.7) 60%, transparent 100%)",
+          }}
+        />
+
+        {/* Seam blend — desktop (vertical where left meets right) */}
         <div
           className="hidden md:block absolute inset-y-0 pointer-events-none"
           style={{
