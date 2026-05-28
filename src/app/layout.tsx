@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PortalAIstudio — סוכני WhatsApp לעסקים יצירתיים",
+  title: "Portal Studio — סוכני WhatsApp לעסקים יצירתיים",
   description: "סוכני WhatsApp חכמים שעונים, מסננים ומקדמים את העסק שלך — בלי לאבד את הקול האנושי.",
+  openGraph: {
+    title: "Portal Studio",
+    description: "סוכני WhatsApp חכמים לעסקים יצירתיים. אנושי, פשוט, מעצים.",
+    type: "website",
+    locale: "he_IL",
+  },
 };
 
 export default function RootLayout({

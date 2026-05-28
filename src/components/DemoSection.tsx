@@ -4,6 +4,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { WhatsappLogo, ArrowLeft } from "@phosphor-icons/react";
 import { WHATSAPP_URL } from "@/lib/constants";
+import AmbientGlow from "@/components/decorative/AmbientGlow";
 
 const conversation = [
   { id: 1, from: "user", text: "היי, ראיתי שיש לכם סדנת צילום" },
@@ -29,8 +30,24 @@ export default function DemoSection() {
   }, [inView]);
 
   return (
-    <section id="demo" className="py-24" style={{ backgroundColor: "#ffffff" }}>
-      <div className="max-w-6xl mx-auto px-6" ref={ref}>
+    <section id="demo" className="relative overflow-hidden py-24" style={{ backgroundColor: "#ffffff" }}>
+      {/* ── Soft decorative life — very gentle on white ── */}
+      <AmbientGlow
+        color="#DC5D46"
+        size={420}
+        opacity={0.10}
+        className="z-0"
+        style={{ top: "-120px", left: "-120px" }}
+      />
+      <AmbientGlow
+        color="#6091B0"
+        size={460}
+        opacity={0.09}
+        className="z-0"
+        style={{ bottom: "-120px", right: "-100px" }}
+      />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6" ref={ref}>
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16 items-start">
           {/* Text */}
           <motion.div

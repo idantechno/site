@@ -3,6 +3,7 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { Plus, Minus } from "@phosphor-icons/react";
+import AmbientGlow from "@/components/decorative/AmbientGlow";
 
 const faqs = [
   {
@@ -33,8 +34,24 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24" style={{ backgroundColor: "#ffffff" }}>
-      <div className="max-w-3xl mx-auto px-6" ref={ref}>
+    <section className="relative overflow-hidden py-24" style={{ backgroundColor: "#ffffff" }}>
+      {/* ── Whisper-soft decoration ── */}
+      <AmbientGlow
+        color="#6091B0"
+        size={380}
+        opacity={0.08}
+        className="z-0"
+        style={{ top: "20%", right: "-160px" }}
+      />
+      <AmbientGlow
+        color="#DC5D46"
+        size={340}
+        opacity={0.07}
+        className="z-0"
+        style={{ bottom: "10%", left: "-120px" }}
+      />
+
+      <div className="relative z-10 max-w-3xl mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

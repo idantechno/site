@@ -13,6 +13,8 @@ import {
   ChartLineUp,
 } from "@phosphor-icons/react";
 import { WHATSAPP_URL } from "@/lib/constants";
+import AmbientGlow from "@/components/decorative/AmbientGlow";
+import PortalEcho from "@/components/decorative/PortalEcho";
 
 type Package = {
   id: string;
@@ -138,6 +140,23 @@ export default function Packages() {
       className="relative overflow-hidden"
       style={{ backgroundColor: "#062340" }}
     >
+      {/* ── Decorative life ── */}
+      <AmbientGlow
+        color="#DC5D46"
+        size={520}
+        opacity={0.09}
+        className="z-0"
+        style={{ top: "30%", left: "-180px" }}
+      />
+      <PortalEcho
+        size={560}
+        color="#6091B0"
+        baseOpacity={0.08}
+        rings={4}
+        className="z-0"
+        style={{ bottom: "10%", right: "-160px" }}
+      />
+
       {/* ── Cinematic banner image ── */}
       <div
         className="relative w-full overflow-hidden"

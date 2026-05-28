@@ -2,6 +2,8 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import AmbientGlow from "@/components/decorative/AmbientGlow";
+import PortalEcho from "@/components/decorative/PortalEcho";
 
 export default function PainSection() {
   const ref = useRef(null);
@@ -9,6 +11,23 @@ export default function PainSection() {
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: "#DC5D46" }} ref={ref}>
+      {/* ── Decorative life — deep navy accents on the warm coral ── */}
+      <AmbientGlow
+        color="#011427"
+        size={460}
+        opacity={0.18}
+        className="z-0"
+        style={{ top: "-100px", right: "-100px" }}
+      />
+      <PortalEcho
+        size={500}
+        color="#011427"
+        baseOpacity={0.10}
+        rings={4}
+        className="z-0"
+        style={{ bottom: "-100px", left: "20%" }}
+      />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[520px]">
 
         {/* Left — bold statement */}

@@ -11,6 +11,8 @@ import {
   Confetti,
   Star,
 } from "@phosphor-icons/react";
+import AmbientGlow from "@/components/decorative/AmbientGlow";
+import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 const audiences = [
   { icon: Microphone, label: "אומנים", desc: "נוכחות דיגיטלית שמרגישה כמוך — בלי לאבד את הקול האותנטי" },
@@ -68,6 +70,23 @@ export default function ForWho() {
           }}
         />
       </div>
+
+      {/* ── Decorative life ── */}
+      <AmbientGlow
+        color="#DC5D46"
+        size={420}
+        opacity={0.10}
+        className="z-0"
+        style={{ top: "10%", right: "-120px" }}
+      />
+      <AmbientGlow
+        color="#6091B0"
+        size={380}
+        opacity={0.09}
+        className="z-0"
+        style={{ bottom: "8%", left: "-100px" }}
+      />
+      <SubtleParticles count={14} className="z-0" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6" ref={ref}>
         <motion.div

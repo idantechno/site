@@ -34,27 +34,58 @@ export default function About() {
       className="relative overflow-hidden"
       style={{ backgroundColor: "#062340" }}
     >
-      {/* ── Cinematic image at top with overlaid headline ── */}
+      {/* ── Editorial composite hero: illustration (left) + photo (right) ── */}
       <div
         className="relative w-full overflow-hidden"
-        style={{ height: "min(82vh, 720px)" }}
+        style={{ height: "min(62vh, 540px)" }}
       >
-        <Image
-          src="/about-stage.png"
-          alt="עידן על הבמה — הסיפור מאחורי PORTAL STUDIO"
-          fill
-          priority
+        {/* Illustration — left half on desktop, full width on mobile */}
+        <div className="absolute inset-y-0 left-0 w-full md:w-1/2 overflow-hidden">
+          <Image
+            src="/portal-illustration.png"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "right center",
+              opacity: 0.92,
+            }}
+          />
+        </div>
+
+        {/* Photo — right half on desktop, hidden on mobile (illustration carries) */}
+        <div className="hidden md:block absolute inset-y-0 right-0 w-1/2 overflow-hidden">
+          <Image
+            src="/about-stage.png"
+            alt="הסיפור מאחורי Portal Studio"
+            fill
+            priority
+            sizes="50vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center 32%",
+              opacity: 0.65,
+            }}
+          />
+        </div>
+
+        {/* Seam blend — soft gradient over the center where the two images meet */}
+        <div
+          className="hidden md:block absolute inset-y-0 pointer-events-none"
           style={{
-            objectFit: "cover",
-            objectPosition: "center 38%",
-            opacity: 0.72,
+            left: "30%",
+            right: "30%",
+            background:
+              "linear-gradient(to right, transparent 0%, rgba(6,35,64,0.7) 40%, rgba(6,35,64,0.7) 60%, transparent 100%)",
           }}
         />
 
-        {/* Overall blend layer — softens the image into the background */}
+        {/* Overall mood tint — unifies both sides into one navy atmosphere */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ backgroundColor: "rgba(6,35,64,0.28)" }}
+          style={{ backgroundColor: "rgba(6,35,64,0.22)" }}
         />
 
         {/* Top fade — nav legibility */}
@@ -75,12 +106,12 @@ export default function About() {
           }}
         />
 
-        {/* Strong bottom fade into navy — for headline legibility and seamless flow */}
+        {/* Soft bottom fade into navy — lets images breathe further down */}
         <div
-          className="absolute inset-x-0 bottom-0 h-3/4 pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to top, #062340 0%, rgba(6,35,64,0.92) 30%, rgba(6,35,64,0.45) 65%, transparent 100%)",
+              "linear-gradient(to top, #062340 0%, rgba(6,35,64,0.78) 45%, transparent 100%)",
           }}
         />
 

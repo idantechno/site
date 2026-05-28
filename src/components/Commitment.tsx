@@ -2,6 +2,8 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import PortalEcho from "@/components/decorative/PortalEcho";
+import AmbientGlow from "@/components/decorative/AmbientGlow";
 
 const commitments = [
   "לשמור על הזהות האומנותית והייחוד של כל יוצר או עסק — ולא להפוך אותו לעוד “תבנית” גנרית.",
@@ -40,6 +42,23 @@ export default function Commitment() {
           background:
             "radial-gradient(ellipse 50% 60% at 50% 50%, rgba(96,145,176,0.06), transparent 70%)",
         }}
+      />
+
+      {/* ── Breathing decorative elements ── */}
+      <PortalEcho
+        size={520}
+        color="#DC5D46"
+        baseOpacity={0.06}
+        rings={4}
+        className="z-0"
+        style={{ top: "20%", left: "-180px" }}
+      />
+      <AmbientGlow
+        color="#6091B0"
+        size={360}
+        opacity={0.08}
+        className="z-0"
+        style={{ bottom: "10%", right: "-120px" }}
       />
 
       <div className="relative z-10 max-w-3xl mx-auto px-6" ref={ref}>
