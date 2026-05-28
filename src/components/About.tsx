@@ -35,11 +35,8 @@ export default function About() {
       style={{ backgroundColor: "#062340" }}
     >
       {/* ── Editorial composite hero: illustration (left) + photo (right) ── */}
-      <div
-        className="relative w-full overflow-hidden"
-        style={{ height: "min(62vh, 540px)" }}
-      >
-        {/* Illustration — left half on desktop, full width on mobile */}
+      <div className="relative w-full overflow-hidden h-[min(52vh,420px)] md:h-[min(62vh,540px)]">
+        {/* Illustration — left half on desktop, full width on mobile (positioned to show the swirl) */}
         <div className="absolute inset-y-0 left-0 w-full md:w-1/2 overflow-hidden">
           <Image
             src="/portal-illustration.png"
@@ -47,11 +44,8 @@ export default function About() {
             fill
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
-            style={{
-              objectFit: "cover",
-              objectPosition: "right center",
-              opacity: 0.92,
-            }}
+            className="object-cover object-[32%_center] md:object-[right_center]"
+            style={{ opacity: 0.92 }}
           />
         </div>
 
