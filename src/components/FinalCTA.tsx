@@ -128,10 +128,10 @@ export default function FinalCTA() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
         >
           <span className="font-display font-black text-xl tracking-tighter" style={{ color: "rgba(255,255,255,0.12)" }}>
-            PORTAL AI STUDIO
+            PORTAL STUDIO
           </span>
           <span className="text-xs font-body" style={{ color: "rgba(255,255,255,0.2)" }}>
-            סוכני WhatsApp לעסקים יצירתיים
+            סוכני WhatsApp לעסקים וליוצרים — עם קול אנושי
           </span>
         </motion.div>
       </div>
