@@ -21,10 +21,11 @@ const fadeUp: Variants = {
 };
 
 const body = [
-  "המסע שלי לעולם הטכנולוגיה לא התחיל ממשוואות או משורות קוד קרות, אלא מעולמות הבמה והיצירה — משחק, מוזיקה והפקה — ולכן אני מכיר מקרוב את האתגר של אמנים היום: ליצור זה כבר לא מספיק. אמן שרוצה להתקדם צריך לדעת איך להציג את עצמו, לבנות נוכחות דיגיטלית, לייצר תוכן נכון, להגיע לקהל ולהתנהל כמו עסק.",
-  "הקמתי את PORTAL STUDIO כדי לעזור לאמנים לעשות בדיוק את המעבר הזה — מהשראה ויצירה, לנוכחות דיגיטלית מסודרת, מקצועית וחכמה.",
-  "אני מאמין ש-AI הוא לא תחליף לאמנות, אלא כלי שמאפשר לאמנים לקבל יותר שליטה על הדרך שלהם: להיראות טוב יותר, לעבוד מסודר יותר, להגיע ליותר אנשים, ולהפוך את היצירה שלהם למשהו שיכול גם להתקדם עסקית.",
-  "הגישה שלי משלבת יצירתיות, חשיבה עסקית וטכנולוגיה — בצורה פשוטה, נגישה ואנושית, בלי להפוך את האמן לאיש טכנולוגיה ובלי למחוק את הקול האישי שלו.",
+  "המסע שלי לעולם הטכנולוגיה לא התחיל ממשוואות או משורות קוד קרות, אלא מעולמות הבמה והיצירה. לכן אני מכיר מקרוב את האתגר שבין הרצון ליצור לבין הצורך לדעת איך למכור את זה.",
+  "אמן שרוצה להתקדם צריך לדעת איך להציג את עצמו, לבנות נוכחות דיגיטלית, לייצר תוכן נכון, להגיע לקהל ולהתנהל כמו עסק.",
+  "הקמתי את PORTAL STUDIO כדי לעזור לעסקים לעשות בדיוק את המעבר הזה — מהשראה ויצירה, לנוכחות דיגיטלית מסודרת, מקצועית וחכמה.",
+  "אני מאמין ש-AI הוא לא תחליף ליצירה ולאמנות, אלא כלי שמאפשר לנו לקבל יותר שליטה על הדרך: להיראות טוב יותר, לעבוד מסודר יותר, להגיע ליותר אנשים ולהפוך את העיסוק שלנו למשהו שיכול להתפתח גם מבחינה עסקית.",
+  "הגישה שלי משלבת יצירתיות, חשיבה עסקית וטכנולוגיה — בצורה פשוטה, נגישה ואנושית, בלי להפוך את האמן לאיש טכנולוגיה ובלי למחוק את הקול האישי של בעל העסק.",
 ];
 
 export default function About() {
@@ -35,49 +36,51 @@ export default function About() {
       style={{ backgroundColor: "#062340" }}
     >
       {/* ── Editorial composite hero ──
-            Mobile: illustration on top half + photo on bottom half (vertically stacked)
-            Desktop: illustration left + photo right (horizontally split) */}
+            Mobile: illustration on top 65% + photo on bottom 35% (vertically stacked)
+            Desktop: illustration left 65% + photo right 35% (horizontally split)
+            The illustration leads — it speaks the visual language of the brand.
+            The stage photo is a supporting accent. */}
       <div className="relative w-full overflow-hidden h-[min(64vh,520px)] md:h-[min(62vh,540px)]">
-        {/* Illustration — top half on mobile, left half on desktop */}
-        <div className="absolute overflow-hidden inset-x-0 top-0 h-[55%] md:inset-y-0 md:left-0 md:right-auto md:w-1/2 md:h-full">
+        {/* Illustration — 65% of the hero */}
+        <div className="absolute overflow-hidden inset-x-0 top-0 h-[68%] md:inset-y-0 md:left-0 md:right-auto md:w-[68%] md:h-full">
           <Image
             src="/portal-illustration.png"
             alt=""
             fill
             priority
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 68vw"
             className="object-cover object-[35%_center] md:object-[right_center]"
             style={{ opacity: 0.92 }}
           />
         </div>
 
-        {/* Photo — bottom half on mobile, right half on desktop */}
-        <div className="absolute overflow-hidden inset-x-0 bottom-0 h-[55%] md:inset-y-0 md:right-0 md:left-auto md:w-1/2 md:h-full">
+        {/* Photo — 35% of the hero (supporting accent) */}
+        <div className="absolute overflow-hidden inset-x-0 bottom-0 h-[37%] md:inset-y-0 md:right-0 md:left-auto md:w-[37%] md:h-full">
           <Image
             src="/about-stage.png"
             alt="הסיפור מאחורי Portal Studio"
             fill
             priority
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 37vw"
             className="object-cover object-[center_28%]"
-            style={{ opacity: 0.62 }}
+            style={{ opacity: 0.58 }}
           />
         </div>
 
-        {/* Seam blend — mobile (horizontal where top meets bottom) */}
+        {/* Seam blend — mobile (horizontal, centered around the 65% join line) */}
         <div
-          className="md:hidden absolute inset-x-0 top-[42%] bottom-[42%] pointer-events-none"
+          className="md:hidden absolute inset-x-0 top-[60%] bottom-[30%] pointer-events-none"
           style={{
             background:
               "linear-gradient(to bottom, transparent 0%, rgba(6,35,64,0.7) 40%, rgba(6,35,64,0.7) 60%, transparent 100%)",
           }}
         />
 
-        {/* Seam blend — desktop (vertical where left meets right) */}
+        {/* Seam blend — desktop (vertical, centered around the 65% join line) */}
         <div
           className="hidden md:block absolute inset-y-0 pointer-events-none"
           style={{
-            left: "30%",
+            left: "60%",
             right: "30%",
             background:
               "linear-gradient(to right, transparent 0%, rgba(6,35,64,0.7) 40%, rgba(6,35,64,0.7) 60%, transparent 100%)",
