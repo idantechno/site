@@ -76,7 +76,7 @@ export default function PainSection() {
             className="text-xs font-display font-medium tracking-widest uppercase"
             style={{ color: "#DC5D46" }}
           >
-            למה PortalAIstudio
+            למה Portal Studio
           </p>
 
           {[

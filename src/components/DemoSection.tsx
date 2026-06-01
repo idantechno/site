@@ -65,7 +65,7 @@ export default function DemoSection() {
               <span style={{ color: "#6091B0" }}>ממש עכשיו.</span>
             </h2>
             <p className="text-base font-body leading-relaxed" style={{ color: "#6b7280" }}>
-              זה לא בוט גנרי. כל סדנה, כל שאלה, כל לקוח — הסוכן יודע את הפרטים ועונה בשפה של העסק שלך.
+              זה לא בוט גנרי. כל שירות, כל שאלה, כל לקוח — הסוכן יודע את הפרטים ועונה בשפה של העסק שלך, לא בקול של מכונה.
             </p>
             <a
               href={WHATSAPP_URL}

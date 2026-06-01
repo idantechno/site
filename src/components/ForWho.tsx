@@ -6,21 +6,47 @@ import { useRef } from "react";
 import {
   Microphone,
   Camera,
-  PaintBrush,
   ChalkboardTeacher,
-  Confetti,
-  Star,
+  Headset,
+  ChartLineUp,
+  Target,
 } from "@phosphor-icons/react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 const audiences = [
-  { icon: Microphone, label: "אומנים", desc: "נוכחות דיגיטלית שמרגישה כמוך — בלי לאבד את הקול האותנטי" },
-  { icon: Camera, label: "צלמים ואנשי מדיה", desc: "מענה מקצועי על בריפים, תאריכים ומחירים — בלי להחזיק טלפון 24/7" },
-  { icon: PaintBrush, label: "גלריות וסטודיואים", desc: "חוויית מבקר מתקדמת שמספרת את הסיפור מאחורי היצירה" },
-  { icon: ChalkboardTeacher, label: "מדריכי סדנאות", desc: "הרשמות, שאלות על תכנים ותאריכים — בלי עומס הודעות" },
-  { icon: Confetti, label: "מפיקי אירועים", desc: "סינון לידים מורכבים ויקרים לפני שיחת אפיון" },
-  { icon: Star, label: "עסקים יצירתיים", desc: "כל עסק יצירתי שמרגיש שהוואטסאפ אוכל לו את היום" },
+  // ── Creative side ──
+  {
+    icon: Microphone,
+    label: "אומנים ומבצעי במה",
+    desc: "נוכחות דיגיטלית שמרגישה כמוך — בלי לאבד את הקול האותנטי",
+  },
+  {
+    icon: Camera,
+    label: "צלמים, סטודיואים וגלריות",
+    desc: "מענה מקצועי לבריפים, תאריכים ומחירים — בלי להחזיק טלפון 24/7",
+  },
+  {
+    icon: ChalkboardTeacher,
+    label: "מדריכי סדנאות ויוצרי קהילה",
+    desc: "הרשמות, שאלות ותאריכים — בלי עומס הודעות",
+  },
+  // ── Business side ──
+  {
+    icon: Headset,
+    label: "עסקי שירות שרוצים מענה אנושי 24/7",
+    desc: "תגובה רגישה ומדויקת ללקוחות בכל שעה — בלי שהעסק שלך יישמע אפילו לרגע רובוטי",
+  },
+  {
+    icon: ChartLineUp,
+    label: "בעלי עסקים שמחפשים סדר ויעילות",
+    desc: "פחות התעסקות תפעולית בהודעות, יותר זמן לעבודה האמיתית ולאנשים שמולך",
+  },
+  {
+    icon: Target,
+    label: "עסקים שרוצים לקוחות איכותיים יותר",
+    desc: "סינון חכם שמעביר אליך רק את מי שמתאים — והשיחות נשמעות כמו ממך, לא ממכונה",
+  },
 ];
 
 export default function ForWho() {
@@ -102,9 +128,9 @@ export default function ForWho() {
             למי זה מתאים?
           </p>
           <h2 className="text-3xl md:text-4xl font-display font-bold leading-tight tracking-tighter" style={{ color: "#ffffff" }}>
-            למי שמרגיש שהעבודה
+            למי שמרגיש שעומס ההודעות
             <br />
-            <span style={{ color: "#6091B0" }}>האדמיניסטרטיבית חונקת את היצירה.</span>
+            <span style={{ color: "#6091B0" }}>חונק את העבודה האמיתית.</span>
           </h2>
         </motion.div>
 
