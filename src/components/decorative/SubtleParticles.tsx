@@ -38,6 +38,7 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
     if (!ctx) return;
 
     let animId: number;
+    let running = false;
     let particles: Particle[] = [];
 
     const init = () => {
@@ -55,6 +56,7 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
     };
 
     const tick = () => {
+      if (!running) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const p of particles) {
         p.x += p.vx;
@@ -66,7 +68,7 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         // Soft glow halo — turns each dot into a speck of glowing stardust
-        ctx.shadowBlur = p.r * 5;
+        ctx.shadowBlur = p.r * 4;
         ctx.shadowColor = `${p.color}${Math.min(p.opacity * 1.7, 1)})`;
         ctx.fillStyle = `${p.color}${p.opacity})`;
         ctx.fill();
@@ -76,13 +78,31 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
     };
 
     init();
-    tick();
+
+    // Only animate while the canvas is on-screen — off-screen layers stay idle.
+    const start = () => {
+      if (!running) {
+        running = true;
+        animId = requestAnimationFrame(tick);
+      }
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(animId);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { rootMargin: "150px" }
+    );
+    io.observe(canvas);
 
     const onResize = () => { init(); };
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
-      cancelAnimationFrame(animId);
+      stop();
+      io.disconnect();
       window.removeEventListener("resize", onResize);
     };
   }, [count]);

@@ -2,9 +2,10 @@
 
 // FloatingShapes — a few abstract, brand-language shapes (portal rings, arcs,
 // an aperture dot) that drift and rotate slowly. Decorative artful touches.
-// Respects prefers-reduced-motion.
+// Respects prefers-reduced-motion, and only animates while on-screen.
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 interface FloatingShapesProps {
   className?: string;
@@ -12,10 +13,15 @@ interface FloatingShapesProps {
 
 export default function FloatingShapes({ className = "" }: FloatingShapesProps) {
   const prefersReduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "150px" });
+  const active = inView && !prefersReduced;
+
   if (prefersReduced) return null;
 
   return (
     <div
+      ref={ref}
       aria-hidden="true"
       className={`absolute inset-0 overflow-hidden pointer-events-none select-none ${className}`}
     >
@@ -27,7 +33,7 @@ export default function FloatingShapes({ className = "" }: FloatingShapesProps) 
         height="190"
         viewBox="0 0 190 190"
         fill="none"
-        animate={{ rotate: 360, x: [0, 26, 0], y: [0, -20, 0] }}
+        animate={active ? { rotate: 360, x: [0, 26, 0], y: [0, -20, 0] } : undefined}
         transition={{
           rotate: { duration: 90, repeat: Infinity, ease: "linear" },
           x: { duration: 24, repeat: Infinity, ease: "easeInOut" },
@@ -46,7 +52,7 @@ export default function FloatingShapes({ className = "" }: FloatingShapesProps) 
         height="230"
         viewBox="0 0 230 230"
         fill="none"
-        animate={{ rotate: -360, x: [0, -28, 0], y: [0, 22, 0] }}
+        animate={active ? { rotate: -360, x: [0, -28, 0], y: [0, 22, 0] } : undefined}
         transition={{
           rotate: { duration: 120, repeat: Infinity, ease: "linear" },
           x: { duration: 28, repeat: Infinity, ease: "easeInOut" },
@@ -70,7 +76,7 @@ export default function FloatingShapes({ className = "" }: FloatingShapesProps) 
         height="96"
         viewBox="0 0 96 96"
         fill="none"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+        animate={active ? { scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] } : undefined}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       >
         <circle cx="48" cy="48" r="36" stroke="#6091B0" strokeOpacity="0.36" strokeWidth="1.5" />
@@ -85,7 +91,7 @@ export default function FloatingShapes({ className = "" }: FloatingShapesProps) 
         height="84"
         viewBox="0 0 84 84"
         fill="none"
-        animate={{ rotate: 360, x: [0, 18, 0], y: [0, 16, 0] }}
+        animate={active ? { rotate: 360, x: [0, 18, 0], y: [0, 16, 0] } : undefined}
         transition={{
           rotate: { duration: 110, repeat: Infinity, ease: "linear" },
           x: { duration: 32, repeat: Infinity, ease: "easeInOut" },

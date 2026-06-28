@@ -5,8 +5,10 @@
 // surrounding cream, and to add slow atmospheric movement.
 // NOTE: no overflow clipping — the blobs fade out via their radial gradient, so
 // a hard container edge would otherwise leave a visible straight "seam".
+// Only animates while on-screen (and not for reduced-motion users).
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 interface Blob {
   color: string;
@@ -32,8 +34,14 @@ interface SmokeProps {
 }
 
 export default function Smoke({ className = "" }: SmokeProps) {
+  const prefersReduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "150px" });
+  const active = inView && !prefersReduced;
+
   return (
     <div
+      ref={ref}
       aria-hidden="true"
       className={`absolute inset-0 pointer-events-none select-none ${className}`}
     >
@@ -50,7 +58,7 @@ export default function Smoke({ className = "" }: SmokeProps) {
             filter: "blur(34px)",
             transform: "translate(-50%, -50%)",
           }}
-          animate={{ x: [0, b.dx, 0], y: [0, b.dy, 0], scale: [1, 1.14, 1] }}
+          animate={active ? { x: [0, b.dx, 0], y: [0, b.dy, 0], scale: [1, 1.14, 1] } : undefined}
           transition={{
             duration: b.dur,
             repeat: Infinity,

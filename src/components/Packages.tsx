@@ -101,9 +101,19 @@ export default function Packages() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
 
-  // Ensure the background loop plays after hydration (covers autoplay edge cases).
+  // Play the background loop only while it's on-screen (saves continuous decode).
   useEffect(() => {
-    videoRef.current?.play().catch(() => {});
+    const v = videoRef.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(v);
+    return () => io.disconnect();
   }, [prefersReduced]);
 
   const openPkg = packages.find((p) => p.id === openId) ?? null;
