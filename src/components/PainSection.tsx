@@ -4,13 +4,14 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
+import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 export default function PainSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="relative overflow-hidden" style={{ backgroundColor: "#DC5D46" }} ref={ref}>
+    <section className="relative overflow-hidden" style={{ backgroundColor: "#6091B0" }} ref={ref}>
       {/* ── Decorative life — deep navy accents on the warm coral ── */}
       <AmbientGlow
         color="#011427"
@@ -27,6 +28,7 @@ export default function PainSection() {
         className="z-0"
         style={{ bottom: "-100px", left: "20%" }}
       />
+      <SubtleParticles count={12} className="z-0" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[520px]">
 
@@ -40,7 +42,7 @@ export default function PainSection() {
           {/* Huge decorative quote mark */}
           <span
             className="absolute top-8 right-10 font-display font-black leading-none select-none pointer-events-none"
-            style={{ fontSize: "18rem", color: "rgba(0,0,0,0.07)", lineHeight: 1 }}
+            style={{ fontSize: "18rem", color: "rgba(6,35,64,0.10)", lineHeight: 1 }}
             aria-hidden="true"
           >
             &ldquo;
@@ -48,17 +50,17 @@ export default function PainSection() {
 
           <p
             className="relative font-display font-black tracking-tighter leading-none"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.8rem)", color: "#ffffff" }}
+            style={{ fontSize: "clamp(2rem, 5vw, 3.8rem)", color: "#062340" }}
           >
             לקוחות לא תמיד
             <br />
             הולכים למתחרה
             <br />
-            כי הוא <span style={{ color: "#062340" }}>טוב יותר.</span>
+            כי הוא <span style={{ color: "#ffffff" }}>טוב יותר.</span>
           </p>
           <p
             className="mt-6 text-lg font-display font-medium"
-            style={{ color: "rgba(255,255,255,0.75)" }}
+            style={{ color: "rgba(6,35,64,0.8)" }}
           >
             לפעמים הוא פשוט ענה לפניכם.
           </p>
@@ -74,7 +76,7 @@ export default function PainSection() {
         >
           <p
             className="text-xs font-display font-medium tracking-widest uppercase"
-            style={{ color: "#DC5D46" }}
+            style={{ color: "#6091B0" }}
           >
             למה Portal Studio
           </p>

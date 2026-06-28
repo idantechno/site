@@ -6,6 +6,8 @@ import { ArrowLeft, WhatsappLogo } from "@phosphor-icons/react";
 import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
+import Smoke from "@/components/decorative/Smoke";
+import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -33,263 +35,204 @@ export default function About() {
     <section
       id="about"
       className="relative overflow-hidden"
-      style={{ backgroundColor: "#062340" }}
+      style={{ backgroundColor: "#F4E8E0" }}
     >
-      {/* ── Editorial composite hero ──
-            Mobile: illustration on top 65% + photo on bottom 35% (vertically stacked)
-            Desktop: illustration left 65% + photo right 35% (horizontally split)
-            The illustration leads — it speaks the visual language of the brand.
-            The stage photo is a supporting accent. */}
-      <div className="relative w-full overflow-hidden h-[min(64vh,520px)] md:h-[min(62vh,540px)]">
-        {/* Illustration — 65% of the hero */}
-        <div className="absolute overflow-hidden inset-x-0 top-0 h-[68%] md:inset-y-0 md:left-0 md:right-auto md:w-[68%] md:h-full">
-          <Image
-            src="/portal-illustration.png"
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 68vw"
-            className="object-cover object-[35%_center] md:object-[right_center]"
-            style={{ opacity: 0.92 }}
-          />
-        </div>
-
-        {/* Photo — 35% of the hero (supporting accent) */}
-        <div className="absolute overflow-hidden inset-x-0 bottom-0 h-[37%] md:inset-y-0 md:right-0 md:left-auto md:w-[37%] md:h-full">
-          <Image
-            src="/about-stage.png"
-            alt="הסיפור מאחורי Portal Studio"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 37vw"
-            className="object-cover object-[center_28%]"
-            style={{ opacity: 0.58 }}
-          />
-        </div>
-
-        {/* Seam blend — mobile (horizontal, centered around the 65% join line) */}
-        <div
-          className="md:hidden absolute inset-x-0 top-[60%] bottom-[30%] pointer-events-none"
+      {/* ── Headline — clean, on cream, comfortably below the nav ── */}
+      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-32 md:pt-40 pb-6 text-center">
+        <motion.span
+          custom={0}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="inline-flex items-center gap-2 text-[11px] font-display font-medium tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-4"
           style={{
-            background:
-              "linear-gradient(to bottom, transparent 0%, rgba(6,35,64,0.7) 40%, rgba(6,35,64,0.7) 60%, transparent 100%)",
+            backgroundColor: "rgba(96,145,176,0.14)",
+            color: "#6091B0",
+            border: "1px solid rgba(96,145,176,0.35)",
           }}
-        />
+        >
+          אודות
+        </motion.span>
 
-        {/* Seam blend — desktop (vertical, centered around the 65% join line) */}
-        <div
-          className="hidden md:block absolute inset-y-0 pointer-events-none"
+        <motion.h1
+          custom={1}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="font-display font-black tracking-tighter leading-none"
           style={{
-            left: "60%",
-            right: "30%",
-            background:
-              "linear-gradient(to right, transparent 0%, rgba(6,35,64,0.7) 40%, rgba(6,35,64,0.7) 60%, transparent 100%)",
+            fontSize: "clamp(1.5rem, 3.4vw, 2.5rem)",
+            color: "#062340",
+            letterSpacing: "-0.03em",
           }}
-        />
+        >
+          מהבמה —{" "}
+          <span style={{ color: "#DC5D46" }}>לטכנולוגיה</span>
+        </motion.h1>
 
-        {/* Overall mood tint — unifies both sides into one navy atmosphere */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ backgroundColor: "rgba(6,35,64,0.22)" }}
-        />
-
-        {/* Top fade — nav legibility */}
-        <div
-          className="absolute inset-x-0 top-0 h-36 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(6,35,64,0.85) 0%, transparent 100%)",
-          }}
-        />
-
-        {/* Side vignette */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, transparent 35%, rgba(6,35,64,0.55) 100%)",
-          }}
-        />
-
-        {/* Soft bottom fade into navy — lets images breathe further down */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, #062340 0%, rgba(6,35,64,0.78) 45%, transparent 100%)",
-          }}
-        />
-
-        {/* Subtle grid texture */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-40"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        {/* Headline overlay — anchored bottom-center */}
-        <div className="absolute inset-x-0 bottom-0 z-10">
-          <div className="max-w-5xl mx-auto px-6 pb-14 md:pb-20 text-center">
-            <motion.span
-              custom={0}
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 text-[11px] font-display font-medium tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-6"
-              style={{
-                backgroundColor: "rgba(220,93,70,0.18)",
-                color: "#DC5D46",
-                border: "1px solid rgba(220,93,70,0.4)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-              }}
-            >
-              אודות
-            </motion.span>
-
-            <motion.h1
-              custom={1}
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              className="font-display font-black tracking-tighter leading-none"
-              style={{
-                fontSize: "clamp(2.6rem, 7vw, 5.4rem)",
-                color: "#ffffff",
-                letterSpacing: "-0.04em",
-              }}
-            >
-              מהבמה —{" "}
-              <span style={{ color: "#DC5D46" }}>לטכנולוגיה.</span>
-            </motion.h1>
-
-            <motion.p
-              custom={2}
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              className="mt-5 text-base md:text-lg font-body mx-auto"
-              style={{ color: "rgba(255,255,255,0.6)", maxWidth: "44ch" }}
-            >
-              הסיפור מאחורי PORTAL STUDIO.
-            </motion.p>
-          </div>
-        </div>
+        <motion.p
+          custom={2}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="mt-3 text-sm md:text-base font-body mx-auto"
+          style={{ color: "rgba(6,35,64,0.6)", maxWidth: "40ch" }}
+        >
+          הסיפור מאחורי PORTAL STUDIO
+        </motion.p>
       </div>
 
-      {/* ── Editorial text body ── */}
-      <div className="relative z-10 max-w-3xl mx-auto px-6 pb-28 -mt-6">
-        {/* Lead paragraph — stylized */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display font-bold tracking-tight leading-snug text-center mb-10"
-          style={{
-            fontSize: "clamp(1.35rem, 2.5vw, 1.85rem)",
-            color: "#ffffff",
-          }}
-        >
-          נעים להכיר, אני{" "}
-          <span style={{ color: "#DC5D46" }}>עידן</span> — המייסד של{" "}
-          <span style={{ letterSpacing: "0.02em" }}>PORTAL STUDIO</span>.
-        </motion.p>
-
-        {/* Decorative divider */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          whileInView={{ opacity: 1, scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, delay: 0.1 }}
-          className="mx-auto mb-12 h-px w-28 origin-center"
-          style={{
-            background:
-              "linear-gradient(to right, transparent, rgba(220,93,70,0.6), transparent)",
-          }}
-        />
-
-        {/* Body paragraphs */}
-        <div className="flex flex-col gap-7">
-          {body.map((p, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.7,
-                delay: i * 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="text-base md:text-lg font-body leading-loose text-right"
-              style={{ color: "rgba(255,255,255,0.78)" }}
-            >
-              {p}
-            </motion.p>
-          ))}
+      {/* ── Founder story — the unified image sits behind it, washed into the
+            cream so the text stays readable, with brand-colored smoke drifting
+            over it. ── */}
+      <div className="relative">
+        {/* Image backdrop (clipped only for its own fades) */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <Image
+            src="/about-hero.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            style={{ opacity: 0.9, filter: "brightness(1.05) saturate(1.05)" }}
+          />
+          {/* Cream wash — lifts the dark image so navy text reads on top */}
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: "rgba(244,232,224,0.68)" }}
+          />
+          {/* Top fade — blend down from the cream headline */}
+          <div
+            className="absolute inset-x-0 top-0 h-28"
+            style={{
+              background:
+                "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
+            }}
+          />
+          {/* Bottom fade — melt back into cream */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-32"
+            style={{
+              background:
+                "linear-gradient(to top, #F4E8E0 0%, transparent 100%)",
+            }}
+          />
         </div>
 
-        {/* Closing statement — emphasized */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mt-12 font-display font-bold tracking-tight leading-snug text-center"
-          style={{
-            fontSize: "clamp(1.15rem, 2.2vw, 1.5rem)",
-            color: "#ffffff",
-          }}
-        >
-          <span style={{ letterSpacing: "0.02em" }}>PORTAL STUDIO</span>{" "}
-          הוא השער שלך לעולם דיגיטלי מסודר, מקצועי וחכם יותר —{" "}
-          <span style={{ color: "#DC5D46" }}>
-            כדי שתוכל להתמקד במה שאתה עושה הכי טוב: ליצור.
-          </span>
-        </motion.p>
+        {/* Brand-colored smoke — drifts over the image, behind the text */}
+        <Smoke />
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-14 pt-10 flex flex-wrap justify-center gap-4 items-center"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-glow inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-display font-semibold text-white text-base active:scale-[0.98]"
-            style={{ backgroundColor: "#DC5D46" }}
-          >
-            <WhatsappLogo size={20} weight="fill" />
-            דברו איתי
-          </a>
-          <a
-            href="#packages"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-display font-medium text-base transition-all duration-300 active:scale-[0.98] hover:bg-white/10"
+        {/* Story text */}
+        <div className="relative z-10 max-w-2xl mx-auto px-6 pt-10 pb-20">
+          {/* Lead paragraph — stylized */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display font-bold tracking-tight leading-snug text-center mb-6"
             style={{
-              color: "rgba(255,255,255,0.75)",
-              border: "1px solid rgba(255,255,255,0.2)",
+              fontSize: "clamp(1.1rem, 2vw, 1.45rem)",
+              color: "#062340",
             }}
           >
-            לחבילות
-            <ArrowLeft size={18} />
-          </a>
-        </motion.div>
+            נעים להכיר, אני{" "}
+            <span style={{ color: "#6091B0" }}>עידן</span> — המייסד של{" "}
+            <span style={{ letterSpacing: "0.02em" }}>PORTAL STUDIO</span>
+          </motion.p>
+
+          {/* Decorative divider */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="mx-auto mb-8 h-px w-24 origin-center"
+            style={{
+              background:
+                "linear-gradient(to right, transparent, rgba(220,93,70,0.6), transparent)",
+            }}
+          />
+
+          {/* Body paragraphs */}
+          <div className="flex flex-col gap-5">
+            {body.map((p, i) => (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.7,
+                  delay: i * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="text-sm md:text-base font-body leading-relaxed text-right"
+                style={{ color: "rgba(6,35,64,0.8)" }}
+              >
+                {p}
+              </motion.p>
+            ))}
+          </div>
+
+          {/* Closing statement — emphasized */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="mt-8 font-display font-bold tracking-tight leading-snug text-center"
+            style={{
+              fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
+              color: "#062340",
+            }}
+          >
+            <span style={{ letterSpacing: "0.02em" }}>PORTAL STUDIO</span>{" "}
+            הוא השער שלך לעולם דיגיטלי מסודר, מקצועי וחכם יותר —{" "}
+            <span style={{ color: "#DC5D46" }}>
+              כדי שתוכל להתמקד במה שאתה עושה הכי טוב: ליצור.
+            </span>
+          </motion.p>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-10 pt-8 flex flex-wrap justify-center gap-4 items-center"
+            style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}
+          >
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-glow inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-display font-semibold text-white text-base active:scale-[0.98]"
+              style={{ backgroundColor: "#DC5D46" }}
+            >
+              <WhatsappLogo size={20} weight="fill" />
+              דברו איתי
+            </a>
+            <a
+              href="#packages"
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-full font-display font-medium text-base transition-all duration-300 active:scale-[0.98] hover:bg-[#062340]/5"
+              style={{
+                color: "rgba(6,35,64,0.75)",
+                border: "1px solid rgba(6,35,64,0.25)",
+              }}
+            >
+              לחבילות
+              <ArrowLeft size={18} />
+            </a>
+          </motion.div>
+        </div>
       </div>
 
       {/* Subtle ambient glow at bottom */}
       <AmbientGlow
         color="#DC5D46"
         size={420}
-        opacity={0.08}
+        opacity={0.1}
         className="z-0"
         style={{
           bottom: "-100px",
@@ -299,7 +242,8 @@ export default function About() {
       />
 
       {/* Subtle particles for life */}
-      <SubtleParticles count={18} className="z-0" />
+      <SubtleParticles count={16} className="z-0" />
+      <FloatingShapes className="z-0" />
     </section>
   );
 }

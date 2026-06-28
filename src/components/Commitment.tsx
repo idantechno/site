@@ -4,6 +4,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import PortalEcho from "@/components/decorative/PortalEcho";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
+import SubtleParticles from "@/components/decorative/SubtleParticles";
+import Smoke from "@/components/decorative/Smoke";
 
 const commitments = [
   "לשמור על הזהות והקול האותנטי של כל עסק ויוצר — ולא להפוך אותו לעוד “תבנית” גנרית.",
@@ -23,7 +25,7 @@ export default function Commitment() {
       className="relative overflow-hidden py-28"
       style={{
         background:
-          "linear-gradient(to bottom, #062340 0%, #04182B 50%, #062340 100%)",
+          "linear-gradient(to bottom, #F4E8E0 0%, #EFE2D6 50%, #F4E8E0 100%)",
       }}
     >
       {/* Top accent border — subtle separator from Packages */}
@@ -47,32 +49,23 @@ export default function Commitment() {
       {/* ── Breathing decorative elements ── */}
       <PortalEcho
         size={520}
-        color="#DC5D46"
-        baseOpacity={0.06}
+        color="#6091B0"
+        baseOpacity={0.09}
         rings={4}
         className="z-0"
         style={{ top: "20%", left: "-180px" }}
       />
       <AmbientGlow
-        color="#6091B0"
+        color="#DC5D46"
         size={360}
-        opacity={0.08}
+        opacity={0.10}
         className="z-0"
         style={{ bottom: "10%", right: "-120px" }}
       />
+      <SubtleParticles count={12} className="z-0" />
+      <Smoke className="z-0" />
 
       <div className="relative z-10 max-w-3xl mx-auto px-6" ref={ref}>
-        {/* Tag */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-[11px] font-display font-medium tracking-[0.22em] uppercase text-center mb-5"
-          style={{ color: "#DC5D46" }}
-        >
-          ההתחייבות שלי
-        </motion.p>
-
         {/* Headline */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -81,12 +74,12 @@ export default function Commitment() {
           className="font-display font-black tracking-tighter leading-none text-center"
           style={{
             fontSize: "clamp(2rem, 4.8vw, 3.4rem)",
-            color: "#ffffff",
+            color: "#062340",
             letterSpacing: "-0.035em",
           }}
         >
           אנושיים.{" "}
-          <span style={{ color: "#DC5D46" }}>גם בעידן של AI.</span>
+          <span style={{ color: "#6091B0" }}>גם בעידן של AI.</span>
         </motion.h2>
 
         {/* Intro paragraph */}
@@ -95,10 +88,10 @@ export default function Commitment() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.18 }}
           className="mt-7 text-base md:text-lg font-body leading-relaxed text-center mx-auto"
-          style={{ color: "rgba(255,255,255,0.7)", maxWidth: "58ch" }}
+          style={{ color: "rgba(6,35,64,0.72)", maxWidth: "58ch" }}
         >
           המטרה של{" "}
-          <span style={{ letterSpacing: "0.02em", color: "#ffffff" }}>
+          <span style={{ letterSpacing: "0.02em", color: "#062340" }}>
             PORTAL STUDIO
           </span>{" "}
           היא לעזור ליוצרים ולעסקים להשתלב בעולם הדיגיטלי החדש בצורה חכמה,
@@ -124,7 +117,7 @@ export default function Commitment() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.32 }}
           className="text-[11px] font-display font-medium tracking-[0.22em] uppercase text-center mb-10"
-          style={{ color: "rgba(255,255,255,0.5)" }}
+          style={{ color: "rgba(6,35,64,0.55)" }}
         >
           ההתחייבות שלי ללקוחות
         </motion.p>
@@ -149,7 +142,7 @@ export default function Commitment() {
                 className="grid grid-cols-[60px_1fr] md:grid-cols-[90px_1fr] gap-5 md:gap-7 items-start py-7"
                 style={{
                   borderBottom: !isLast
-                    ? "1px solid rgba(255,255,255,0.07)"
+                    ? "1px solid rgba(6,35,64,0.1)"
                     : "none",
                 }}
               >
@@ -168,7 +161,7 @@ export default function Commitment() {
                 {/* Commitment text */}
                 <p
                   className="text-base md:text-lg font-body leading-relaxed pt-2"
-                  style={{ color: "rgba(255,255,255,0.85)" }}
+                  style={{ color: "rgba(6,35,64,0.82)" }}
                 >
                   {text}
                 </p>
@@ -183,17 +176,17 @@ export default function Commitment() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 1.1 }}
           className="mt-14 pt-8 flex flex-col items-center gap-2"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+          style={{ borderTop: "1px solid rgba(6,35,64,0.1)" }}
         >
           <span
             className="font-display font-bold text-base tracking-tight"
-            style={{ color: "#ffffff" }}
+            style={{ color: "#062340" }}
           >
-            — עידן
+            עידן
           </span>
           <span
             className="text-[11px] font-display font-medium tracking-[0.22em] uppercase"
-            style={{ color: "rgba(255,255,255,0.4)" }}
+            style={{ color: "rgba(6,35,64,0.45)" }}
           >
             מייסד · PORTAL STUDIO
           </span>

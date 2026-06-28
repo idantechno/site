@@ -16,19 +16,19 @@ export default function Home() {
     <main>
       <Nav />
       <About />
-      {/* dark → light transition */}
-      <LightTrail fromColor="#F2A541" toColor="#2FB7A4" />
+      {/* subtle brand divider */}
+      <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
       <ForWho />
       <Packages />
       <Commitment />
       <StatsStrip />
-      {/* dark → light transition */}
-      <LightTrail fromColor="#2FB7A4" toColor="#6091B0" />
+      {/* subtle brand divider */}
+      <LightTrail fromColor="#DC5D46" toColor="#6091B0" />
       <DemoSection />
       <PainSection />
       <FAQ />
-      {/* light → dark transition */}
-      <LightTrail fromColor="#6091B0" toColor="#F2A541" />
+      {/* subtle brand divider */}
+      <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
       <FinalCTA />
       <Footer />
     </main>

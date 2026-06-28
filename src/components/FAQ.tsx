@@ -4,6 +4,8 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { Plus, Minus } from "@phosphor-icons/react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
+import SubtleParticles from "@/components/decorative/SubtleParticles";
+import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const faqs = [
   {
@@ -26,6 +28,26 @@ const faqs = [
     q: "מה קורה אם הלקוח שואל שאלה שהסוכן לא יודע?",
     a: "הסוכן מוגדר לזהות שאלות מחוץ לתחום ולהעביר אותן אליך בצורה חלקה — בלי לבלבל את הלקוח.",
   },
+  {
+    q: "האם אתם מייצרים סוכנים?",
+    a: "כן — זה הלב של מה שאנחנו עושים. סוכני WhatsApp וצ'אטבוטים שנבנים מאפס לקול, לשפה ולערכים של העסק שלך, אחרי שאנחנו לומדים אותו לעומק.",
+  },
+  {
+    q: "האם אתם מבצעים הדרכות בכלי AI?",
+    a: "כן. מעבר לבנייה, אנחנו מלווים ומדריכים אותך ואת הצוות איך לשלב כלי AI בעבודה היומיומית — בצורה פשוטה, בלי להפוך אתכם לאנשי טכנולוגיה.",
+  },
+  {
+    q: "כמה זמן לוקח לבנות סוכן?",
+    a: "סוכן בסיסי — שבוע עד שבועיים מרגע אישור התסריט. פתרון מורכב יותר עם אינטגרציות לוקח קצת יותר, ונדע לתת לך לוח זמנים מדויק כבר בשיחת האפיון.",
+  },
+  {
+    q: "האם שימוש ב-AI יכול לעזור לי בשיווק?",
+    a: "בהחלט — מתוכן לרשתות, דרך מענה מהיר ללידים ועד סינון הלקוחות שמתאימים לך. AI עוזר לך להגיע ליותר אנשים ולהיראות מקצועי יותר, בלי לאבד את הקול האישי.",
+  },
+  {
+    q: "מתי כדאי לי להשתמש ב-AI ומתי לעשות בעצמי?",
+    a: "כלל אצבע: מה שחוזר על עצמו, גוזל זמן או דורש זמינות 24/7 — תן ל-AI. מה שדורש יצירתיות, שיקול דעת ומגע אנושי — תשאיר לעצמך. אנחנו עוזרים לך לסמן את הקו הזה נכון.",
+  },
 ];
 
 export default function FAQ() {
@@ -34,7 +56,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative overflow-hidden py-24" style={{ backgroundColor: "#ffffff" }}>
+    <section className="relative overflow-hidden py-24" style={{ backgroundColor: "#F4E8E0" }}>
       {/* ── Whisper-soft decoration ── */}
       <AmbientGlow
         color="#6091B0"
@@ -50,6 +72,8 @@ export default function FAQ() {
         className="z-0"
         style={{ bottom: "10%", left: "-120px" }}
       />
+      <SubtleParticles count={12} className="z-0" />
+      <FloatingShapes className="z-0" />
 
       <div className="relative z-10 max-w-3xl mx-auto px-6" ref={ref}>
         <motion.div
@@ -58,7 +82,7 @@ export default function FAQ() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <p className="text-sm font-display font-medium tracking-widest uppercase mb-3" style={{ color: "#DC5D46" }}>
+          <p className="text-sm font-display font-medium tracking-widest uppercase mb-3" style={{ color: "#6091B0" }}>
             שאלות נפוצות
           </p>
           <h2 className="text-3xl font-display font-bold tracking-tight" style={{ color: "#062340" }}>

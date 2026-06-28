@@ -12,7 +12,7 @@ interface AmbientGlowProps {
 }
 
 export default function AmbientGlow({
-  color = "#F2A541",
+  color = "#6091B0",
   size = 480,
   opacity = 0.12,
   className = "",
