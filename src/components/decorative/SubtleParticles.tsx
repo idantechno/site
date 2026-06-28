@@ -14,9 +14,10 @@ interface Particle {
 }
 
 const PALETTE = [
-  "rgba(242,165,65,",   // amber
-  "rgba(47,183,164,",   // teal
+  "rgba(96,145,176,",   // steel blue  (secondary — most present)
   "rgba(96,145,176,",   // steel blue
+  "rgba(6,35,64,",      // navy
+  "rgba(220,93,70,",    // coral       (precious accent — least)
 ];
 
 interface SubtleParticlesProps {
@@ -37,23 +38,25 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
     if (!ctx) return;
 
     let animId: number;
+    let running = false;
     let particles: Particle[] = [];
 
     const init = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: count }, () => ({
+      particles = Array.from({ length: Math.round(count * 1.6) }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 1.8 + 0.6,
-        opacity: Math.random() * 0.55 + 0.2,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28,
+        r: Math.random() * 2.6 + 1,
+        opacity: Math.random() * 0.45 + 0.28,
         color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
       }));
     };
 
     const tick = () => {
+      if (!running) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const p of particles) {
         p.x += p.vx;
@@ -64,20 +67,42 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
         if (p.y > canvas.height) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        // Soft glow halo — turns each dot into a speck of glowing stardust
+        ctx.shadowBlur = p.r * 4;
+        ctx.shadowColor = `${p.color}${Math.min(p.opacity * 1.7, 1)})`;
         ctx.fillStyle = `${p.color}${p.opacity})`;
         ctx.fill();
       }
+      ctx.shadowBlur = 0;
       animId = requestAnimationFrame(tick);
     };
 
     init();
-    tick();
+
+    // Only animate while the canvas is on-screen — off-screen layers stay idle.
+    const start = () => {
+      if (!running) {
+        running = true;
+        animId = requestAnimationFrame(tick);
+      }
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(animId);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { rootMargin: "150px" }
+    );
+    io.observe(canvas);
 
     const onResize = () => { init(); };
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
-      cancelAnimationFrame(animId);
+      stop();
+      io.disconnect();
       window.removeEventListener("resize", onResize);
     };
   }, [count]);

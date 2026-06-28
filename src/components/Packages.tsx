@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import {
   ArrowLeft,
@@ -14,6 +14,7 @@ import {
 import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
+import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 type Package = {
   id: string;
@@ -96,7 +97,24 @@ const businessPackage = packages.find((p) => p.group === "business")!;
 export default function Packages() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReduced = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
+
+  // Play the background loop only while it's on-screen (saves continuous decode).
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, [prefersReduced]);
 
   const openPkg = packages.find((p) => p.id === openId) ?? null;
 
@@ -117,7 +135,7 @@ export default function Packages() {
     <section
       id="packages"
       className="relative overflow-hidden"
-      style={{ backgroundColor: "#062340" }}
+      style={{ backgroundColor: "#F4E8E0" }}
     >
       {/* ── Decorative life ── */}
       <AmbientGlow
@@ -135,44 +153,10 @@ export default function Packages() {
         className="z-0"
         style={{ bottom: "10%", right: "-160px" }}
       />
-
-      {/* ── Cinematic banner image ── */}
-      <div className="relative w-full overflow-hidden h-[clamp(180px,28vh,320px)] md:h-[clamp(260px,38vh,420px)]">
-        <Image
-          src="/packages-banner.png"
-          alt="הפורטל — השער לעולם הדיגיטלי שלך"
-          fill
-          sizes="100vw"
-          style={{ objectFit: "cover", objectPosition: "center 55%" }}
-        />
-        {/* Top fade — into previous section */}
-        <div
-          className="absolute inset-x-0 top-0 h-32 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, #062340 0%, transparent 100%)",
-          }}
-        />
-        {/* Bottom fade — into packages content */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, #062340 0%, rgba(6,35,64,0.7) 40%, transparent 100%)",
-          }}
-        />
-        {/* Side vignette */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, transparent 45%, rgba(6,35,64,0.55) 100%)",
-          }}
-        />
-      </div>
+      <SubtleParticles count={14} className="z-0" />
 
       {/* Main content */}
-      <div className="relative pb-28 -mt-20 md:-mt-24">
+      <div className="relative pb-28 pt-28 md:pt-32">
         {/* Ambient glow */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -182,95 +166,161 @@ export default function Packages() {
           }}
         />
 
+        {/* ── Main section header — on the clean cream ── */}
         <div className="relative z-10 max-w-6xl mx-auto px-6" ref={ref}>
-        {/* ── Main section header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="mb-20 text-center"
-        >
-          <p
-            className="text-[11px] font-display font-medium tracking-[0.22em] uppercase mb-4"
-            style={{ color: "#DC5D46" }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7 }}
+            className="mb-12 text-center"
           >
-            החבילות שלנו
-          </p>
-          <h2
-            className="font-display font-black tracking-tighter leading-none"
-            style={{
-              fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
-              color: "#ffffff",
-              letterSpacing: "-0.035em",
-            }}
-          >
-            לכל עסק —
-            <br />
-            <span style={{ color: "#DC5D46" }}>והעולם הדיגיטלי שלו.</span>
-          </h2>
-          <p
-            className="mt-6 text-base md:text-lg font-body mx-auto"
-            style={{ color: "rgba(255,255,255,0.55)", maxWidth: "50ch" }}
-          >
-            לא חבילה אחת לכולם. כל עסק זוכה לשפה, לטיפול ולנוכחות
-            דיגיטלית שמתאימה לעולם שלו.
-          </p>
-        </motion.div>
-
-        {/* ── Sub-section: Artists ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-10 flex items-center gap-4"
-        >
-          <span
-            className="text-[11px] font-display font-medium tracking-[0.22em] uppercase whitespace-nowrap"
-            style={{ color: "rgba(255,255,255,0.55)" }}
-          >
-            לאמנים, יוצרים ומעצבים
-          </span>
-          <div
-            className="flex-1 h-px"
-            style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
-          />
-        </motion.div>
-
-        {/* Artists grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {artistPackages.map((pkg, i) => (
-            <PackageCard
-              key={pkg.id}
-              pkg={pkg}
-              index={i}
-              inView={inView}
-              onOpen={() => setOpenId(pkg.id)}
-            />
-          ))}
+            <p
+              className="text-[11px] font-display font-medium tracking-[0.22em] uppercase mb-4"
+              style={{ color: "#6091B0" }}
+            >
+              החבילות שלנו
+            </p>
+            <h2
+              className="font-display font-black tracking-tighter leading-none"
+              style={{
+                fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
+                color: "#062340",
+                letterSpacing: "-0.035em",
+              }}
+            >
+              לכל עסק —
+              <br />
+              <span style={{ color: "#6091B0" }}>והעולם הדיגיטלי שלו.</span>
+            </h2>
+            <p
+              className="mt-6 text-base md:text-lg font-body mx-auto"
+              style={{ color: "rgba(6,35,64,0.6)", maxWidth: "50ch" }}
+            >
+              לא חבילה אחת לכולם. כל עסק זוכה לשפה, לטיפול ולנוכחות
+              דיגיטלית שמתאימה לעולם שלו.
+            </p>
+          </motion.div>
         </div>
 
-        {/* ── Sub-section: Business ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="mt-24 mb-10 flex items-center gap-4"
-        >
-          <span
-            className="text-[11px] font-display font-medium tracking-[0.22em] uppercase whitespace-nowrap"
-            style={{ color: "rgba(96,145,176,0.85)" }}
+        {/* ── Packages tier — the portal artwork is a full-bleed (edge-to-edge)
+              background behind everything from here down. The cream is the clean
+              base; the artwork gives it an artistic counter-layer. ── */}
+        <div className="relative">
+          {/* Full-bleed artwork background — natural brightness, reaches the edges */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
           >
-            לעסקים שמחפשים סדר ואוטומציה
-          </span>
-          <div
-            className="flex-1 h-px"
-            style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
-          />
-        </motion.div>
+            {prefersReduced ? (
+              <Image
+                src="/packages-banner.png"
+                alt=""
+                fill
+                sizes="100vw"
+                className="object-cover object-bottom"
+                style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/packages-banner.png"
+                className="absolute inset-0 h-full w-full object-cover object-bottom"
+                style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
+              >
+                <source src="/packages-banner.webm" type="video/webm" />
+                <source src="/packages-banner.mp4" type="video/mp4" />
+              </video>
+            )}
+            {/* Cream wash — brings the brightness in line with the other background images */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ backgroundColor: "rgba(244,232,224,0.42)" }}
+            />
+            {/* Top fade — blends into the cream above + keeps the artists label clean */}
+            <div
+              className="absolute inset-x-0 top-0 h-28 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)" }}
+            />
+            {/* Bottom fade — gentle, so the floor reflection stays visible and only the
+                very edge dissolves into the cream (no hard contour) */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
+              style={{ background: "linear-gradient(to top, #F4E8E0 0%, transparent 100%)" }}
+            />
+          </motion.div>
 
-        {/* Business wide card */}
-        <BusinessCard pkg={businessPackage} onOpen={() => setOpenId(businessPackage.id)} />
+          {/* Content over the artwork (unchanged positions; extra bottom room lets the
+              artwork's floor reflection breathe below the cards) */}
+          <div className="relative z-10 max-w-6xl mx-auto px-6 pt-6 pb-28">
+            {/* ── Sub-section: Artists ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mb-10 flex items-center gap-4"
+            >
+              <span
+                className="text-[11px] font-display font-semibold tracking-[0.22em] uppercase whitespace-nowrap"
+                style={{
+                  color: "#062340",
+                  textShadow:
+                    "0 1px 10px rgba(244,232,224,0.95), 0 0 4px rgba(244,232,224,0.85)",
+                }}
+              >
+                לאמנים, יוצרים ומעצבים
+              </span>
+              <div
+                className="flex-1 h-px"
+                style={{ backgroundColor: "rgba(6,35,64,0.22)" }}
+              />
+            </motion.div>
+
+            {/* Artists grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {artistPackages.map((pkg, i) => (
+                <PackageCard
+                  key={pkg.id}
+                  pkg={pkg}
+                  index={i}
+                  inView={inView}
+                  onOpen={() => setOpenId(pkg.id)}
+                />
+              ))}
+            </div>
+
+            {/* ── Sub-section: Business ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6 }}
+              className="mt-24 mb-10 flex items-center gap-4"
+            >
+              <span
+                className="text-[11px] font-display font-semibold tracking-[0.22em] uppercase whitespace-nowrap"
+                style={{
+                  color: "#062340",
+                  textShadow:
+                    "0 1px 10px rgba(244,232,224,0.95), 0 0 4px rgba(244,232,224,0.85)",
+                }}
+              >
+                לעסקים שמחפשים סדר ואוטומציה
+              </span>
+              <div
+                className="flex-1 h-px"
+                style={{ backgroundColor: "rgba(6,35,64,0.22)" }}
+              />
+            </motion.div>
+
+            {/* Business wide card */}
+            <BusinessCard pkg={businessPackage} onOpen={() => setOpenId(businessPackage.id)} />
+          </div>
         </div>
       </div>
 
@@ -500,9 +550,9 @@ function PackageCard({
       whileHover={{ y: -4 }}
       className="group relative text-right rounded-2xl p-8 md:p-9 flex flex-col gap-6 cursor-pointer transition-shadow min-h-[420px]"
       style={{
-        backgroundColor: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)",
+        backgroundColor: "rgba(255,255,255,0.55)",
+        border: "1px solid rgba(6,35,64,0.10)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.6), 0 10px 30px -12px rgba(6,35,64,0.12)",
       }}
     >
       {/* Icon */}
@@ -521,7 +571,7 @@ function PackageCard({
         className="font-display font-black tracking-tighter leading-tight"
         style={{
           fontSize: "clamp(1.5rem, 2.2vw, 1.9rem)",
-          color: "#ffffff",
+          color: "#062340",
           letterSpacing: "-0.03em",
         }}
       >
@@ -533,7 +583,7 @@ function PackageCard({
         className="font-display font-bold tracking-tight leading-snug"
         style={{
           fontSize: "clamp(1rem, 1.4vw, 1.1rem)",
-          color: "#ffffff",
+          color: "#062340",
         }}
       >
         {pkg.tagline}
@@ -542,7 +592,7 @@ function PackageCard({
       {/* CTA */}
       <div
         className="mt-auto pt-5 flex items-center justify-between"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}
       >
         <span
           className="inline-flex items-center gap-2 text-sm font-display font-medium"
@@ -579,7 +629,9 @@ function BusinessCard({
       whileHover={{ y: -3 }}
       className="group relative w-full text-right rounded-2xl p-8 md:p-10 cursor-pointer transition-shadow overflow-hidden"
       style={{
-        backgroundColor: "#06223D",
+        backgroundColor: "rgba(6,34,61,0.82)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
         border: "1px solid rgba(96,145,176,0.30)",
         boxShadow:
           "inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 50px -20px rgba(96,145,176,0.25)",

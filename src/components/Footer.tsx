@@ -13,13 +13,13 @@ export default function Footer() {
   return (
     <footer
       className="relative overflow-hidden"
-      style={{ backgroundColor: "#062340", borderTop: "1px solid rgba(255,255,255,0.06)" }}
+      style={{ backgroundColor: "#F4E8E0", borderTop: "1px solid rgba(6,35,64,0.1)" }}
     >
       {/* Faint portal echo — bottom right, barely visible */}
       <PortalEcho
         size={380}
-        color="#F2A541"
-        baseOpacity={0.04}
+        color="#6091B0"
+        baseOpacity={0.05}
         rings={3}
         style={{ bottom: "-100px", left: "-60px" }}
       />
@@ -37,13 +37,13 @@ export default function Footer() {
             <div className="flex flex-col leading-none">
               <span
                 className="font-display text-lg font-semibold tracking-tight"
-                style={{ color: "#ffffff" }}
+                style={{ color: "#062340" }}
               >
                 Portal
               </span>
               <span
                 className="font-display text-[10px] font-medium tracking-[0.32em] uppercase mt-1"
-                style={{ color: "rgba(255,255,255,0.6)" }}
+                style={{ color: "rgba(6,35,64,0.6)" }}
               >
                 Studio
               </span>
@@ -56,7 +56,7 @@ export default function Footer() {
                 key={link.href}
                 href={link.href}
                 className="text-sm font-body transition-opacity hover:opacity-60"
-                style={{ color: "rgba(255,255,255,0.55)" }}
+                style={{ color: "rgba(6,35,64,0.6)" }}
               >
                 {link.label}
               </a>
@@ -72,7 +72,7 @@ export default function Footer() {
             </a>
           </nav>
 
-          <p className="text-xs font-body" style={{ color: "rgba(255,255,255,0.3)" }}>
+          <p className="text-xs font-body" style={{ color: "rgba(6,35,64,0.4)" }}>
             © 2026 Portal Studio
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function Footer() {
         {/* ─── Contact row ─── */}
         <div
           className="mt-8 pt-8 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-8"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+          style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}
         >
           {/* Phone → WhatsApp */}
           <a
@@ -88,8 +88,8 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`וואטסאפ ${WHATSAPP_DISPLAY}`}
-            className="group flex items-center gap-2.5 px-4 py-2 rounded-full transition-all hover:bg-white/5"
-            style={{ color: "rgba(255,255,255,0.85)" }}
+            className="group flex items-center gap-2.5 px-4 py-2 rounded-full transition-all hover:bg-[#062340]/5"
+            style={{ color: "rgba(6,35,64,0.85)" }}
           >
             <WhatsappLogo
               size={22}
@@ -108,8 +108,8 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Portal Studio בפייסבוק"
-            className="group flex items-center justify-center w-10 h-10 rounded-full transition-all hover:bg-white/5"
-            style={{ color: "rgba(255,255,255,0.85)" }}
+            className="group flex items-center justify-center w-10 h-10 rounded-full transition-all hover:bg-[#062340]/5"
+            style={{ color: "rgba(6,35,64,0.85)" }}
           >
             <FacebookLogo
               size={22}
@@ -124,8 +124,8 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Portal Studio באינסטגרם"
-            className="group flex items-center justify-center w-10 h-10 rounded-full transition-all hover:bg-white/5"
-            style={{ color: "rgba(255,255,255,0.85)" }}
+            className="group flex items-center justify-center w-10 h-10 rounded-full transition-all hover:bg-[#062340]/5"
+            style={{ color: "rgba(6,35,64,0.85)" }}
           >
             <InstagramLogo
               size={22}

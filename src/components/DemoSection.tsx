@@ -5,6 +5,8 @@ import { useRef, useState, useEffect } from "react";
 import { WhatsappLogo, ArrowLeft } from "@phosphor-icons/react";
 import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
+import SubtleParticles from "@/components/decorative/SubtleParticles";
+import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const conversation = [
   { id: 1, from: "user", text: "היי, ראיתי שיש לכם סדנת צילום" },
@@ -30,7 +32,7 @@ export default function DemoSection() {
   }, [inView]);
 
   return (
-    <section id="demo" className="relative overflow-hidden py-24" style={{ backgroundColor: "#ffffff" }}>
+    <section id="demo" className="relative overflow-hidden py-24" style={{ backgroundColor: "#F4E8E0" }}>
       {/* ── Soft decorative life — very gentle on white ── */}
       <AmbientGlow
         color="#DC5D46"
@@ -46,6 +48,8 @@ export default function DemoSection() {
         className="z-0"
         style={{ bottom: "-120px", right: "-100px" }}
       />
+      <SubtleParticles count={12} className="z-0" />
+      <FloatingShapes className="z-0" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6" ref={ref}>
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-16 items-start">
@@ -56,7 +60,7 @@ export default function DemoSection() {
             transition={{ duration: 0.6 }}
             className="flex flex-col gap-6 md:sticky md:top-24"
           >
-            <p className="text-sm font-display font-medium tracking-widest uppercase" style={{ color: "#DC5D46" }}>
+            <p className="text-sm font-display font-medium tracking-widest uppercase" style={{ color: "#6091B0" }}>
               דמו חי
             </p>
             <h2 className="text-3xl md:text-4xl font-display font-bold leading-tight tracking-tight" style={{ color: "#062340" }}>

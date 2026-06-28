@@ -5,7 +5,7 @@
   --color-navy: #062340;
   --color-coral: #DC5D46;
   --color-steel: #6091B0;
-  --color-bg: #FFFFFF;
+  --color-bg: #F4E8E0;
   --color-surface: #F8F9FA;
   --color-text: #1a1a2e;
   --color-muted: #6b7280;
@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  background-color: #ffffff;
+  background-color: #F4E8E0;
   color: #1a1a2e;
   font-family: 'Alef', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;

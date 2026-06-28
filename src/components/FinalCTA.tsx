@@ -8,13 +8,14 @@ import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
+import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 export default function FinalCTA() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="final-cta" className="relative overflow-hidden" style={{ backgroundColor: "#062340" }} ref={ref}>
+    <section id="final-cta" className="relative overflow-hidden" style={{ backgroundColor: "#F4E8E0" }} ref={ref}>
       {/* Atmospheric orb — left side, fades into navy toward the headline */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <div
@@ -38,11 +39,12 @@ export default function FinalCTA() {
 
       {/* Floating particles */}
       <SubtleParticles count={20} className="z-[1]" />
+      <FloatingShapes className="z-[1]" />
 
       {/* Portal echo — center-right */}
       <PortalEcho
         size={600}
-        color="#2FB7A4"
+        color="#6091B0"
         baseOpacity={0.16}
         rings={5}
         className="z-[1]"
@@ -51,9 +53,9 @@ export default function FinalCTA() {
 
       {/* Amber glow near CTA area */}
       <AmbientGlow
-        color="#F2A541"
+        color="#DC5D46"
         size={440}
-        opacity={0.2}
+        opacity={0.16}
         className="z-[1]"
         style={{ bottom: "40px", left: "28%" }}
       />
@@ -75,12 +77,12 @@ export default function FinalCTA() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-xs font-display font-medium tracking-widest uppercase mb-8" style={{ color: "#DC5D46" }}>
+            <p className="text-xs font-display font-medium tracking-widest uppercase mb-8" style={{ color: "#6091B0" }}>
               מתחילים?
             </p>
             <h2
               className="font-display font-black tracking-tighter leading-none"
-              style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)", color: "#ffffff" }}
+              style={{ fontSize: "clamp(3.5rem, 10vw, 8rem)", color: "#062340" }}
             >
               אנחנו
               <br />
@@ -97,7 +99,7 @@ export default function FinalCTA() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-6 lg:max-w-xs lg:pb-4"
           >
-            <p className="text-base font-body leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <p className="text-base font-body leading-relaxed" style={{ color: "rgba(6,35,64,0.62)" }}>
               בלי לחץ. רק שיחה.
               נאבחן איפה העסק שלך מאבד זמן ואיך לשחרר אותו בחזרה לידיים שלך.
             </p>
@@ -113,7 +115,7 @@ export default function FinalCTA() {
               שלחו הודעה עכשיו
             </a>
 
-            <p className="text-xs font-body" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs font-body" style={{ color: "rgba(6,35,64,0.45)" }}>
               נתחיל בצעד קטן · הקול נשאר שלך · בלי התחייבות
             </p>
           </motion.div>
@@ -125,12 +127,12 @@ export default function FinalCTA() {
           animate={inView ? { scaleX: 1 } : {}}
           transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mt-20 pt-8 flex items-center justify-between origin-right"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+          style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}
         >
-          <span className="font-display font-black text-xl tracking-tighter" style={{ color: "rgba(255,255,255,0.12)" }}>
+          <span className="font-display font-black text-xl tracking-tighter" style={{ color: "rgba(6,35,64,0.14)" }}>
             PORTAL STUDIO
           </span>
-          <span className="text-xs font-body" style={{ color: "rgba(255,255,255,0.2)" }}>
+          <span className="text-xs font-body" style={{ color: "rgba(6,35,64,0.4)" }}>
             סוכני WhatsApp לעסקים וליוצרים — עם קול אנושי
           </span>
         </motion.div>

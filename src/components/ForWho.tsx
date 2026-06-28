@@ -13,6 +13,7 @@ import {
 } from "@phosphor-icons/react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
+import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const audiences = [
   // ── Creative side ──
@@ -57,7 +58,7 @@ export default function ForWho() {
     <section
       id="for-who"
       className="relative overflow-hidden py-24"
-      style={{ backgroundColor: "#062340" }}
+      style={{ backgroundColor: "#F4E8E0" }}
     >
       {/* ── Atmospheric background image ── */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
@@ -72,14 +73,14 @@ export default function ForWho() {
         {/* Mobile-only strong darkening — image becomes pure atmospheric texture */}
         <div
           className="absolute inset-0 md:hidden"
-          style={{ backgroundColor: "rgba(6,35,64,0.55)" }}
+          style={{ backgroundColor: "rgba(244,232,224,0.55)" }}
         />
-        {/* Vignette — soften edges into navy */}
+        {/* Vignette — soften edges into cream */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 35%, rgba(6,35,64,0.65) 100%)",
+              "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 35%, rgba(244,232,224,0.65) 100%)",
           }}
         />
         {/* Top fade — seamless join with previous section */}
@@ -87,7 +88,7 @@ export default function ForWho() {
           className="absolute inset-x-0 top-0 h-24"
           style={{
             background:
-              "linear-gradient(to bottom, #062340 0%, transparent 100%)",
+              "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
           }}
         />
         {/* Bottom fade — seamless join with next section */}
@@ -95,7 +96,7 @@ export default function ForWho() {
           className="absolute inset-x-0 bottom-0 h-24"
           style={{
             background:
-              "linear-gradient(to top, #062340 0%, transparent 100%)",
+              "linear-gradient(to top, #F4E8E0 0%, transparent 100%)",
           }}
         />
       </div>
@@ -116,6 +117,7 @@ export default function ForWho() {
         style={{ bottom: "8%", left: "-100px" }}
       />
       <SubtleParticles count={14} className="z-0" />
+      <FloatingShapes className="z-0" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6" ref={ref}>
         <motion.div
@@ -124,7 +126,7 @@ export default function ForWho() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
           className="mb-10"
         >
-          <p className="text-sm font-display font-medium tracking-widest uppercase" style={{ color: "#DC5D46" }}>
+          <p className="text-sm font-display font-medium tracking-widest uppercase" style={{ color: "#6091B0" }}>
             למי זה מתאים?
           </p>
         </motion.div>
@@ -147,33 +149,33 @@ export default function ForWho() {
                 }}
                 className="card-glow rounded-2xl p-7 flex flex-col gap-4"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.05)",
+                  backgroundColor: "rgba(255,255,255,0.5)",
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(6,35,64,0.10)",
                   boxShadow:
-                    "inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px -10px rgba(0,0,0,0.35)",
+                    "inset 0 1px 0 rgba(255,255,255,0.6), 0 10px 30px -12px rgba(6,35,64,0.12)",
                 }}
               >
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{
-                    backgroundColor: "rgba(220,93,70,0.18)",
-                    border: "1px solid rgba(220,93,70,0.35)",
+                    backgroundColor: "rgba(96,145,176,0.16)",
+                    border: "1px solid rgba(96,145,176,0.35)",
                   }}
                 >
-                  <Icon size={22} style={{ color: "#DC5D46" }} weight="duotone" />
+                  <Icon size={22} style={{ color: "#6091B0" }} weight="duotone" />
                 </div>
                 <div>
                   <h3
                     className="font-display font-semibold text-base mb-1.5"
-                    style={{ color: "#ffffff" }}
+                    style={{ color: "#062340" }}
                   >
                     {item.label}
                   </h3>
                   <p
                     className="text-sm font-body leading-relaxed"
-                    style={{ color: "rgba(255,255,255,0.65)" }}
+                    style={{ color: "rgba(6,35,64,0.68)" }}
                   >
                     {item.desc}
                   </p>

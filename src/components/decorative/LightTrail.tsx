@@ -13,8 +13,8 @@ interface LightTrailProps {
 }
 
 export default function LightTrail({
-  fromColor = "#F2A541",
-  toColor = "#2FB7A4",
+  fromColor = "#6091B0",
+  toColor = "#DC5D46",
   height = 2,
   className = "",
 }: LightTrailProps) {

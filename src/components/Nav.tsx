@@ -104,14 +104,14 @@ export default function Nav() {
     <header
       className="fixed top-0 inset-x-0 z-50"
       style={{
-        backgroundColor: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
+        backgroundColor: scrolled ? "rgba(96,145,176,0.95)" : "transparent",
         backdropFilter: scrolled ? "blur(14px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
         borderBottom: scrolled
-          ? "1px solid rgba(255,255,255,0.6)"
-          : "1px solid rgba(255,255,255,0.08)",
+          ? "1px solid rgba(6,35,64,0.12)"
+          : "1px solid rgba(6,35,64,0.08)",
         boxShadow: scrolled
-          ? "inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 0 rgba(0,0,0,0.06)"
+          ? "inset 0 1px 0 rgba(255,255,255,0.25), 0 6px 20px -8px rgba(6,35,64,0.25)"
           : "none",
         transition:
           "background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease",
@@ -133,7 +133,7 @@ export default function Nav() {
             <span
               className="font-display text-lg sm:text-xl font-semibold tracking-tight"
               style={{
-                color: scrolled ? "#011427" : "#ffffff",
+                color: scrolled ? "#ffffff" : "#062340",
                 transition: "color 0.4s ease",
               }}
             >
@@ -142,7 +142,7 @@ export default function Nav() {
             <span
               className="font-display text-[10px] font-medium tracking-[0.32em] uppercase mt-1"
               style={{
-                color: scrolled ? "#6091B0" : "rgba(255,255,255,0.65)",
+                color: scrolled ? "rgba(255,255,255,0.85)" : "rgba(6,35,64,0.6)",
                 transition: "color 0.4s ease",
               }}
             >
@@ -159,7 +159,7 @@ export default function Nav() {
                 href={link.href}
                 className="text-sm font-body hover:opacity-70"
                 style={{
-                  color: scrolled ? "#1a1a2e" : "rgba(255,255,255,0.82)",
+                  color: scrolled ? "rgba(255,255,255,0.92)" : "rgba(6,35,64,0.82)",
                   transition: "color 0.4s ease, opacity 0.2s ease",
                 }}
               >
@@ -176,7 +176,7 @@ export default function Nav() {
               aria-haspopup="true"
               className="flex items-center gap-1.5 text-sm font-body hover:opacity-70"
               style={{
-                color: scrolled ? "#1a1a2e" : "rgba(255,255,255,0.82)",
+                color: scrolled ? "rgba(255,255,255,0.92)" : "rgba(6,35,64,0.82)",
                 transition: "color 0.4s ease, opacity 0.2s ease",
               }}
             >
@@ -263,8 +263,8 @@ export default function Nav() {
           className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-display font-medium active:scale-[0.98]"
           style={{
             backgroundColor: scrolled ? "#DC5D46" : "transparent",
-            color: scrolled ? "#ffffff" : "rgba(255,255,255,0.9)",
-            border: scrolled ? "none" : "1px solid rgba(255,255,255,0.4)",
+            color: scrolled ? "#ffffff" : "rgba(6,35,64,0.9)",
+            border: scrolled ? "none" : "1px solid rgba(6,35,64,0.3)",
             transition: "background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease",
           }}
         >
@@ -278,9 +278,9 @@ export default function Nav() {
           aria-label="תפריט"
         >
           {open ? (
-            <X size={24} style={{ color: scrolled ? "#062340" : "#ffffff", transition: "color 0.4s ease" }} />
+            <X size={24} style={{ color: scrolled ? "#ffffff" : "#062340", transition: "color 0.4s ease" }} />
           ) : (
-            <List size={24} style={{ color: scrolled ? "#062340" : "#ffffff", transition: "color 0.4s ease" }} />
+            <List size={24} style={{ color: scrolled ? "#ffffff" : "#062340", transition: "color 0.4s ease" }} />
           )}
         </button>
       </nav>
@@ -290,8 +290,8 @@ export default function Nav() {
         <div
           className="md:hidden border-t"
           style={{
-            backgroundColor: scrolled ? "rgba(255,255,255,0.96)" : "rgba(6,35,64,0.95)",
-            borderColor: scrolled ? "#e5e7eb" : "rgba(255,255,255,0.1)",
+            backgroundColor: scrolled ? "rgba(96,145,176,0.97)" : "rgba(6,35,64,0.95)",
+            borderColor: scrolled ? "rgba(6,35,64,0.12)" : "rgba(255,255,255,0.1)",
             backdropFilter: "blur(14px)",
           }}
         >
@@ -301,7 +301,7 @@ export default function Nav() {
                 <a
                   href={link.href}
                   className="block text-base font-body py-1"
-                  style={{ color: scrolled ? "#1a1a2e" : "rgba(255,255,255,0.85)" }}
+                  style={{ color: "rgba(255,255,255,0.9)" }}
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -313,14 +313,12 @@ export default function Nav() {
             <li
               className="pt-3 mt-2"
               style={{
-                borderTop: scrolled
-                  ? "1px solid rgba(1,20,39,0.08)"
-                  : "1px solid rgba(255,255,255,0.1)",
+                borderTop: "1px solid rgba(255,255,255,0.12)",
               }}
             >
               <p
                 className="text-[11px] font-display font-medium tracking-[0.2em] uppercase mb-3"
-                style={{ color: scrolled ? "#6091B0" : "rgba(255,255,255,0.5)" }}
+                style={{ color: "rgba(255,255,255,0.6)" }}
               >
                 צור קשר
               </p>
@@ -350,16 +348,14 @@ export default function Nav() {
                       <div className="flex flex-col leading-tight">
                         <span
                           className="text-sm font-display font-medium"
-                          style={{ color: scrolled ? "#011427" : "#ffffff" }}
+                          style={{ color: "#ffffff" }}
                         >
                           {item.label}
                         </span>
                         <span
                           className="text-xs font-body"
                           style={{
-                            color: scrolled
-                              ? "#6091B0"
-                              : "rgba(255,255,255,0.55)",
+                            color: "rgba(255,255,255,0.6)",
                           }}
                           dir="ltr"
                         >
