@@ -77,5 +77,5 @@ export const NAV_LINKS = [
   { label: "פתרונות", href: "/solutions" },
   { label: "חבילות", href: "/#packages" },
   { label: "גלריה", href: "/gallery" },
-  { label: "בלוג", href: "/blog" },
+  { label: "תובנות", href: "/blog" },
 ];

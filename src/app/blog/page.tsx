@@ -6,9 +6,9 @@ import Footer from "@/components/Footer";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "בלוג | Portal Studio",
+  title: "תובנות | Portal Studio",
   description:
-    "מאמרים על בינה מלאכותית לניהול עסקים — איך לשלב AI חכם, לחסוך זמן ולשמור על הקול האנושי של העסק שלך.",
+    "תובנות על בינה מלאכותית לניהול עסקים — איך לשלב AI חכם, לחסוך זמן ולשמור על הקול האנושי של העסק שלך.",
   alternates: { canonical: "/blog" },
 };
 
@@ -25,7 +25,7 @@ export default function BlogIndexPage() {
               className="text-sm font-display font-medium tracking-widest uppercase mb-3"
               style={{ color: "#6091B0" }}
             >
-              הבלוג
+              תובנות
             </p>
             <h1
               className="font-display text-3xl sm:text-4xl font-bold tracking-tight"
