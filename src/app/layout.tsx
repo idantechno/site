@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import AccessibilityWidget from "@/components/AccessibilityWidget";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         </a>
         <JsonLd />
         {children}
+        <AccessibilityWidget />
         <CookieConsent />
         {/* Portal Studio chat widget */}
         <Script
