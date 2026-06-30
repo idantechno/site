@@ -133,7 +133,7 @@ export default function FinalCTA() {
             PORTAL STUDIO
           </span>
           <span className="text-xs font-body" style={{ color: "rgba(6,35,64,0.4)" }}>
-            סוכני WhatsApp לעסקים וליוצרים — עם קול אנושי
+            מערכת AI לניהול עסקים — עם קול אנושי
           </span>
         </motion.div>
       </div>

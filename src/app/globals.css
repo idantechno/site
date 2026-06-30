@@ -63,6 +63,91 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(0.98);
 }
 
+/* ─── Accessibility: skip-to-content link ─── */
+.skip-link {
+  position: absolute;
+  right: 1rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  background-color: #062340;
+  color: #ffffff;
+  font-family: 'Heebo', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Accessibility: visible keyboard focus on all interactive elements ─── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #062340;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Long-form legal / content typography ─── */
+.legal-prose {
+  color: #1a1a2e;
+  font-family: 'Alef', system-ui, sans-serif;
+  line-height: 1.85;
+  font-size: 1.0625rem;
+}
+.legal-prose h2 {
+  font-family: 'Heebo', system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #062340;
+  margin-top: 2.75rem;
+  margin-bottom: 0.9rem;
+  scroll-margin-top: 6rem;
+}
+.legal-prose h3 {
+  font-family: 'Heebo', system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #062340;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+}
+.legal-prose p {
+  margin-bottom: 1.1rem;
+}
+.legal-prose ul,
+.legal-prose ol {
+  margin: 0 1.25rem 1.25rem 0;
+  padding-right: 1.25rem;
+}
+.legal-prose ul { list-style: disc; }
+.legal-prose ol { list-style: decimal; }
+.legal-prose li {
+  margin-bottom: 0.5rem;
+  padding-right: 0.35rem;
+}
+.legal-prose a {
+  color: #C24A34;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-prose a:hover { opacity: 0.8; }
+.legal-prose strong {
+  font-weight: 700;
+  color: #062340;
+}
+.legal-prose hr {
+  border: none;
+  border-top: 1px solid rgba(6, 35, 64, 0.12);
+  margin: 2.5rem 0;
+}
+
 /* ─── Reduced motion: disable all decorative animations ─── */
 @media (prefers-reduced-motion: reduce) {
   .card-glow,

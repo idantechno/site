@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { WhatsappLogo, FacebookLogo, InstagramLogo } from "@phosphor-icons/react/dist/ssr";
 import {
   WHATSAPP_URL,
@@ -6,8 +7,20 @@ import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
   NAV_LINKS,
+  BUSINESS_OWNER_NAME,
+  BUSINESS_TYPE,
+  BUSINESS_NUMBER,
+  BUSINESS_ADDRESS,
 } from "@/lib/constants";
 import PortalEcho from "@/components/decorative/PortalEcho";
+
+const LEGAL_LINKS = [
+  { label: "הזמנה ותשלום", href: "/order" },
+  { label: "תקנון ותנאי שימוש", href: "/terms" },
+  { label: "מדיניות פרטיות", href: "/privacy" },
+  { label: "הצהרת נגישות", href: "/accessibility" },
+  { label: "צור קשר", href: "/contact" },
+];
 
 export default function Footer() {
   return (
@@ -134,6 +147,34 @@ export default function Footer() {
             />
           </a>
         </div>
+
+        {/* ─── Legal links ─── */}
+        <nav
+          aria-label="קישורים משפטיים"
+          className="mt-8 pt-6 flex flex-wrap justify-center gap-x-6 gap-y-3"
+          style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}
+        >
+          {LEGAL_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-xs font-body transition-opacity hover:opacity-60"
+              style={{ color: "rgba(6,35,64,0.65)" }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* ─── Business details (legal / clearing compliance) ─── */}
+        <p
+          className="mt-5 text-center text-xs font-body leading-relaxed"
+          style={{ color: "rgba(6,35,64,0.5)" }}
+        >
+          {BUSINESS_OWNER_NAME} · {BUSINESS_TYPE} · עוסק מס׳ {BUSINESS_NUMBER}
+          <br />
+          {BUSINESS_ADDRESS}
+        </p>
       </div>
     </footer>
   );
