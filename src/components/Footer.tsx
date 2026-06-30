@@ -7,9 +7,7 @@ import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
   NAV_LINKS,
-  BUSINESS_OWNER_NAME,
-  BUSINESS_TYPE,
-  BUSINESS_NUMBER,
+  BUSINESS_BRAND,
   BUSINESS_ADDRESS,
 } from "@/lib/constants";
 import PortalEcho from "@/components/decorative/PortalEcho";
@@ -166,14 +164,12 @@ export default function Footer() {
           ))}
         </nav>
 
-        {/* ─── Business details (legal / clearing compliance) ─── */}
+        {/* ─── Address line (full business details live on /contact + /terms) ─── */}
         <p
-          className="mt-5 text-center text-xs font-body leading-relaxed"
-          style={{ color: "rgba(6,35,64,0.5)" }}
+          className="mt-5 text-center text-xs font-body"
+          style={{ color: "rgba(6,35,64,0.45)" }}
         >
-          {BUSINESS_OWNER_NAME} · {BUSINESS_TYPE} · עוסק מס׳ {BUSINESS_NUMBER}
-          <br />
-          {BUSINESS_ADDRESS}
+          {BUSINESS_BRAND} · {BUSINESS_ADDRESS}
         </p>
       </div>
     </footer>
