@@ -5,7 +5,6 @@ import PainSection from "@/components/PainSection";
 import Packages from "@/components/Packages";
 import Commitment from "@/components/Commitment";
 import StatsStrip from "@/components/StatsStrip";
-import DemoSection from "@/components/DemoSection";
 import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -13,7 +12,7 @@ import LightTrail from "@/components/decorative/LightTrail";
 
 export default function Home() {
   return (
-    <main>
+    <main id="main">
       <Nav />
       <About />
       {/* subtle brand divider */}
@@ -24,7 +23,6 @@ export default function Home() {
       <StatsStrip />
       {/* subtle brand divider */}
       <LightTrail fromColor="#DC5D46" toColor="#6091B0" />
-      <DemoSection />
       <PainSection />
       <FAQ />
       {/* subtle brand divider */}

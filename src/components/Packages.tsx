@@ -11,6 +11,7 @@ import {
   PaintBrush,
   Sparkle,
 } from "@phosphor-icons/react";
+import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
@@ -44,8 +45,7 @@ const packages: Package[] = [
       "מיתוג מחדש או רענון זהות שמשקפת באמת את הסגנון האמנותי שלך",
       "אסטרטגיית שיווק יחודית לקול האמנותי שלך — לא תבנית גנרית של “אמן ממוצע”",
       "נוכחות דיגיטלית מעוצבת: עמוד נחיתה / אתר אישי, חומרי שיווק, ויז'ואלים לרשתות",
-      "סוכן WhatsApp שמדבר בקול שלך — להופעות, מכירות, פניות מעריצים ולידים",
-      "מערכת מסודרת לתקשורת עם הקהל — בלי שתאבד הודעות בדרך",
+      "צוות סוכנים שעוזרים לנהל את העסק ואת הקשרים העסקיים שלך עם אנשים",
     ],
     group: "artists",
   },
@@ -64,7 +64,7 @@ const packages: Package[] = [
       "אתר מעוצב בשפה החזותית של העסק — לא תבנית גנרית",
       "גלריית עבודות אונליין שמדגישה את האיכות, לא כמות",
       "מערכת קליטת בריפים, פגישות והזמנות — כל לקוח מתועד במקום אחד",
-      "סוכן WhatsApp שעונה על בריפים, תאריכים ומחירים — בקול של העסק, לא של מכונה",
+      "צוות סוכנים שעוזרים לנהל את העסק ואת הקשרים העסקיים שלך עם אנשים",
       "ניהול הרשמות מסודר לסדנאות, אירועים וקבוצות — כולל תזכורות אוטומטיות",
     ],
     group: "artists",
@@ -81,7 +81,7 @@ const packages: Package[] = [
     ],
     fitForLabel: "מה אתה מקבל בחבילה:",
     fitFor: [
-      "סוכן WhatsApp / Chatbot מותאם אישית בקול ובערכים של העסק שלך — נבנה אחרי שאלון עומק על הטון, השפה והאופי של העסק",
+      "צוות סוכנים שעוזרים לנהל את העסק ואת הקשרים העסקיים שלך עם אנשים — נבנה אחרי שאלון עומק על הטון, השפה והאופי של העסק",
       "אוטומציות פנימיות לזרימת עבודה: לידים, תורים, תזכורות, מעקב אחרי לקוחות, חיובים",
       "אינטגרציה מלאה עם הכלים שכבר בשימוש (Google Calendar, Sheets, CRM, יומן, סליקה)",
       "מערכת סינון לידים חכמה — רק מי שמתאים לעסק שלך מגיע לשיחה אישית איתך",
@@ -488,29 +488,38 @@ export default function Packages() {
 
                 {/* CTA */}
                 <div
-                  className="pt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between"
+                  className="pt-6 flex flex-col gap-4"
                   style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
                 >
                   <p
                     className="text-sm font-body"
-                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    style={{ color: "rgba(255,255,255,0.6)" }}
                   >
-                    מעוניינים בחבילה הזו? בואו נדבר.
+                    כל חבילה נבנית בהתאמה אישית. המחיר נקבע לפי ההיקף ומוצג לפני התשלום.
                   </p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-display font-medium transition-all duration-200 active:scale-[0.98] hover:opacity-90"
-                    style={{
-                      backgroundColor:
-                        openPkg.group === "business" ? "#6091B0" : "#DC5D46",
-                      color: "#ffffff",
-                    }}
-                  >
-                    שלחו הודעה
-                    <ArrowLeft size={16} />
-                  </a>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Link
+                      href={`/order?plan=${openPkg.id}`}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-display font-semibold transition-all duration-200 active:scale-[0.98] hover:opacity-90"
+                      style={{
+                        backgroundColor:
+                          openPkg.group === "business" ? "#6091B0" : "#DC5D46",
+                        color: "#ffffff",
+                      }}
+                    >
+                      להזמנה ותשלום
+                      <ArrowLeft size={16} />
+                    </Link>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-display font-medium transition-all duration-200 active:scale-[0.98] hover:opacity-90"
+                      style={{ color: "#ffffff", border: "1px solid rgba(255,255,255,0.25)" }}
+                    >
+                      יש לי שאלה
+                    </a>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -598,7 +607,7 @@ function PackageCard({
           className="inline-flex items-center gap-2 text-sm font-display font-medium"
           style={{ color: "#DC5D46" }}
         >
-          לפירוט החבילה
+          לפרטים והזמנה
           <ArrowLeft
             size={16}
             className="transition-transform group-hover:-translate-x-1"
@@ -690,7 +699,7 @@ function BusinessCard({
             border: "1px solid rgba(96,145,176,0.4)",
           }}
         >
-          לפירוט החבילה
+          לפרטים והזמנה
           <ArrowLeft
             size={16}
             className="transition-transform group-hover:-translate-x-1"
