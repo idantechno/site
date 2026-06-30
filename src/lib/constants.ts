@@ -74,6 +74,8 @@ export const COLORS = {
 } as const;
 
 export const NAV_LINKS = [
+  { label: "פתרונות", href: "/solutions" },
   { label: "חבילות", href: "/#packages" },
-  { label: "על הסטודיו", href: "/#about" },
+  { label: "גלריה", href: "/gallery" },
+  { label: "בלוג", href: "/blog" },
 ];

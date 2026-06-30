@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import JsonLd from "@/components/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           דילוג לתוכן הראשי
         </a>
+        <JsonLd />
         {children}
         <CookieConsent />
         {/* Portal Studio chat widget */}
