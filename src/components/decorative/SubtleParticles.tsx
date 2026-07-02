@@ -1,7 +1,7 @@
 "use client";
 
 // SubtleParticles — tiny drifting canvas dots.
-// Used only in Hero and FinalCTA. Max 20 particles. Very slow movement.
+// Used sparingly (site bookends only). Low density, soft glow, very slow drift.
 // Fully respects prefers-reduced-motion.
 
 import { useEffect, useRef } from "react";
@@ -44,13 +44,13 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
     const init = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: Math.round(count * 1.6) }, () => ({
+      particles = Array.from({ length: count }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.28,
-        vy: (Math.random() - 0.5) * 0.28,
-        r: Math.random() * 2.6 + 1,
-        opacity: Math.random() * 0.45 + 0.28,
+        vx: (Math.random() - 0.5) * 0.24,
+        vy: (Math.random() - 0.5) * 0.24,
+        r: Math.random() * 2.2 + 0.8,
+        opacity: Math.random() * 0.32 + 0.16,
         color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
       }));
     };
@@ -67,9 +67,9 @@ export default function SubtleParticles({ count = 18, className = "" }: SubtlePa
         if (p.y > canvas.height) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        // Soft glow halo — turns each dot into a speck of glowing stardust
-        ctx.shadowBlur = p.r * 4;
-        ctx.shadowColor = `${p.color}${Math.min(p.opacity * 1.7, 1)})`;
+        // Very soft glow — a faint speck, not glowing stardust
+        ctx.shadowBlur = p.r * 2;
+        ctx.shadowColor = `${p.color}${Math.min(p.opacity * 1.2, 1)})`;
         ctx.fillStyle = `${p.color}${p.opacity})`;
         ctx.fill();
       }

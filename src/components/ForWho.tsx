@@ -12,8 +12,6 @@ import {
   ChartLineUp,
 } from "@phosphor-icons/react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
-import SubtleParticles from "@/components/decorative/SubtleParticles";
-import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const audiences = [
   // ── Creative side ──
@@ -67,25 +65,20 @@ export default function ForWho() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-20 md:opacity-70"
-          style={{ objectPosition: "center center" }}
+          className="object-contain object-top opacity-50 md:object-cover md:object-center md:opacity-70"
         />
-        {/* Mobile-only strong darkening — image becomes pure atmospheric texture */}
+        {/* Vignette — soften edges into cream (desktop full-bleed only) */}
         <div
-          className="absolute inset-0 md:hidden"
-          style={{ backgroundColor: "rgba(244,232,224,0.55)" }}
-        />
-        {/* Vignette — soften edges into cream */}
-        <div
-          className="absolute inset-0"
+          className="absolute inset-0 hidden md:block"
           style={{
             background:
               "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 35%, rgba(244,232,224,0.65) 100%)",
           }}
         />
-        {/* Top fade — seamless join with previous section */}
+        {/* Top fade — seamless join with previous section
+            (desktop full-bleed only; on mobile the image is a contained top band) */}
         <div
-          className="absolute inset-x-0 top-0 h-24"
+          className="absolute inset-x-0 top-0 h-24 hidden md:block"
           style={{
             background:
               "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
@@ -116,9 +109,6 @@ export default function ForWho() {
         className="z-0"
         style={{ bottom: "8%", left: "-100px" }}
       />
-      <SubtleParticles count={14} className="z-0" />
-      <FloatingShapes className="z-0" />
-
       <div className="relative z-10 max-w-6xl mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

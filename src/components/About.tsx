@@ -7,7 +7,6 @@ import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
 import Smoke from "@/components/decorative/Smoke";
-import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -93,7 +92,7 @@ export default function About() {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-contain object-top md:object-cover md:object-center"
             style={{ opacity: 0.9, filter: "brightness(1.05) saturate(1.05)" }}
           />
           {/* Cream wash — lifts the dark image so navy text reads on top */}
@@ -101,9 +100,10 @@ export default function About() {
             className="absolute inset-0"
             style={{ backgroundColor: "rgba(244,232,224,0.68)" }}
           />
-          {/* Top fade — blend down from the cream headline */}
+          {/* Top fade — blend down from the cream headline (desktop full-bleed only;
+              on mobile the image is a contained band and shouldn't be washed from the top) */}
           <div
-            className="absolute inset-x-0 top-0 h-28"
+            className="absolute inset-x-0 top-0 h-28 hidden md:block"
             style={{
               background:
                 "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
@@ -242,8 +242,7 @@ export default function About() {
       />
 
       {/* Subtle particles for life */}
-      <SubtleParticles count={16} className="z-0" />
-      <FloatingShapes className="z-0" />
+      <SubtleParticles count={10} className="z-0" />
     </section>
   );
 }

@@ -4,8 +4,6 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import PortalEcho from "@/components/decorative/PortalEcho";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
-import SubtleParticles from "@/components/decorative/SubtleParticles";
-import Smoke from "@/components/decorative/Smoke";
 
 const commitments = [
   "לשמור על הזהות והקול האותנטי של כל עסק ויוצר — ולא להפוך אותו לעוד “תבנית” גנרית.",
@@ -62,9 +60,6 @@ export default function Commitment() {
         className="z-0"
         style={{ bottom: "10%", right: "-120px" }}
       />
-      <SubtleParticles count={12} className="z-0" />
-      <Smoke className="z-0" />
-
       <div className="relative z-10 max-w-3xl mx-auto px-6" ref={ref}>
         {/* Headline */}
         <motion.h2

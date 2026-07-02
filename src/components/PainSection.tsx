@@ -4,7 +4,6 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
-import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 export default function PainSection() {
   const ref = useRef(null);
@@ -28,7 +27,6 @@ export default function PainSection() {
         className="z-0"
         style={{ bottom: "-100px", left: "20%" }}
       />
-      <SubtleParticles count={12} className="z-0" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[520px]">
 
