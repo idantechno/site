@@ -27,36 +27,38 @@ export const BUSINESS_COUNTRY = "ישראל";
 
 export const SITE_URL = "https://www.portalstudio.co.il";
 
-// כתובת דף הסליקה המתארח של Grow/Morning (חשבונית ירוקה).
-// ⚠️ placeholder עד שתאושר הסליקה. אחרי האישור — יוצרים דף תשלום לכל חבילה
-//    במורנינג ומדביקים את הקישור ב-checkoutUrl של כל חבילה ב-PLANS למטה.
-export const GROW_CHECKOUT_URL = "https://grow.business/"; // TODO: קישור סליקה אמיתי
+// קישורי התשלום המתארחים של Morning (חשבונית ירוקה) — דף סליקה ייעודי לכל חבילה.
+// כל קישור מפנה בחזרה ל-/thank-you לאחר תשלום מוצלח (מוגדר בצד מורנינג).
+const CHECKOUT_URLS = {
+  art: "https://mrng.to/0q7Gy7vrVF",
+  design: "https://mrng.to/LJ1FYQoxfb",
+  comfort: "https://mrng.to/bDC5DlLVqr",
+} as const;
 
 // תאריך עדכון אחרון של המסמכים המשפטיים (מוצג בעמודים)
 export const LEGAL_LAST_UPDATED = "30 ביוני 2026";
 
 // תוכניות החבילות. המחירים מותאמים-אישית ואינם מוצגים באתר (לפי החלטה) —
-// setupFrom/monthly נשמרים כהפניה פנימית בלבד (לבניית קישור התשלום ב-Grow).
-// עוסק פטור — ללא מע"מ. checkoutUrl: placeholder עד אישור הסליקה,
-// אחר כך קישור תשלום ייעודי לכל חבילה.
+// setupFrom/monthly נשמרים כהפניה פנימית בלבד. עוסק פטור — ללא מע"מ.
+// checkoutUrl: קישור התשלום הייעודי של כל חבילה במורנינג.
 export const PLANS = {
   art: {
     name: "PORTAL ART",
     setupFrom: 800,
     monthly: 130,
-    checkoutUrl: GROW_CHECKOUT_URL,
+    checkoutUrl: CHECKOUT_URLS.art,
   },
   design: {
     name: "PORTAL DESIGN",
     setupFrom: 650,
     monthly: 130,
-    checkoutUrl: GROW_CHECKOUT_URL,
+    checkoutUrl: CHECKOUT_URLS.design,
   },
   comfort: {
     name: "PORTAL COMFORT",
     setupFrom: 1100,
     monthly: 150,
-    checkoutUrl: GROW_CHECKOUT_URL,
+    checkoutUrl: CHECKOUT_URLS.comfort,
   },
 } as const;
 

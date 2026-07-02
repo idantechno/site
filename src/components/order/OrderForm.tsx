@@ -48,17 +48,10 @@ export default function OrderForm() {
     }
     setSubmitting(true);
 
-    // הפניה לדף הסליקה המאובטח והמתארח של Grow/Morning.
-    // הפרטים מצורפים כפרמטרים לטובת מילוי-מראש (במידה ש-Grow תומך בהם).
-    const params = new URLSearchParams({
-      fullName: `${firstName.trim()} ${lastName.trim()}`,
-      email: email.trim(),
-      phone: phone.trim(),
-      country,
-      plan: plan.name,
-    });
-    const sep = plan.checkoutUrl.includes("?") ? "&" : "?";
-    window.location.href = `${plan.checkoutUrl}${sep}${params.toString()}`;
+    // הפניה לדף הסליקה המאובטח והמתארח של Morning (חשבונית ירוקה).
+    // הקישור המקוצר (mrng.to) מפנה לדף התשלום הייעודי של החבילה; פרמטרים
+    // חיצוניים אינם נשמרים דרך הקיצור, ולכן מפנים לקישור עצמו.
+    window.location.href = plan.checkoutUrl;
   }
 
   const fieldClass =
