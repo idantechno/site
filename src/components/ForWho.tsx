@@ -60,25 +60,33 @@ export default function ForWho() {
     >
       {/* ── Atmospheric background image ── */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        {/* Mobile — portrait crop */}
+        <Image
+          src="/forwho-bg-mobile.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-60 md:hidden"
+        />
+        {/* Desktop — landscape */}
         <Image
           src="/forwho-bg.png"
           alt=""
           fill
           sizes="100vw"
-          className="object-contain object-top opacity-50 md:object-cover md:object-center md:opacity-70"
+          className="hidden object-cover object-center opacity-70 md:block"
         />
-        {/* Vignette — soften edges into cream (desktop full-bleed only) */}
+        {/* Vignette — soften edges into cream */}
         <div
-          className="absolute inset-0 hidden md:block"
+          className="absolute inset-0"
           style={{
             background:
               "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 35%, rgba(244,232,224,0.65) 100%)",
           }}
         />
-        {/* Top fade — seamless join with previous section
-            (desktop full-bleed only; on mobile the image is a contained top band) */}
+        {/* Top fade — seamless join with previous section */}
         <div
-          className="absolute inset-x-0 top-0 h-24 hidden md:block"
+          className="absolute inset-x-0 top-0 h-24"
           style={{
             background:
               "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",

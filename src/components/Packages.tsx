@@ -212,38 +212,66 @@ export default function Packages() {
             className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
           >
             {prefersReduced ? (
-              <Image
-                src="/packages-banner.png"
-                alt=""
-                fill
-                sizes="100vw"
-                className="object-contain object-top md:object-cover md:object-bottom"
-                style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
-              />
+              <>
+                {/* Mobile — portrait still */}
+                <Image
+                  src="/packages-banner-mobile.jpg"
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center md:hidden"
+                  style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
+                />
+                {/* Desktop — landscape still */}
+                <Image
+                  src="/packages-banner.png"
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  className="hidden object-cover object-bottom md:block"
+                  style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
+                />
+              </>
             ) : (
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/packages-banner.png"
-                className="absolute inset-0 h-full w-full object-contain object-top md:object-cover md:object-bottom"
-                style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
-              >
-                <source src="/packages-banner.webm" type="video/webm" />
-                <source src="/packages-banner.mp4" type="video/mp4" />
-              </video>
+              <>
+                {/* Mobile — portrait video */}
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  poster="/packages-banner-mobile.jpg"
+                  className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+                  style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
+                >
+                  <source src="/packages-banner-mobile.mp4" type="video/mp4" />
+                </video>
+                {/* Desktop — landscape video */}
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  poster="/packages-banner.png"
+                  className="absolute inset-0 h-full w-full hidden object-cover object-bottom md:block"
+                  style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
+                >
+                  <source src="/packages-banner.webm" type="video/webm" />
+                  <source src="/packages-banner.mp4" type="video/mp4" />
+                </video>
+              </>
             )}
             {/* Cream wash — brings the brightness in line with the other background images */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{ backgroundColor: "rgba(244,232,224,0.42)" }}
             />
-            {/* Top fade — blends into the cream above + keeps the artists label clean
-                (desktop full-bleed only; on mobile the banner is a contained top band) */}
+            {/* Top fade — blends into the cream above + keeps the artists label clean */}
             <div
-              className="absolute inset-x-0 top-0 h-28 pointer-events-none hidden md:block"
+              className="absolute inset-x-0 top-0 h-28 pointer-events-none"
               style={{ background: "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)" }}
             />
             {/* Bottom fade — gentle, so the floor reflection stays visible and only the

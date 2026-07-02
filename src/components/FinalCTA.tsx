@@ -27,11 +27,22 @@ export default function FinalCTA() {
               "linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 88%)",
           }}
         >
+          {/* Mobile — portrait orb */}
+          <Image
+            src="/hero-orb-mobile.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="md:hidden"
+            style={{ objectFit: "cover", objectPosition: "center" }}
+          />
+          {/* Desktop — landscape orb */}
           <Image
             src="/hero-orb.jpg"
             alt=""
             fill
             sizes="(max-width: 1024px) 100vw, 58vw"
+            className="hidden md:block"
             style={{ objectFit: "cover", objectPosition: "center left" }}
           />
         </div>

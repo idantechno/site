@@ -87,12 +87,22 @@ export default function About() {
       <div className="relative">
         {/* Image backdrop (clipped only for its own fades) */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {/* Mobile — portrait crop */}
+          <Image
+            src="/about-hero-mobile.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center md:hidden"
+            style={{ opacity: 0.9, filter: "brightness(1.05) saturate(1.05)" }}
+          />
+          {/* Desktop — landscape */}
           <Image
             src="/about-hero.png"
             alt=""
             fill
             sizes="100vw"
-            className="object-contain object-top md:object-cover md:object-center"
+            className="hidden object-cover object-center md:block"
             style={{ opacity: 0.9, filter: "brightness(1.05) saturate(1.05)" }}
           />
           {/* Cream wash — lifts the dark image so navy text reads on top */}
@@ -100,10 +110,9 @@ export default function About() {
             className="absolute inset-0"
             style={{ backgroundColor: "rgba(244,232,224,0.68)" }}
           />
-          {/* Top fade — blend down from the cream headline (desktop full-bleed only;
-              on mobile the image is a contained band and shouldn't be washed from the top) */}
+          {/* Top fade — blend down from the cream headline */}
           <div
-            className="absolute inset-x-0 top-0 h-28 hidden md:block"
+            className="absolute inset-x-0 top-0 h-28"
             style={{
               background:
                 "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
