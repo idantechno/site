@@ -38,7 +38,7 @@ export default function FinalCTA() {
       </div>
 
       {/* Floating particles */}
-      <SubtleParticles count={20} className="z-[1]" />
+      <SubtleParticles count={12} className="z-[1]" />
       <FloatingShapes className="z-[1]" />
 
       {/* Portal echo — center-right */}

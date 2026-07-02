@@ -4,8 +4,6 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { Plus, Minus } from "@phosphor-icons/react";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
-import SubtleParticles from "@/components/decorative/SubtleParticles";
-import FloatingShapes from "@/components/decorative/FloatingShapes";
 
 const faqs = [
   {
@@ -68,9 +66,6 @@ export default function FAQ() {
         className="z-0"
         style={{ bottom: "10%", left: "-120px" }}
       />
-      <SubtleParticles count={12} className="z-0" />
-      <FloatingShapes className="z-0" />
-
       <div className="relative z-10 max-w-3xl mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

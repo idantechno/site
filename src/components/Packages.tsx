@@ -15,7 +15,6 @@ import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/constants";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
-import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 type Package = {
   id: string;
@@ -153,7 +152,6 @@ export default function Packages() {
         className="z-0"
         style={{ bottom: "10%", right: "-160px" }}
       />
-      <SubtleParticles count={14} className="z-0" />
 
       {/* Main content */}
       <div className="relative pb-28 pt-28 md:pt-32">
@@ -219,7 +217,7 @@ export default function Packages() {
                 alt=""
                 fill
                 sizes="100vw"
-                className="object-cover object-bottom"
+                className="object-contain object-top md:object-cover md:object-bottom"
                 style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
               />
             ) : (
@@ -230,7 +228,7 @@ export default function Packages() {
                 loop
                 playsInline
                 poster="/packages-banner.png"
-                className="absolute inset-0 h-full w-full object-cover object-bottom"
+                className="absolute inset-0 h-full w-full object-contain object-top md:object-cover md:object-bottom"
                 style={{ opacity: 0.9, filter: "brightness(1.06) saturate(1.05)" }}
               >
                 <source src="/packages-banner.webm" type="video/webm" />
@@ -242,9 +240,10 @@ export default function Packages() {
               className="absolute inset-0 pointer-events-none"
               style={{ backgroundColor: "rgba(244,232,224,0.42)" }}
             />
-            {/* Top fade — blends into the cream above + keeps the artists label clean */}
+            {/* Top fade — blends into the cream above + keeps the artists label clean
+                (desktop full-bleed only; on mobile the banner is a contained top band) */}
             <div
-              className="absolute inset-x-0 top-0 h-28 pointer-events-none"
+              className="absolute inset-x-0 top-0 h-28 pointer-events-none hidden md:block"
               style={{ background: "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)" }}
             />
             {/* Bottom fade — gentle, so the floor reflection stays visible and only the

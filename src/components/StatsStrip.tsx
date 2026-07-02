@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import SubtleParticles from "@/components/decorative/SubtleParticles";
 
 const stats = [
   { num: "3×", label: "יותר פניות מוסננות", sub: "ממוצע לקוחות ב-6 חודשים" },
@@ -24,7 +23,6 @@ export default function StatsStrip() {
           className="relative flex flex-col justify-center px-10 py-16 lg:px-16 overflow-hidden"
           style={{ backgroundColor: "#6091B0" }}
         >
-          <SubtleParticles count={10} className="z-0" />
           {/* Decorative ring in corner */}
           <div className="absolute -bottom-20 -left-20 pointer-events-none opacity-20">
             <svg width="280" height="280" viewBox="0 0 280 280" fill="none">
