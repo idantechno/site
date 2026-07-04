@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer
       className="relative overflow-hidden"
-      style={{ backgroundColor: "#F4E8E0", borderTop: "1px solid rgba(6,35,64,0.1)" }}
+      style={{ backgroundColor: "#F0E1D5", borderTop: "1px solid rgba(6,35,64,0.1)" }}
     >
       {/* Faint portal echo — bottom right, barely visible */}
       <PortalEcho

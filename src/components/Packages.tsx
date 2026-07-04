@@ -134,7 +134,7 @@ export default function Packages() {
     <section
       id="packages"
       className="relative overflow-hidden"
-      style={{ backgroundColor: "#F4E8E0" }}
+      style={{ backgroundColor: "#F0E1D5" }}
     >
       {/* ── Decorative life ── */}
       <AmbientGlow
@@ -267,18 +267,18 @@ export default function Packages() {
             {/* Cream wash — brings the brightness in line with the other background images */}
             <div
               className="absolute inset-0 pointer-events-none"
-              style={{ backgroundColor: "rgba(244,232,224,0.42)" }}
+              style={{ backgroundColor: "rgba(240,225,213,0.42)" }}
             />
             {/* Top fade — blends into the cream above + keeps the artists label clean */}
             <div
               className="absolute inset-x-0 top-0 h-28 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)" }}
+              style={{ background: "linear-gradient(to bottom, #F0E1D5 0%, transparent 100%)" }}
             />
             {/* Bottom fade — gentle, so the floor reflection stays visible and only the
                 very edge dissolves into the cream (no hard contour) */}
             <div
               className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
-              style={{ background: "linear-gradient(to top, #F4E8E0 0%, transparent 100%)" }}
+              style={{ background: "linear-gradient(to top, #F0E1D5 0%, transparent 100%)" }}
             />
           </motion.div>
 
@@ -297,7 +297,7 @@ export default function Packages() {
                 style={{
                   color: "#062340",
                   textShadow:
-                    "0 1px 10px rgba(244,232,224,0.95), 0 0 4px rgba(244,232,224,0.85)",
+                    "0 1px 10px rgba(240,225,213,0.95), 0 0 4px rgba(240,225,213,0.85)",
                 }}
               >
                 לאמנים, יוצרים ומעצבים
@@ -334,7 +334,7 @@ export default function Packages() {
                 style={{
                   color: "#062340",
                   textShadow:
-                    "0 1px 10px rgba(244,232,224,0.95), 0 0 4px rgba(244,232,224,0.85)",
+                    "0 1px 10px rgba(240,225,213,0.95), 0 0 4px rgba(240,225,213,0.85)",
                 }}
               >
                 לעסקים שמחפשים סדר ואוטומציה

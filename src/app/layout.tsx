@@ -8,9 +8,9 @@ import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Portal Studio — מערכת AI לניהול עסקים",
+  title: "Portal Studio — טכנולוגיה יצירתית לעסקים אנושיים",
   description:
-    "Portal Studio — מערכת חכמה מבוססת בינה מלאכותית לניהול העסק שלך, במנוי. פשוט, אנושי ומעצים.",
+    "Portal Studio — טכנולוגיה יצירתית לעסקים אנושיים. נוכחות דיגיטלית ומערכות חכמות מבוססות AI, בגישה אישית ואנושית.",
   openGraph: {
     title: "Portal Studio",
     description: "מערכת AI לניהול עסקים. פשוט, אנושי, מעצים.",

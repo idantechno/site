@@ -50,7 +50,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative overflow-hidden py-24" style={{ backgroundColor: "#F4E8E0" }}>
+    <section className="relative overflow-hidden py-24" style={{ backgroundColor: "#F0E1D5" }}>
       {/* ── Whisper-soft decoration ── */}
       <AmbientGlow
         color="#6091B0"
