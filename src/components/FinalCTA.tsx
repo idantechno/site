@@ -15,7 +15,7 @@ export default function FinalCTA() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="final-cta" className="relative overflow-hidden" style={{ backgroundColor: "#F4E8E0" }} ref={ref}>
+    <section id="final-cta" className="relative overflow-hidden" style={{ backgroundColor: "#F0E1D5" }} ref={ref}>
       {/* Atmospheric orb — left side, fades into navy toward the headline */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <div

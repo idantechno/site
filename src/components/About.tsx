@@ -34,7 +34,7 @@ export default function About() {
     <section
       id="about"
       className="relative overflow-hidden"
-      style={{ backgroundColor: "#F4E8E0" }}
+      style={{ backgroundColor: "#F0E1D5" }}
     >
       {/* ── Headline — clean, on cream, comfortably below the nav ── */}
       <div className="relative z-10 max-w-3xl mx-auto px-6 pt-32 md:pt-40 pb-6 text-center">
@@ -65,8 +65,8 @@ export default function About() {
             letterSpacing: "-0.03em",
           }}
         >
-          מהבמה —{" "}
-          <span style={{ color: "#DC5D46" }}>לטכנולוגיה</span>
+          טכנולוגיה יצירתית{" "}
+          <span style={{ color: "#DC5D46" }}>לעסקים אנושיים</span>
         </motion.h1>
 
         <motion.p
@@ -108,14 +108,14 @@ export default function About() {
           {/* Cream wash — lifts the dark image so navy text reads on top */}
           <div
             className="absolute inset-0"
-            style={{ backgroundColor: "rgba(244,232,224,0.68)" }}
+            style={{ backgroundColor: "rgba(240,225,213,0.68)" }}
           />
           {/* Top fade — blend down from the cream headline */}
           <div
             className="absolute inset-x-0 top-0 h-28"
             style={{
               background:
-                "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
+                "linear-gradient(to bottom, #F0E1D5 0%, transparent 100%)",
             }}
           />
           {/* Bottom fade — melt back into cream */}
@@ -123,7 +123,7 @@ export default function About() {
             className="absolute inset-x-0 bottom-0 h-32"
             style={{
               background:
-                "linear-gradient(to top, #F4E8E0 0%, transparent 100%)",
+                "linear-gradient(to top, #F0E1D5 0%, transparent 100%)",
             }}
           />
         </div>

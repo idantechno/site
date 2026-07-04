@@ -23,7 +23,7 @@ export default function Commitment() {
       className="relative overflow-hidden py-28"
       style={{
         background:
-          "linear-gradient(to bottom, #F4E8E0 0%, #EFE2D6 50%, #F4E8E0 100%)",
+          "linear-gradient(to bottom, #F0E1D5 0%, #EBDBCB 50%, #F0E1D5 100%)",
       }}
     >
       {/* Top accent border — subtle separator from Packages */}

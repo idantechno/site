@@ -56,7 +56,7 @@ export default function ForWho() {
     <section
       id="for-who"
       className="relative overflow-hidden py-24"
-      style={{ backgroundColor: "#F4E8E0" }}
+      style={{ backgroundColor: "#F0E1D5" }}
     >
       {/* ── Atmospheric background image ── */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
@@ -81,7 +81,7 @@ export default function ForWho() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 35%, rgba(244,232,224,0.65) 100%)",
+              "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 35%, rgba(240,225,213,0.65) 100%)",
           }}
         />
         {/* Top fade — seamless join with previous section */}
@@ -89,7 +89,7 @@ export default function ForWho() {
           className="absolute inset-x-0 top-0 h-24"
           style={{
             background:
-              "linear-gradient(to bottom, #F4E8E0 0%, transparent 100%)",
+              "linear-gradient(to bottom, #F0E1D5 0%, transparent 100%)",
           }}
         />
         {/* Bottom fade — seamless join with next section */}
@@ -97,7 +97,7 @@ export default function ForWho() {
           className="absolute inset-x-0 bottom-0 h-24"
           style={{
             background:
-              "linear-gradient(to top, #F4E8E0 0%, transparent 100%)",
+              "linear-gradient(to top, #F0E1D5 0%, transparent 100%)",
           }}
         />
       </div>
