@@ -27,7 +27,7 @@ export default function LpHeader() {
       className="fixed top-0 inset-x-0 z-40 flex justify-center pointer-events-none"
     >
       <div
-        className="pointer-events-auto mt-4 mx-4 flex items-center justify-between gap-6 rounded-full px-3 py-2 w-full max-w-3xl"
+        className="pointer-events-auto mt-4 mx-4 flex items-center justify-between gap-6 rounded-full px-3 py-2.5 w-full max-w-3xl"
         style={{
           backgroundColor: "rgba(240, 225, 213, 0.72)",
           backdropFilter: "blur(16px)",
@@ -45,16 +45,16 @@ export default function LpHeader() {
           <Image
             src="/brand/portal-icon.png"
             alt="Portal Studio"
-            width={36}
-            height={36}
+            width={72}
+            height={72}
             priority
-            className="w-9 h-9 object-contain"
+            className="w-14 h-14 sm:w-[72px] sm:h-[72px] object-contain"
           />
           <span
-            className="hidden sm:inline font-display font-semibold text-base tracking-tight whitespace-nowrap"
+            className="hidden sm:inline font-display font-bold text-[2rem] tracking-tight whitespace-nowrap"
             style={{ color: "#062340" }}
           >
-            Portal Studio
+            PORTAL STUDIO
           </span>
         </button>
 

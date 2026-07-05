@@ -1,21 +1,21 @@
 "use client";
 
-// LpPain — עולם ה"לפני": הכאוס היומיומי של הודעות שלא נענות.
-// רקע נייבי כהה, בועות הודעות נסחפות מאחורי הטקסט.
+// LpPain — עולם ה"לפני": כל המשימות הפתוחות שרודפות אחרי בעל העסק.
+// רקע נייבי כהה, תזכורות נסחפות מאחורי הטקסט.
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-// בועות דקורטיביות — טקסטים קצרים שמרחפים ברקע
+// בועות דקורטיביות — משימות פתוחות שמרחפות ברקע
 const BUBBLES = [
-  { text: "יש תור ליום חמישי?", left: "6%", delay: 0, duration: 12, top: "78%" },
-  { text: "כמה עולה?", left: "22%", delay: 3.5, duration: 10, top: "85%", mobileHidden: true },
-  { text: "עוד לא חזרתם אליי…", left: "45%", delay: 1.6, duration: 13, top: "80%", mobileHidden: true },
-  { text: "אפשר להזיז את הפגישה?", left: "63%", delay: 5, duration: 11, top: "88%" },
-  { text: "אתם פתוחים בשישי?", left: "80%", delay: 2.4, duration: 12.5, top: "82%", mobileHidden: true },
-  { text: "ראיתי אצלכם באינסטגרם…", left: "33%", delay: 7, duration: 12, top: "90%" },
+  { text: "לחזור לליד מאתמול", left: "6%", delay: 0, duration: 12, top: "78%" },
+  { text: "לשלוח את הצעת המחיר", left: "22%", delay: 3.5, duration: 10, top: "85%", mobileHidden: true },
+  { text: "הפנייה מהאתר עדיין פתוחה", left: "45%", delay: 1.6, duration: 13, top: "80%", mobileHidden: true },
+  { text: "להעלות את הפוסט השבוע", left: "63%", delay: 5, duration: 11, top: "88%" },
+  { text: "תזכורת: פגישה מחר ב-9:00", left: "80%", delay: 2.4, duration: 12.5, top: "82%", mobileHidden: true },
+  { text: "לא שכחת משהו?", left: "33%", delay: 7, duration: 12, top: "90%" },
 ];
 
 export default function LpPain() {
@@ -83,19 +83,20 @@ export default function LpPain() {
           style={{ color: "rgba(255, 255, 255, 0.72)" }}
         >
           <p className="mb-6">
-            שמונה בערב. עוד לקוחה שואלת בוואטסאפ אם נשאר תור ליום חמישי. ענית?
-            יופי. עכשיו זה רשום ביומן וגם על פתק ליד המחשב, ומחר בבוקר מחכות
-            עוד עשרים הודעות כאלה.
+            שמונה בערב. סיימת את יום העבודה, ועכשיו מתחיל התפקיד השני:
+            לחזור ללקוחה ששאלה בבוקר, לשלוח את הצעת המחיר שהבטחת, להיזכר
+            אם מישהו בכלל ענה לליד מיום רביעי.
           </p>
           <p className="mb-6">
-            ככה נראה ערב רגיל אצל רוב בעלי העסקים שאנחנו פוגשים.
+            לקוחות שמחכים לתשובה. לידים שמתקררים. הצעות מחיר שנשארות
+            פתוחות. משימות שחוזרות כל שבוע. וברשימה הזאת יש רק זוג ידיים
+            אחד. שלך.
           </p>
           <p
             className="font-display font-semibold text-xl lg:text-2xl leading-snug"
             style={{ color: "#DC5D46" }}
           >
-            לקוחות יש. זמן אין. השעות שהיו אמורות ללכת לעבודה עצמה נבלעות
-            בתיאומים.
+            עסק טוב יש. פשוט יותר מדי ממנו תלוי בך אישית.
           </p>
         </motion.div>
       </div>

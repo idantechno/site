@@ -22,7 +22,7 @@ import MagneticButton from "@/components/lp/MagneticButton";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-const H1_LINES = ["העסק שלך עונה ללקוחות.", "גם כשישנת."];
+const H1_LINES = ["הכול בעסק עובר דרכך.", "בדיוק שם זה נתקע."];
 
 export default function LpHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -85,7 +85,7 @@ export default function LpHero() {
                 className="lp-status-dot inline-block w-1.5 h-1.5 rounded-full"
                 style={{ backgroundColor: "#DC5D46" }}
               />
-              מערכת AI לעסקים קטנים · Portal Studio
+              יד נוספת לעסק שלך · Portal Studio
             </motion.p>
 
             <h1
@@ -114,8 +114,10 @@ export default function LpHero() {
               className="font-body text-lg leading-relaxed mb-10 max-w-xl"
               style={{ color: "rgba(6, 35, 64, 0.68)" }}
             >
-              מערכת חכמה שעונה לפניות בוואטסאפ וקובעת תורים בשבילך, בקול שלך
-              ובסגנון שלך. בלי בוט גנרי. באוויר תוך 14 יום מהשיחה הראשונה.
+              לחזור ללקוחות, לרדוף אחרי לידים, לזכור הצעות מחיר, לשלוח
+              תזכורות. הכול אצלך בראש. אנחנו בונים לעסק יד נוספת: סוכן AI
+              קטן ומדויק שלוקח את מה שחוזר על עצמו, ומתחיל בדבר אחד שעוזר
+              כבר מחר בבוקר.
             </motion.p>
 
             <motion.div
@@ -164,7 +166,7 @@ export default function LpHero() {
               className="mt-7 font-body text-sm"
               style={{ color: "rgba(6, 35, 64, 0.48)" }}
             >
-              בלי התחייבות · שיחה של 20 דקות · עסקים בכל הארץ
+              בלי התחייבות · שיחה של 20 דקות · בלי מערכת חדשה ללמוד
             </motion.p>
           </div>
 

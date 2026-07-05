@@ -20,27 +20,27 @@ interface ChatMsg {
 
 const CHATS: Record<Mode, ChatMsg[]> = {
   before: [
-    { from: "customer", text: "היי, יש אפשרות לתור מחר אחר הצהריים?", time: "21:47" },
+    { from: "customer", text: "היי, ראיתי את העבודות באתר. אפשר הצעת מחיר?", time: "21:47" },
     { from: "customer", text: "אשמח לתשובה כשנוח", time: "22:15" },
     {
       from: "business",
-      text: "היי! סליחה על העיכוב, אתמול היה עמוס. יש מקום ב-17:00",
+      text: "היי! סליחה על העיכוב, אתמול היה עמוס. אשמח לפרטים",
       time: "11:02",
       dayBreak: "למחרת",
     },
-    { from: "customer", text: "כבר סגרתי במקום אחר, תודה", time: "11:40" },
+    { from: "customer", text: "כבר התקדמתי עם מישהו אחר, תודה", time: "11:40" },
   ],
   after: [
-    { from: "customer", text: "היי, יש אפשרות לתור מחר אחר הצהריים?", time: "21:47" },
+    { from: "customer", text: "היי, ראיתי את העבודות באתר. אפשר הצעת מחיר?", time: "21:47" },
     {
       from: "business",
-      text: "היי! כן, נשארו 16:30 או 18:00. מה נוח לך?",
+      text: "היי! בשמחה. על איזה פרויקט מדובר, ומתי נוח שנחזור אליך?",
       time: "21:47",
     },
-    { from: "customer", text: "18:00 מושלם", time: "21:49" },
+    { from: "customer", text: "שיפוץ קטן במטבח. מחר בבוקר מעולה", time: "21:49" },
     {
       from: "business",
-      text: "קבעתי לך למחר ב-18:00. תזכורת תגיע בבוקר",
+      text: "נרשם. קבעתי שיחה למחר ב-9:30, והפרטים כבר מסודרים אצל בעלת העסק",
       time: "21:49",
     },
   ],
@@ -85,8 +85,8 @@ export default function BeforeAfter() {
               className="font-body text-lg leading-relaxed max-w-md mb-8"
               style={{ color: "rgba(6, 35, 64, 0.65)" }}
             >
-              לחיצה על הטוגל מראה את זה טוב יותר מכל הסבר. שיחה אמיתית מהסוג
-              שקורה כל ערב, פעם בלי מערכת ופעם איתה.
+              לחיצה על הטוגל מראה את זה טוב יותר מכל הסבר. פנייה אמיתית
+              מהצ'אט באתר, פעם כשהיא מחכה לך ופעם כשיש למי לענות.
             </p>
             <p
               className="font-body text-sm leading-relaxed max-w-md rounded-2xl px-5 py-4"
@@ -174,7 +174,7 @@ export default function BeforeAfter() {
                   </div>
                   <div className="flex flex-col">
                     <span className="font-display font-semibold text-sm" style={{ color: "#fff" }}>
-                      דנה · לקוחה
+                      דנה · מתעניינת
                     </span>
                     <span className="flex items-center gap-1.5 font-body text-[11px]" style={{ color: "rgba(255,255,255,0.55)" }}>
                       {mode === "after" && (
@@ -183,7 +183,7 @@ export default function BeforeAfter() {
                           style={{ backgroundColor: "#25D366" }}
                         />
                       )}
-                      {mode === "after" ? "המערכת מחוברת" : "וואטסאפ עסקי"}
+                      {mode === "after" ? "הסוכן שלך מחובר" : "הצ'אט באתר שלך"}
                     </span>
                   </div>
                 </div>
@@ -271,12 +271,12 @@ export default function BeforeAfter() {
                         {mode === "after" ? (
                           <>
                             <CheckCircle size={15} weight="fill" />
-                            נקבע תור · נשלחה תזכורת
+                            נקבעה שיחה · הליד חם
                           </>
                         ) : (
                           <>
                             <ClockCountdown size={15} weight="fill" />
-                            13 שעות בלי מענה · הלקוחה הלכה
+                            13 שעות בלי מענה · הליד התקרר
                           </>
                         )}
                       </motion.div>

@@ -35,20 +35,20 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: "timeDrain",
     question: "מה גוזל לך הכי הרבה זמן ביום?",
     options: [
-      { label: "מענה להודעות ושאלות חוזרות", scores: { art: 0, design: 1, comfort: 3 } },
-      { label: "תיאום תורים ופגישות", scores: { art: 0, design: 2, comfort: 3 } },
-      { label: "שיווק ונוכחות ברשת", scores: { art: 3, design: 2, comfort: 0 } },
-      { label: "סדר ומעקב אחרי לקוחות", scores: { art: 1, design: 1, comfort: 2 } },
+      { label: "מענה לפניות ושאלות חוזרות", scores: { art: 0, design: 1, comfort: 3 } },
+      { label: "פולואפ ללידים והצעות מחיר", scores: { art: 0, design: 1, comfort: 3 } },
+      { label: "שיווק, תוכן ונוכחות ברשת", scores: { art: 3, design: 2, comfort: 0 } },
+      { label: "סדר, מעקב ומשימות שחוזרות", scores: { art: 1, design: 1, comfort: 2 } },
     ],
   },
   {
     id: "goal",
     question: "מה הכי חשוב שיקרה בחודשיים הקרובים?",
     options: [
-      { label: "יותר פניות של לקוחות חדשים", scores: { art: 2, design: 2, comfort: 1 } },
-      { label: "פחות שעות על הטלפון", scores: { art: 0, design: 1, comfort: 3 } },
+      { label: "יותר לקוחות חדשים", scores: { art: 2, design: 2, comfort: 1 } },
+      { label: "פחות שעות על תפעול", scores: { art: 0, design: 1, comfort: 3 } },
       { label: "נוכחות שנראית מקצועית", scores: { art: 3, design: 3, comfort: 0 } },
-      { label: "לא לפספס אף פנייה", scores: { art: 0, design: 1, comfort: 3 } },
+      { label: "שאף פנייה לא תלך לאיבוד", scores: { art: 0, design: 1, comfort: 3 } },
     ],
   },
   {
@@ -73,17 +73,17 @@ export const QUIZ_RESULTS: Record<PlanId, QuizResultCopy> = {
   art: {
     planId: "art",
     title: "PORTAL ART",
-    why: "היצירה שלך במרכז. חבילה שבונה סביבך נוכחות ושפה שיווקית אישית, עם סוכן חכם שעונה בשמך ושומר על הקול שלך.",
+    why: "היצירה שלך במרכז. נוכחות ושפה שיווקית שנבנות סביבך, עם סוכן שעונה בשמך ושומר על הקול שלך.",
   },
   design: {
     planId: "design",
     title: "PORTAL DESIGN",
-    why: "עסק ויזואלי צריך במה ויזואלית. אתר מעוצב, גלריה, מערכת תיאומים, וסוכן שעונה לפניות בזמן שהעדשה אצלך ביד.",
+    why: "עסק ויזואלי צריך במה ויזואלית. אתר מעוצב, גלריה ומערכת תיאומים, עם סוכן שעונה לפניות בזמן שהעדשה אצלך ביד.",
   },
   comfort: {
     planId: "comfort",
     title: "PORTAL COMFORT",
-    why: "צוות סוכנים שעונה ומתאם בשבילך. הפניות מטופלות תוך שניות, ורק מה שדורש אותך מגיע אליך.",
+    why: "סוכן שעונה לפניות באתר שלך ועוקב אחרי הלידים. שום דבר לא נופל בין הכיסאות, ורק מה שדורש אותך מגיע אליך.",
   },
 };
 
