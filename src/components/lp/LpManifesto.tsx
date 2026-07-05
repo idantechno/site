@@ -1,6 +1,6 @@
 "use client";
 
-// LpManifesto — הצהרת המותג: לא מוכרים טכנולוגיה, בונים יד נוספת.
+// LpManifesto — הצהרת המותג: לא מוכרים טכנולוגיה, בונים שקט תפעולי.
 // טיפוגרפיה גדולה בחשיפה מדורגת, באותה שפה ויזואלית של שאר העמוד.
 
 import { motion, useInView } from "framer-motion";
@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-const VERBS = ["עונה.", "מסדרת.", "מזכירה.", "עוקבת.", "מסננת."];
+const VERBS = ["עונה.", "מסדר.", "מזכיר.", "עוקב.", "מסנן."];
 
 export default function LpManifesto() {
   const ref = useRef(null);
@@ -45,7 +45,7 @@ export default function LpManifesto() {
                   animate={inView ? { y: 0 } : {}}
                   transition={{ duration: 0.9, ease: EASE }}
                 >
-                  יד נוספת
+                  שקט תפעולי
                 </motion.span>
               </span>
               <span className="block overflow-hidden">
@@ -84,7 +84,7 @@ export default function LpManifesto() {
                 className="font-display font-bold text-2xl lg:text-3xl tracking-tight"
                 style={{ color: "#062340" }}
               >
-                ומחזירה לך שליטה.
+                ומחזיר לך שליטה.
               </motion.span>
             </div>
 
@@ -98,8 +98,8 @@ export default function LpManifesto() {
               קוראים לנו פורטל לא במקרה. זה השער שדרכו עסק קטן נכנס לעולם
               ה-AI בקלות ובתחושה ביתית: סוכן קטן שמחובר לעבודה האמיתית
               שלך, בקליניקה, בסטודיו, בחנות או בעסק של אדם אחד. בלי עוד
-              מערכת ללמוד. מתחילים מהדבר האחד שהכי מכביד, וכבר מחר בבוקר
-              יש לעסק יד נוספת.
+              מערכת ללמוד. מתחילים מהדבר האחד שהכי מכביד, ומחר בבוקר הוא
+              כבר לא מחכה לך.
             </motion.p>
           </div>
         </div>

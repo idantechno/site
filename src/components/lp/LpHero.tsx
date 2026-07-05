@@ -22,7 +22,7 @@ import MagneticButton from "@/components/lp/MagneticButton";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-const H1_LINES = ["הכול בעסק עובר דרכך.", "בדיוק שם זה נתקע."];
+const H1_LINES = ["לא כל דבר בעסק צריך לעבור דרכך.", "אבל שום דבר לא צריך ליפול."];
 
 export default function LpHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -85,7 +85,7 @@ export default function LpHero() {
                 className="lp-status-dot inline-block w-1.5 h-1.5 rounded-full"
                 style={{ backgroundColor: "#DC5D46" }}
               />
-              יד נוספת לעסק שלך · Portal Studio
+              שקט תפעולי לעסק שלך · Portal Studio
             </motion.p>
 
             <h1
@@ -114,10 +114,9 @@ export default function LpHero() {
               className="font-body text-lg leading-relaxed mb-10 max-w-xl"
               style={{ color: "rgba(6, 35, 64, 0.68)" }}
             >
-              לחזור ללקוחות, לרדוף אחרי לידים, לזכור הצעות מחיר, לשלוח
-              תזכורות. הכול אצלך בראש. אנחנו בונים לעסק יד נוספת: סוכן AI
-              קטן ומדויק שלוקח את מה שחוזר על עצמו, ומתחיל בדבר אחד שעוזר
-              כבר מחר בבוקר.
+              פניות, תזכורות, מעקב אחרי לידים, הצעות מחיר פתוחות. סוכן AI
+              קטן ומדויק, שנבנה סביב העסק שלך, מטפל בהם גם כשהיום שלך
+              מלא. מתחילים מדבר אחד שעוזר כבר מחר בבוקר.
             </motion.p>
 
             <motion.div

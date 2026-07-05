@@ -24,7 +24,7 @@ const CARDS: PlanCard[] = [
   {
     id: "comfort",
     name: "PORTAL COMFORT",
-    tagline: "לכל עסק שצריך יד נוספת",
+    tagline: "לכל עסק שרוצה שקט תפעולי",
     points: [
       "סוכן שעונה ללקוחות באתר שלך, בקול שלך",
       "מעקב אחרי לידים והצעות מחיר פתוחות",

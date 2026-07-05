@@ -51,11 +51,23 @@ export default function LpStats() {
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: EASE }}
-          className="font-display font-medium text-[11px] tracking-[0.2em] uppercase mb-12"
+          className="font-display font-medium text-[11px] tracking-[0.2em] uppercase mb-5"
           style={{ color: "#6091B0" }}
         >
           מה זה עושה בפועל
         </motion.p>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 22 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          className="font-display font-black tracking-tighter leading-[1.08] mb-14"
+          style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", color: "#ffffff" }}
+        >
+          פחות לרדוף אחרי העסק.
+          <br />
+          <span style={{ color: "#DC5D46" }}>יותר לנהל אותו.</span>
+        </motion.h2>
 
         <div
           className="grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 lg:divide-x lg:divide-x-reverse"
