@@ -15,14 +15,14 @@ import LpFooter from "@/components/lp/LpFooter";
 import LightTrail from "@/components/decorative/LightTrail";
 
 export const metadata: Metadata = {
-  title: "Portal Studio | יד נוספת לעסק שלך",
+  title: "Portal Studio | שקט תפעולי לעסק שלך",
   description:
-    "הכול בעסק עובר דרכך? Portal Studio בונה סוכן AI קטן ומדויק שעונה ללקוחות באתר ועוקב אחרי הלידים בשבילך. מתחילים מדבר אחד שעוזר כבר מחר בבוקר. שיחת אבחון בחינם.",
+    "יש דברים בעסק שלא צריכים לחכות לך: פניות, תזכורות, מעקב אחרי לידים. סוכן AI קטן ומדויק מטפל בהם בשבילך. מתחילים מדבר אחד שעוזר כבר מחר בבוקר. שיחת אבחון בחינם.",
   alternates: { canonical: "/start" },
   openGraph: {
-    title: "הכול בעסק עובר דרכך. בדיוק שם זה נתקע.",
+    title: "לא כל דבר בעסק צריך לעבור דרכך. אבל שום דבר לא צריך ליפול.",
     description:
-      "יד נוספת לעסק: סוכן AI קטן שעונה ללקוחות ועוקב אחרי הלידים בשבילך. באוויר תוך 14 יום.",
+      "שקט תפעולי לעסק: סוכן AI קטן שעונה ללקוחות ועוקב אחרי הלידים בשבילך. באוויר תוך 14 יום.",
     type: "website",
     locale: "he_IL",
   },

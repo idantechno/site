@@ -90,13 +90,13 @@ export default function LpPain() {
           <p className="mb-6">
             לקוחות שמחכים לתשובה. לידים שמתקררים. הצעות מחיר שנשארות
             פתוחות. משימות שחוזרות כל שבוע. וברשימה הזאת יש רק זוג ידיים
-            אחד. שלך.
+            אחד. שלך. עסק טוב יש, פשוט יותר מדי ממנו תלוי בך אישית.
           </p>
           <p
             className="font-display font-semibold text-xl lg:text-2xl leading-snug"
             style={{ color: "#DC5D46" }}
           >
-            עסק טוב יש. פשוט יותר מדי ממנו תלוי בך אישית.
+            יש דברים בעסק שלא צריכים לחכות לך.
           </p>
         </motion.div>
       </div>
