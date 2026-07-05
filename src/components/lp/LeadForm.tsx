@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { WhatsappLogo, PaperPlaneTilt, ShieldCheck } from "@phosphor-icons/react";
 import { WHATSAPP_URL, PLANS, type PlanId } from "@/lib/constants";
-import { buildLeadWhatsAppUrl, trackLpEvent } from "@/lib/lp";
+import { buildLeadWhatsAppUrl, submitLeadToPortal, trackLpEvent } from "@/lib/lp";
 import PortalEcho from "@/components/decorative/PortalEcho";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
@@ -25,7 +25,7 @@ export default function LeadForm() {
   const [phone, setPhone] = useState("");
   const [plan, setPlan] = useState<PlanId | null>(null);
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
 
   // מאזינים לתוצאת השאלון
   useEffect(() => {
@@ -37,8 +37,9 @@ export default function LeadForm() {
     return () => window.removeEventListener("lp:plan", onPlan);
   }, []);
 
-  function handleSubmit(ev: React.FormEvent) {
+  async function handleSubmit(ev: React.FormEvent) {
     ev.preventDefault();
+    if (status === "sending" || status === "sent") return;
     const e: { name?: string; phone?: string } = {};
     if (name.trim().length < 2) e.name = "איך קוראים לך?";
     if (!/^[0-9+\-\s()]{7,}$/.test(phone.trim())) e.phone = "נא להזין מספר טלפון תקין";
@@ -48,8 +49,17 @@ export default function LeadForm() {
       return;
     }
     trackLpEvent("lp_lead_submit", plan ? { plan } : undefined);
-    setSent(true);
-    window.open(buildLeadWhatsAppUrl(name, phone, plan), "_blank", "noopener,noreferrer");
+    setStatus("sending");
+
+    // הפנייה נרשמת ישירות במערכת Portal Studio (אותה שיחה כמו הצ'אט באתר).
+    // אם המערכת לא זמינה — נפילה רכה לוואטסאפ כדי שהליד לא ילך לאיבוד.
+    const ok = await submitLeadToPortal(name, phone, plan);
+    if (ok) {
+      setStatus("sent");
+    } else {
+      setStatus("fallback");
+      window.open(buildLeadWhatsAppUrl(name, phone, plan), "_blank", "noopener,noreferrer");
+    }
   }
 
   const fieldClass =
@@ -63,28 +73,40 @@ export default function LeadForm() {
       className="relative overflow-hidden py-24 lg:py-36"
       style={{ backgroundColor: "#F0E1D5" }}
     >
-      {/* תמונת השער — רצועה תחתונה שנמוגה כלפי מעלה אל הקרם.
-          שכבת רקע בלבד (לא מזיזה תוכן), נבלמת מאחורי כרטיס הטופס הלבן. */}
+      {/* תמונת השער — הקשת והמדרגות נחשפות כמעט במלואן. שתי מסכות מקוננות:
+          אנכית (נמוגה כלפי מעלה) ואופקית (נמוגה לכיוון עמודת הטקסט הימנית),
+          כך שהמרכז נשאר דרמטי והטקסט נשאר קריא. שכבת רקע בלבד. */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-[52%] pointer-events-none select-none"
+        className="absolute inset-x-0 bottom-0 h-[55%] md:h-[88%] pointer-events-none select-none"
         style={{
           zIndex: 0,
+          opacity: 0.85,
           maskImage:
-            "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)",
+            "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 45%, rgba(0,0,0,0.3) 78%, transparent 100%)",
           WebkitMaskImage:
-            "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)",
+            "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 45%, rgba(0,0,0,0.3) 78%, transparent 100%)",
         }}
       >
+        <div
+          className="absolute inset-0"
+          style={{
+            maskImage:
+              "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 52%, rgba(0,0,0,0.3) 76%, rgba(0,0,0,0.08) 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 52%, rgba(0,0,0,0.3) 76%, rgba(0,0,0,0.08) 100%)",
+          }}
+        >
         {/* מובייל — גרסה לאורך */}
         <Image
           src="/portal-gate-mobile.png"
           alt=""
           fill
           quality={90}
+          loading="eager"
           sizes="100vw"
           className="md:hidden"
-          style={{ objectFit: "cover", objectPosition: "center top" }}
+          style={{ objectFit: "cover", objectPosition: "center bottom" }}
         />
         {/* דסקטופ — גרסה לרוחב */}
         <Image
@@ -92,10 +114,12 @@ export default function LeadForm() {
           alt=""
           fill
           quality={90}
+          loading="eager"
           sizes="100vw"
           className="hidden md:block"
-          style={{ objectFit: "cover", objectPosition: "center top" }}
+          style={{ objectFit: "cover", objectPosition: "center bottom" }}
         />
+        </div>
       </div>
 
       {/* בוקאנד תנועה — כמו בפתיחה */}
@@ -258,17 +282,26 @@ export default function LeadForm() {
                 <MagneticButton className="w-full">
                   <button
                     type="submit"
-                    className="btn-glow w-full inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 font-display font-semibold text-white text-base active:scale-[0.98]"
-                    style={{ backgroundColor: "#DC5D46" }}
+                    disabled={status === "sending" || status === "sent"}
+                    className="btn-glow w-full inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 font-display font-semibold text-white text-base active:scale-[0.98] disabled:opacity-70"
+                    style={{ backgroundColor: status === "sent" ? "#1d7a43" : "#DC5D46" }}
                   >
-                    {sent ? "נפתח לך וואטסאפ עם ההודעה" : "לקבל שיחה חוזרת"}
-                    <PaperPlaneTilt size={18} weight="fill" />
+                    {status === "idle" && "לקבל שיחה חוזרת"}
+                    {status === "sending" && "שולחים…"}
+                    {status === "sent" && "הפרטים אצלנו"}
+                    {status === "fallback" && "לקבל שיחה חוזרת"}
+                    {status !== "sent" && <PaperPlaneTilt size={18} weight="fill" />}
                   </button>
                 </MagneticButton>
 
-                {sent && (
+                {status === "sent" && (
                   <p className="font-body text-sm text-center" role="status" style={{ color: "#1d7a43" }}>
-                    ההודעה מוכנה בוואטסאפ. נשאר רק ללחוץ שליחה, ונחזור אליך.
+                    הפנייה נקלטה במערכת שלנו. נחזור אליך לשיחת אבחון קצרה.
+                  </p>
+                )}
+                {status === "fallback" && (
+                  <p className="font-body text-sm text-center" role="status" style={{ color: "#C24A34" }}>
+                    נפתח לך וואטסאפ עם ההודעה מוכנה. נשאר רק ללחוץ שליחה.
                   </p>
                 )}
 
