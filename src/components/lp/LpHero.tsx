@@ -89,8 +89,8 @@ export default function LpHero() {
             </motion.p>
 
             <h1
-              className="font-display font-black tracking-tighter leading-[1.04] mb-7"
-              style={{ fontSize: "clamp(2.6rem, 6.5vw, 5.2rem)", color: "#062340" }}
+              className="font-display font-black tracking-tight leading-[1.12] mb-7"
+              style={{ fontSize: "clamp(1.9rem, 4.2vw, 3.4rem)", color: "#062340" }}
             >
               {H1_LINES.map((line, li) => (
                 <span key={line} className="block overflow-hidden">

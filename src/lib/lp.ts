@@ -102,7 +102,66 @@ export function scoreQuiz(answers: number[]): PlanId {
 }
 
 /* ───────────────────────────────────────────────
-   בניית קישור וואטסאפ עם פרטי הליד
+   שליחת ליד למערכת Portal Studio (אותו API של הווידג'ט)
+   ─────────────────────────────────────────────── */
+
+// אותם פרטי חיבור של ווידג'ט הצ'אט שנטען ב-layout
+const WIDGET_PUBLIC_KEY = "GIcgPI08bMIXBPHhis6p9b72";
+const WIDGET_API = "https://api.portalstudio.co.il";
+// אותו מפתח אחסון של הווידג'ט — כך הפנייה והצ'אט חולקים שיחה אחת,
+// ותשובה של נציג תופיע למבקר בצ'אט שבאתר.
+const WIDGET_STORAGE_KEY = `portal-widget-session-${WIDGET_PUBLIC_KEY}`;
+
+async function widgetApi(path: string, body?: object) {
+  const res = await fetch(`${WIDGET_API}${path}`, {
+    method: body ? "POST" : "GET",
+    headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function submitLeadToPortal(
+  name: string,
+  phone: string,
+  planId?: PlanId | null
+): Promise<boolean> {
+  try {
+    // שימוש בסשן קיים של הווידג'ט אם יש, אחרת פתיחת סשן חדש ושמירתו
+    let session: { sessionToken?: string } | null = null;
+    try {
+      session = JSON.parse(localStorage.getItem(WIDGET_STORAGE_KEY) || "null");
+    } catch {
+      session = null;
+    }
+    if (!session?.sessionToken) {
+      session = await widgetApi(
+        `/api/widget/${encodeURIComponent(WIDGET_PUBLIC_KEY)}/session`,
+        {}
+      );
+      try {
+        localStorage.setItem(WIDGET_STORAGE_KEY, JSON.stringify(session));
+      } catch {
+        /* אחסון חסום — לא קריטי */
+      }
+    }
+
+    const planPart = planId ? `\nחבילה מהשאלון: ${PLANS[planId].name}` : "";
+    const content = `פנייה חדשה מעמוד הנחיתה /start\nשם: ${name.trim()}\nטלפון: ${phone.trim()}${planPart}\nמבקש/ת שיחת אבחון קצרה.`;
+
+    await widgetApi(
+      `/api/widget/session/${encodeURIComponent(session!.sessionToken!)}/messages`,
+      { content }
+    );
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/* ───────────────────────────────────────────────
+   בניית קישור וואטסאפ עם פרטי הליד (נפילה רכה)
    ─────────────────────────────────────────────── */
 
 export function buildLeadWhatsAppUrl(
