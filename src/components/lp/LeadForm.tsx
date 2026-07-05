@@ -5,6 +5,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { WhatsappLogo, PaperPlaneTilt, ShieldCheck } from "@phosphor-icons/react";
 import { WHATSAPP_URL, PLANS, type PlanId } from "@/lib/constants";
@@ -62,6 +63,41 @@ export default function LeadForm() {
       className="relative overflow-hidden py-24 lg:py-36"
       style={{ backgroundColor: "#F0E1D5" }}
     >
+      {/* תמונת השער — רצועה תחתונה שנמוגה כלפי מעלה אל הקרם.
+          שכבת רקע בלבד (לא מזיזה תוכן), נבלמת מאחורי כרטיס הטופס הלבן. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-[52%] pointer-events-none select-none"
+        style={{
+          zIndex: 0,
+          maskImage:
+            "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)",
+        }}
+      >
+        {/* מובייל — גרסה לאורך */}
+        <Image
+          src="/portal-gate-mobile.png"
+          alt=""
+          fill
+          quality={90}
+          sizes="100vw"
+          className="md:hidden"
+          style={{ objectFit: "cover", objectPosition: "center top" }}
+        />
+        {/* דסקטופ — גרסה לרוחב */}
+        <Image
+          src="/portal-gate.png"
+          alt=""
+          fill
+          quality={90}
+          sizes="100vw"
+          className="hidden md:block"
+          style={{ objectFit: "cover", objectPosition: "center top" }}
+        />
+      </div>
+
       {/* בוקאנד תנועה — כמו בפתיחה */}
       <SubtleParticles count={12} className="z-[1]" />
       <PortalEcho

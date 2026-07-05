@@ -205,12 +205,14 @@ export default function LpHero() {
                     "inset 0 1px 1px rgba(255,255,255,0.25), 0 32px 64px -24px rgba(6,35,64,0.35)",
                 }}
               >
+                {/* מקור לאורך (1122x1402) — תואם את יחס המסגרת, בלי חיתוך והגדלה */}
                 <Image
-                  src="/hero-orb.jpg"
+                  src="/hero-orb-mobile.png"
                   alt=""
                   fill
                   priority
-                  sizes="(max-width: 1024px) 0px, 340px"
+                  quality={100}
+                  sizes="(max-width: 1024px) 0px, 680px"
                   style={{ objectFit: "cover", objectPosition: "center" }}
                 />
                 {/* דהייה עדינה לקרם בתחתית */}
