@@ -180,3 +180,74 @@ html.a11y-no-motion *::after {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   עמוד הנחיתה /start — כל הכללים מתוחמים בקידומת lp-
+   ═══════════════════════════════════════════════ */
+
+/* בועות הודעות נסחפות בסקשן הכאב */
+@keyframes lp-bubble-drift {
+  0% {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--lp-bubble-opacity, 0.5);
+  }
+  85% {
+    opacity: var(--lp-bubble-opacity, 0.5);
+  }
+  100% {
+    transform: translateY(-110px);
+    opacity: 0;
+  }
+}
+.lp-bubble {
+  animation: lp-bubble-drift var(--lp-bubble-duration, 11s) linear infinite;
+  animation-delay: var(--lp-bubble-delay, 0s);
+  will-change: transform, opacity;
+}
+@media (max-width: 767px) {
+  .lp-bubble {
+    --lp-bubble-opacity: 0.3;
+  }
+}
+
+/* נצנוץ עדין על נקודת הסטטוס "מחוברת" במוקאפ הטלפון */
+@keyframes lp-status-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+.lp-status-dot {
+  animation: lp-status-pulse 2.4s ease-in-out infinite;
+}
+
+/* בר ה-CTA הדביק במובייל — ריפוד לאזור הבטוח של iOS */
+.lp-sticky-bar {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* דחיקת ווידג'טים צפים מעל הבר הדביק במובייל בעמוד הנחיתה */
+@media (max-width: 767px) {
+  body.lp-page #portal-widget-root,
+  body.lp-page [id^="portal-widget"],
+  body.lp-page iframe[src*="portalstudio"] {
+    bottom: 96px !important;
+  }
+  /* כפתור ופאנל הנגישות (fixed bottom-5/bottom-20 left-5) */
+  body.lp-page [class*="bottom-5"][class*="left-5"] {
+    bottom: 96px !important;
+  }
+  body.lp-page [class*="bottom-20"][class*="left-5"] {
+    bottom: 156px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-bubble,
+  .lp-status-dot {
+    animation: none !important;
+    opacity: var(--lp-bubble-opacity, 0.5);
+    transform: none;
+  }
+}
