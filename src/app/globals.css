@@ -227,13 +227,14 @@ html.a11y-no-motion *::after {
   padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
 }
 
-/* דחיקת ווידג'טים צפים מעל הבר הדביק במובייל בעמוד הנחיתה */
+/* עמוד הנחיתה מוכוון השארת פרטים בלבד — בועת הצ'אט מוסתרת בו לגמרי.
+   הווידג'ט (נטען גלובלית ב-layout) מזוהה לפי data-portal-widget. */
+body.lp-page div[data-portal-widget] {
+  display: none !important;
+}
+
+/* דחיקת ווידג'ט הנגישות מעל הבר הדביק במובייל בעמוד הנחיתה */
 @media (max-width: 767px) {
-  body.lp-page #portal-widget-root,
-  body.lp-page [id^="portal-widget"],
-  body.lp-page iframe[src*="portalstudio"] {
-    bottom: 96px !important;
-  }
   /* כפתור ופאנל הנגישות (fixed bottom-5/bottom-20 left-5) */
   body.lp-page [class*="bottom-5"][class*="left-5"] {
     bottom: 96px !important;
