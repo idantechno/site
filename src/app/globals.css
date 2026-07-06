@@ -198,7 +198,7 @@ html.a11y-no-motion *::after {
     opacity: var(--lp-bubble-opacity, 0.5);
   }
   100% {
-    transform: translateY(-110px);
+    transform: translateY(-170px);
     opacity: 0;
   }
 }

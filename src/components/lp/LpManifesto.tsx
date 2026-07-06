@@ -31,7 +31,7 @@ export default function LpManifesto() {
               className="font-display font-medium text-[11px] tracking-[0.2em] uppercase mb-7"
               style={{ color: "#6091B0" }}
             >
-              מה אנחנו בעצם בונים
+              למה אנחנו עושים את זה
             </motion.p>
 
             <h2

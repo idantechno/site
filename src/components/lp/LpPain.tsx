@@ -8,14 +8,22 @@ import { useRef } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-// בועות דקורטיביות — משימות פתוחות שמרחפות ברקע
+// בועות דקורטיביות — המשימות הפתוחות שרודפות אחרי בעל העסק.
+// הרבה, בקצבים ובגדלים שונים — התחושה של עומס אמיתי.
 const BUBBLES = [
-  { text: "לחזור לליד מאתמול", left: "6%", delay: 0, duration: 12, top: "78%" },
-  { text: "לשלוח את הצעת המחיר", left: "22%", delay: 3.5, duration: 10, top: "85%", mobileHidden: true },
-  { text: "הפנייה מהאתר עדיין פתוחה", left: "45%", delay: 1.6, duration: 13, top: "80%", mobileHidden: true },
-  { text: "להעלות את הפוסט השבוע", left: "63%", delay: 5, duration: 11, top: "88%" },
-  { text: "תזכורת: פגישה מחר ב-9:00", left: "80%", delay: 2.4, duration: 12.5, top: "82%", mobileHidden: true },
-  { text: "לא שכחת משהו?", left: "33%", delay: 7, duration: 12, top: "90%" },
+  { text: "לחזור לליד מאתמול", left: "5%", delay: 0, duration: 9, top: "76%", size: 15, opacity: 0.7 },
+  { text: "לשלוח את הצעת המחיר", left: "20%", delay: 3.2, duration: 7.5, top: "84%", size: 13, opacity: 0.55, mobileHidden: true },
+  { text: "הפנייה מהאתר עדיין פתוחה", left: "42%", delay: 1.4, duration: 10, top: "80%", size: 16, opacity: 0.75, mobileHidden: true },
+  { text: "להעלות את הפוסט השבוע", left: "60%", delay: 4.6, duration: 8, top: "88%", size: 13, opacity: 0.5 },
+  { text: "תזכורת: פגישה מחר ב-9:00", left: "78%", delay: 2.2, duration: 9.5, top: "82%", size: 15, opacity: 0.7, mobileHidden: true },
+  { text: "עוד לא חזרו אליי…", left: "31%", delay: 6.4, duration: 8.5, top: "90%", size: 14, opacity: 0.65 },
+  { text: "פולואפ להצעה מרביעי", left: "68%", delay: 0.8, duration: 11, top: "78%", size: 13, opacity: 0.5, mobileHidden: true },
+  { text: "לענות לביקורת בגוגל", left: "12%", delay: 5.4, duration: 8, top: "86%", size: 14, opacity: 0.6, mobileHidden: true },
+  { text: "כמה עולה אצלכם?", left: "50%", delay: 7.8, duration: 7, top: "92%", size: 15, opacity: 0.7 },
+  { text: "לשלם לספק עד חמישי", left: "88%", delay: 4, duration: 9, top: "88%", size: 12, opacity: 0.45, mobileHidden: true },
+  { text: "אפשר להזיז את התור?", left: "26%", delay: 9.2, duration: 8, top: "84%", size: 14, opacity: 0.6 },
+  { text: "המסמכים לרואה החשבון", left: "72%", delay: 6.8, duration: 10, top: "90%", size: 12, opacity: 0.45, mobileHidden: true },
+  { text: "לקוחה מחכה לתשובה", left: "38%", delay: 3.8, duration: 7.5, top: "94%", size: 16, opacity: 0.75 },
 ];
 
 export default function LpPain() {
@@ -33,19 +41,20 @@ export default function LpPain() {
         {BUBBLES.map((b) => (
           <span
             key={b.text}
-            className={`lp-bubble absolute rounded-2xl rounded-br-sm px-4 py-2 font-body text-sm whitespace-nowrap ${
+            className={`lp-bubble absolute rounded-2xl rounded-br-sm px-4 py-2 font-body whitespace-nowrap ${
               b.mobileHidden ? "hidden md:inline-block" : ""
             }`}
             style={
               {
                 left: b.left,
                 top: b.top,
-                backgroundColor: "rgba(96, 145, 176, 0.13)",
-                border: "1px solid rgba(96, 145, 176, 0.18)",
-                color: "rgba(255, 255, 255, 0.55)",
+                fontSize: b.size,
+                backgroundColor: "rgba(96, 145, 176, 0.14)",
+                border: "1px solid rgba(96, 145, 176, 0.2)",
+                color: "rgba(255, 255, 255, 0.6)",
                 "--lp-bubble-delay": `${b.delay}s`,
                 "--lp-bubble-duration": `${b.duration}s`,
-                "--lp-bubble-opacity": "0.55",
+                "--lp-bubble-opacity": `${b.opacity}`,
               } as React.CSSProperties
             }
           >
