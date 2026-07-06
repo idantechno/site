@@ -69,7 +69,7 @@ export default function LeadForm() {
     <section
       ref={ref}
       id="lead"
-      className="relative overflow-hidden py-24 lg:py-36"
+      className="relative overflow-hidden pt-8 pb-24 lg:pt-10 lg:pb-36"
       style={{ backgroundColor: "#F0E1D5" }}
     >
       {/* בוקאנד תנועה — כמו בפתיחה */}

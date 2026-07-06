@@ -21,7 +21,7 @@ import NothingFalls from "@/components/lp/NothingFalls";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-const H1_LINES = ["לא כל דבר בעסק צריך לעבור דרכך.", "אבל שום דבר לא צריך ליפול."];
+const H1_LINES = ["העסק מתפקד מצוין", "גם כשאין לך זמן."];
 
 export default function LpHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -111,9 +111,11 @@ export default function LpHero() {
               className="font-body text-lg leading-relaxed mb-10 max-w-xl"
               style={{ color: "rgba(6, 35, 64, 0.68)" }}
             >
-              פניות, תזכורות, מעקב אחרי לידים, הצעות מחיר פתוחות. סוכן AI
-              קטן ומדויק, שנבנה סביב העסק שלך, מטפל בהם גם כשהיום שלך
-              מלא. מתחילים מדבר אחד שעוזר כבר מחר בבוקר.
+              Portal Studio נותנים פתרונות AI אישיים לבעלי עסקים, יוצרים,
+              סטודיואים, קליניקות ועצמאיים בתחומים שונים. הוא עונה
+              לפניות, עוקב אחרי לידים, שולח תזכורות ושומר שהצעות מחיר לא
+              יישכחו. הכל בטון שלך ובאישור שלך, באוויר תוך 14 יום, בלי
+              מערכת חדשה ללמוד.
             </motion.p>
 
             <motion.div
