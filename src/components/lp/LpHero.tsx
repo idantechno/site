@@ -4,7 +4,6 @@
 // ה-H1 הוא הטקסט הראשון שנצבע (LCP). האורב והטבעת נכנסים אחריו.
 // בגלילה החוצה הטבעת גדלה ונמוגה — אפקט "כניסה דרך הפורטל".
 
-import Image from "next/image";
 import {
   motion,
   useScroll,
@@ -15,10 +14,10 @@ import { useRef } from "react";
 import { WhatsappLogo, ArrowDown } from "@phosphor-icons/react";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { trackLpEvent } from "@/lib/lp";
-import PortalEcho from "@/components/decorative/PortalEcho";
 import SubtleParticles from "@/components/decorative/SubtleParticles";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import MagneticButton from "@/components/lp/MagneticButton";
+import NothingFalls from "@/components/lp/NothingFalls";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -32,9 +31,7 @@ export default function LpHero() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  // טבעת הפורטל מתרחבת ונמוגה ככל שגוללים החוצה מההירו
-  const ringScale = useTransform(scrollYProgress, [0, 1], [1, 1.35]);
-  const ringOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  // פרלקסה עדינה של הוויזואל בגלילה החוצה מההירו
   const orbY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -60]);
 
   function scrollToLead() {
@@ -169,62 +166,15 @@ export default function LpHero() {
             </motion.p>
           </div>
 
-          {/* ── ויזואל — האורב בתוך טבעת הפורטל ── */}
+          {/* ── ויזואל — אנימציית "שום דבר לא נופל" ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.35, ease: EASE }}
             style={{ y: orbY }}
-            className="relative hidden lg:flex items-center justify-center"
+            className="relative flex items-center justify-center mt-2 lg:mt-0"
           >
-            <motion.div
-              style={{ scale: ringScale, opacity: ringOpacity }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <PortalEcho
-                size={560}
-                color="#6091B0"
-                baseOpacity={0.2}
-                rings={5}
-                style={{ position: "relative" }}
-              />
-            </motion.div>
-
-            {/* Double-bezel: מעטפת חיצונית + ליבה פנימית */}
-            <div
-              className="relative rounded-[2.5rem] p-2"
-              style={{
-                backgroundColor: "rgba(6, 35, 64, 0.05)",
-                border: "1px solid rgba(6, 35, 64, 0.08)",
-              }}
-            >
-              <div
-                className="relative w-[340px] h-[420px] rounded-[calc(2.5rem-0.5rem)] overflow-hidden"
-                style={{
-                  boxShadow:
-                    "inset 0 1px 1px rgba(255,255,255,0.25), 0 32px 64px -24px rgba(6,35,64,0.35)",
-                }}
-              >
-                {/* מקור לאורך (1122x1402) — תואם את יחס המסגרת, בלי חיתוך והגדלה */}
-                <Image
-                  src="/hero-orb-mobile.png"
-                  alt=""
-                  fill
-                  priority
-                  quality={100}
-                  sizes="(max-width: 1024px) 0px, 680px"
-                  style={{ objectFit: "cover", objectPosition: "center" }}
-                />
-                {/* דהייה עדינה לקרם בתחתית */}
-                <div
-                  className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
-                  style={{
-                    background:
-                      "linear-gradient(to top, rgba(240,225,213,0.55), transparent)",
-                  }}
-                />
-              </div>
-            </div>
+            <NothingFalls />
           </motion.div>
         </div>
       </div>

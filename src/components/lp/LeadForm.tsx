@@ -5,7 +5,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { WhatsappLogo, PaperPlaneTilt, ShieldCheck } from "@phosphor-icons/react";
 import { WHATSAPP_URL, PLANS, type PlanId } from "@/lib/constants";
@@ -73,55 +72,6 @@ export default function LeadForm() {
       className="relative overflow-hidden py-24 lg:py-36"
       style={{ backgroundColor: "#F0E1D5" }}
     >
-      {/* תמונת השער — הקשת והמדרגות נחשפות כמעט במלואן. שתי מסכות מקוננות:
-          אנכית (נמוגה כלפי מעלה) ואופקית (נמוגה לכיוון עמודת הטקסט הימנית),
-          כך שהמרכז נשאר דרמטי והטקסט נשאר קריא. שכבת רקע בלבד. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-[55%] md:h-[88%] pointer-events-none select-none"
-        style={{
-          zIndex: 0,
-          opacity: 0.85,
-          maskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 45%, rgba(0,0,0,0.3) 78%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 45%, rgba(0,0,0,0.3) 78%, transparent 100%)",
-        }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            maskImage:
-              "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 52%, rgba(0,0,0,0.3) 76%, rgba(0,0,0,0.08) 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 52%, rgba(0,0,0,0.3) 76%, rgba(0,0,0,0.08) 100%)",
-          }}
-        >
-        {/* מובייל — גרסה לאורך */}
-        <Image
-          src="/portal-gate-mobile.png"
-          alt=""
-          fill
-          quality={90}
-          loading="eager"
-          sizes="100vw"
-          className="md:hidden"
-          style={{ objectFit: "cover", objectPosition: "center bottom" }}
-        />
-        {/* דסקטופ — גרסה לרוחב */}
-        <Image
-          src="/portal-gate.png"
-          alt=""
-          fill
-          quality={90}
-          loading="eager"
-          sizes="100vw"
-          className="hidden md:block"
-          style={{ objectFit: "cover", objectPosition: "center bottom" }}
-        />
-        </div>
-      </div>
-
       {/* בוקאנד תנועה — כמו בפתיחה */}
       <SubtleParticles count={12} className="z-[1]" />
       <PortalEcho

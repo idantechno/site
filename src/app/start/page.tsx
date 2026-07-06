@@ -6,9 +6,8 @@ import BeforeAfter from "@/components/lp/BeforeAfter";
 import LpManifesto from "@/components/lp/LpManifesto";
 import LpSteps from "@/components/lp/LpSteps";
 import LpStats from "@/components/lp/LpStats";
-import PlanQuiz from "@/components/lp/PlanQuiz";
-import LpPlans from "@/components/lp/LpPlans";
 import LpFAQ from "@/components/lp/LpFAQ";
+import PortalGateBand from "@/components/lp/PortalGateBand";
 import LeadForm from "@/components/lp/LeadForm";
 import StickyCtaBar from "@/components/lp/StickyCtaBar";
 import LpFooter from "@/components/lp/LpFooter";
@@ -39,10 +38,9 @@ export default function StartPage() {
       <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
       <LpSteps />
       <LpStats />
-      <PlanQuiz />
       <LightTrail fromColor="#DC5D46" toColor="#6091B0" />
-      <LpPlans />
       <LpFAQ />
+      <PortalGateBand />
       <LeadForm />
       <LpFooter />
       <StickyCtaBar />
