@@ -22,11 +22,9 @@ const fadeUp: Variants = {
 };
 
 const body = [
-  "המסע שלי לעולם הטכנולוגיה לא התחיל ממשוואות או משורות קוד קרות, אלא מעולמות הבמה והיצירה. לכן אני מכיר מקרוב את האתגר שבין הרצון ליצור לבין הצורך לדעת איך למכור את זה.",
-  "אמן שרוצה להתקדם צריך לדעת איך להציג את עצמו, לבנות נוכחות דיגיטלית, לייצר תוכן נכון, להגיע לקהל ולהתנהל כמו עסק.",
-  "הקמתי את PORTAL STUDIO כדי לעזור לעסקים לעשות בדיוק את המעבר הזה — מהשראה ויצירה, לנוכחות דיגיטלית מסודרת, מקצועית וחכמה.",
-  "אני מאמין ש-AI הוא לא תחליף ליצירה ולאמנות, אלא כלי שמאפשר לנו לקבל יותר שליטה על הדרך: להיראות טוב יותר, לעבוד מסודר יותר, להגיע ליותר אנשים ולהפוך את העיסוק שלנו למשהו שיכול להתפתח גם מבחינה עסקית.",
-  "הגישה שלי משלבת יצירתיות, חשיבה עסקית וטכנולוגיה — בצורה פשוטה, נגישה ואנושית, בלי להפוך את האמן לאיש טכנולוגיה ובלי למחוק את הקול האישי של בעל העסק.",
+  "המסע שלי לטכנולוגיה לא התחיל משורות קוד קרות, אלא מעולמות הבמה והיצירה — מוזיקה, משחק, אמנות. משם אני מכיר מקרוב את האתגר של כל יוצר: צריך להופיע, לבנות נוכחות, לתמחר, לתאם ולנהל את הצד העסקי — ובלי לאבד את הניצוץ של הקול האישי.",
+  "לא רציתי רק להשתלב בעולם הטכנולוגי החדש, אלא להוביל בו דרך אחרת. מזה נולדה יצירה היברידית: לקחת כלים חדשניים, ולהעצים בהם דווקא את האנושיות והיצירה — לא להחליף אותן.",
+  "הקמתי את PORTAL STUDIO מתוך תשוקה לעזור ליוצרים ולעסקים להיות נוכחים בעולם הדיגיטלי החדש — בלי לפחד ממנו. שירגישו בבית, ולא מאוימים.",
 ];
 
 export default function About() {
@@ -184,13 +182,38 @@ export default function About() {
             ))}
           </div>
 
+          {/* Pull-quote — the sentence that says it all */}
+          <motion.blockquote
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mt-10 mx-auto max-w-xl text-center"
+          >
+            {/* Coral accent above the quote */}
+            <span
+              aria-hidden="true"
+              className="block mx-auto mb-5 h-8 w-px"
+              style={{ backgroundColor: "rgba(220,93,70,0.5)" }}
+            />
+            <p
+              className="font-display font-bold tracking-tight leading-snug"
+              style={{ fontSize: "clamp(1.15rem, 2.3vw, 1.6rem)", color: "#062340" }}
+            >
+              לאמן, ליוצר, לבעל העסק{" "}
+              <span style={{ color: "#DC5D46" }}>לא מגיע לבחור</span> בין
+              ״מקצועי ומסודר״ לבין ״אנושי ואותנטי״ — אפשר את שניהם. וזה בדיוק
+              מה שאנחנו בונים.
+            </p>
+          </motion.blockquote>
+
           {/* Closing statement — emphasized */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="mt-8 font-display font-bold tracking-tight leading-snug text-center"
+            className="mt-10 font-display font-bold tracking-tight leading-snug text-center"
             style={{
               fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
               color: "#062340",

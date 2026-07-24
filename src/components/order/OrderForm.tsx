@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, ArrowLeft } from "@phosphor-icons/react";
 import { PLANS, type PlanId } from "@/lib/constants";
+import LaunchPricingBadge from "@/components/LaunchPricingBadge";
 
 type Errors = Partial<Record<"firstName" | "lastName" | "phone" | "email" | "terms", string>>;
 
@@ -168,6 +169,7 @@ export default function OrderForm() {
         <p className="font-display font-bold text-lg mb-2" style={{ color: "#062340" }}>
           {plan.name}
         </p>
+        <LaunchPricingBadge className="mb-3" />
         <p
           className="font-body text-sm mb-4 pb-4"
           style={{ color: "#374151", borderBottom: "1px solid rgba(6,35,64,0.1)" }}

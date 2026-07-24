@@ -64,6 +64,34 @@ export const PLANS = {
 
 export type PlanId = keyof typeof PLANS;
 
+/* ───────────────────────────────────────────────
+   מחירי השקה — מקור אמת יחיד.
+   המחירים הנוכחיים זמניים ועתידים לעלות. כל הקומפוננטות
+   קוראות מכאן. להחלפת מנגנון בעתיד: שנה mechanism בלבד
+   ("spots" = מספר מקומות · "date" = תאריך סיום).
+   ─────────────────────────────────────────────── */
+export const LAUNCH_PRICING = {
+  active: true,
+  mechanism: "spots" as "spots" | "date",
+  spots: 10, // מנגנון "spots" — כמה עסקים ראשונים נכנסים בתנאי ההשקה
+  endDate: "31.12.2026", // מנגנון "date" — עד מתי מחירי ההשקה בתוקף
+  badge: "מחירי השקה",
+} as const;
+
+// שורת נדירות קצרה — לתג/צ'יפ ליד אזכור מחיר.
+export function launchPricingShort(): string {
+  return LAUNCH_PRICING.mechanism === "date"
+    ? `בתוקף עד ${LAUNCH_PRICING.endDate}`
+    : `ל-${LAUNCH_PRICING.spots} העסקים הראשונים`;
+}
+
+// משפט הסבר מלא — ליד סקשן החבילות, בטון של האתר.
+export function launchPricingNote(): string {
+  return LAUNCH_PRICING.mechanism === "date"
+    ? `אנחנו בתחילת הדרך, והמחירים האלה בתוקף עד ${LAUNCH_PRICING.endDate} — אחר כך הם עולים.`
+    : `אנחנו בתחילת הדרך, ו-${LAUNCH_PRICING.spots} העסקים הראשונים שנכנסים מקבלים תנאים שלא יחזרו.`;
+}
+
 export const COLORS = {
   navy: "#062340",
   coral: "#DC5D46",
