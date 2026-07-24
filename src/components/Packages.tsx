@@ -12,7 +12,8 @@ import {
   Sparkle,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import { WHATSAPP_URL } from "@/lib/constants";
+import { WHATSAPP_URL, launchPricingNote } from "@/lib/constants";
+import LaunchPricingBadge from "@/components/LaunchPricingBadge";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
 import PortalEcho from "@/components/decorative/PortalEcho";
 
@@ -197,6 +198,17 @@ export default function Packages() {
               לא חבילה אחת לכולם. כל עסק זוכה לשפה, לטיפול ולנוכחות
               דיגיטלית שמתאימה לעולם שלו.
             </p>
+
+            {/* מחירי השקה — תג + משפט הסבר */}
+            <div className="mt-7 flex flex-col items-center gap-3">
+              <LaunchPricingBadge />
+              <p
+                className="text-sm font-body mx-auto"
+                style={{ color: "rgba(6,35,64,0.55)", maxWidth: "44ch" }}
+              >
+                {launchPricingNote()}
+              </p>
+            </div>
           </motion.div>
         </div>
 
@@ -518,6 +530,7 @@ export default function Packages() {
                   className="pt-6 flex flex-col gap-4"
                   style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
                 >
+                  <LaunchPricingBadge tone="steel" className="self-start" />
                   <p
                     className="text-sm font-body"
                     style={{ color: "rgba(255,255,255,0.6)" }}

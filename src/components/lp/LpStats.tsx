@@ -1,7 +1,8 @@
 "use client";
 
-// LpStats — רצועת הוכחה עם מוני count-up.
-// המספרים זהים לאלה שבאתר הראשי (StatsStrip) — מקור אמת אחד לנתונים.
+// LpStats — רצועת יכולות עם מוני count-up.
+// יכולות והבטחות בלבד — לא תוצאות נמדדות של לקוחות (לפורטל אין עדיין לקוחות).
+// זהה ל-StatsStrip באתר הראשי כדי לשמור מסר אחיד.
 
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -18,10 +19,10 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-  { value: 3, suffix: "×", label: "יותר פניות מוסננות", sub: "ממוצע לקוחות ב-6 חודשים" },
-  { value: 80, suffix: "%", label: "חיסכון בזמן תפעולי", sub: "בהתכתבויות שגרתיות" },
   { value: 0, static: "24/7", label: "מענה אוטומטי", sub: "גם שישי, שבת, חגים" },
-  { value: 14, label: "ימים להטמעה", sub: "מהשיחה הראשונה ועד לאוויר" },
+  { value: 0, static: "0", label: "פניות נופלות בין הכיסאות", sub: "כל פנייה מתועדת ונענית" },
+  { value: 100, suffix: "%", label: "בטון שלך", sub: "כל מילה עוברת אישור שלך" },
+  { value: 20, label: "דקות לאבחון", sub: "שיחה קצרה, בלי התחייבות" },
 ];
 
 function CountUp({ stat, start }: { stat: Stat; start: boolean }) {

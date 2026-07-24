@@ -3,11 +3,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+// יכולות והבטחות בלבד — לא תוצאות נמדדות של לקוחות (לפורטל אין עדיין לקוחות).
 const stats = [
-  { num: "3×", label: "יותר פניות מוסננות", sub: "ממוצע לקוחות ב-6 חודשים" },
-  { num: "80%", label: "חיסכון בזמן תפעולי", sub: "בהתכתבויות שגרתיות" },
   { num: "24/7", label: "מענה אוטומטי", sub: "גם שישי, שבת, חגים" },
-  { num: "14", label: "ימים להטמעה", sub: "מהשיחה הראשונה ועד לאוויר" },
+  { num: "0", label: "פניות נופלות בין הכיסאות", sub: "כל פנייה מתועדת ונענית" },
+  { num: "100%", label: "בטון שלך", sub: "כל מילה עוברת אישור שלך" },
+  { num: "20", label: "דקות לאבחון", sub: "שיחה קצרה, בלי התחייבות" },
 ];
 
 export default function StatsStrip() {
@@ -37,7 +38,7 @@ export default function StatsStrip() {
             className="relative z-10"
           >
             <p className="text-xs font-display font-medium tracking-widest uppercase mb-4" style={{ color: "rgba(6,35,64,0.65)" }}>
-              התוצאות מדברות
+              השורה התחתונה
             </p>
             <h2
               className="font-display font-black tracking-tighter leading-none"
