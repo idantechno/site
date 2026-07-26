@@ -36,21 +36,6 @@ export default function About() {
     >
       {/* ── Headline — clean, on cream, comfortably below the nav ── */}
       <div className="relative z-10 max-w-3xl mx-auto px-6 pt-32 md:pt-40 pb-6 text-center">
-        <motion.span
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="inline-flex items-center gap-2 text-[11px] font-display font-medium tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-4"
-          style={{
-            backgroundColor: "rgba(96,145,176,0.14)",
-            color: "#6091B0",
-            border: "1px solid rgba(96,145,176,0.35)",
-          }}
-        >
-          אודות
-        </motion.span>
-
         <motion.h1
           custom={1}
           initial="hidden"

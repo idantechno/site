@@ -153,7 +153,7 @@ export default function LpHero() {
                 }}
               >
                 <WhatsappLogo size={20} weight="fill" style={{ color: "#25D366" }} />
-                לשאול אותנו בוואטסאפ
+                לכתוב לסוכן שלנו בוואטסאפ
               </a>
             </motion.div>
 

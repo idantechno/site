@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import About from "@/components/About";
 import ForWho from "@/components/ForWho";
 import PainSection from "@/components/PainSection";
+import WhatsAppAgent from "@/components/WhatsAppAgent";
 import Packages from "@/components/Packages";
 import Commitment from "@/components/Commitment";
 import StatsStrip from "@/components/StatsStrip";
@@ -18,6 +19,7 @@ export default function Home() {
       {/* subtle brand divider */}
       <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
       <ForWho />
+      <WhatsAppAgent />
       <Packages />
       <Commitment />
       <StatsStrip />

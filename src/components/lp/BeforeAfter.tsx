@@ -86,7 +86,7 @@ export default function BeforeAfter() {
               style={{ color: "rgba(6, 35, 64, 0.65)" }}
             >
               לחיצה על הטוגל מראה את זה טוב יותר מכל הסבר. פנייה אמיתית
-              מהצ'אט באתר, פעם כשהיא מחכה לך ופעם כשיש למי לענות.
+              מהצ'אט באתר ומהוואטסאפ, פעם כשהיא מחכה לך ופעם כשיש למי לענות.
             </p>
             <p
               className="font-body text-sm leading-relaxed max-w-md rounded-2xl px-5 py-4"
@@ -183,7 +183,7 @@ export default function BeforeAfter() {
                           style={{ backgroundColor: "#25D366" }}
                         />
                       )}
-                      {mode === "after" ? "הסוכן שלך מחובר" : "הצ'אט באתר שלך"}
+                      {mode === "after" ? "הסוכן שלך מחובר — באתר ובוואטסאפ" : "הצ'אט באתר שלך"}
                     </span>
                   </div>
                 </div>
