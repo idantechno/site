@@ -48,7 +48,7 @@ export default function PainSection() {
 
           <p
             className="relative font-display font-black tracking-tighter leading-none"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.8rem)", color: "#062340" }}
+            style={{ fontSize: "clamp(1.9rem, 4.2vw, 3.1rem)", color: "#062340" }}
           >
             לקוחות לא תמיד
             <br />
@@ -57,10 +57,10 @@ export default function PainSection() {
             כי הוא <span style={{ color: "#ffffff" }}>טוב יותר.</span>
           </p>
           <p
-            className="mt-6 text-lg font-display font-medium"
-            style={{ color: "rgba(6,35,64,0.8)" }}
+            className="mt-6 font-display font-bold tracking-tight leading-snug"
+            style={{ fontSize: "clamp(1.35rem, 2.6vw, 2rem)", color: "#062340" }}
           >
-            לפעמים הוא פשוט ענה לפניכם.
+            לפעמים הוא פשוט <span style={{ color: "#ffffff" }}>ענה לפניכם.</span>
           </p>
         </motion.div>
 
