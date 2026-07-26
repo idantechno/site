@@ -113,6 +113,7 @@ export default function FinalCTA() {
             <p className="text-base font-body leading-relaxed" style={{ color: "rgba(6,35,64,0.62)" }}>
               בלי לחץ. רק שיחה.
               נאבחן איפה העסק שלך מאבד זמן ואיך לשחרר אותו בחזרה לידיים שלך.
+              וכשתכתבו — הסוכן שלנו כבר עונה. זו טעימה קטנה ממה שהעסק שלכם יקבל.
             </p>
 
             <a

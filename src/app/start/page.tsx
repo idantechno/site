@@ -3,6 +3,7 @@ import LpHeader from "@/components/lp/LpHeader";
 import LpHero from "@/components/lp/LpHero";
 import LpPain from "@/components/lp/LpPain";
 import BeforeAfter from "@/components/lp/BeforeAfter";
+import WhatsAppAgent from "@/components/WhatsAppAgent";
 import LpManifesto from "@/components/lp/LpManifesto";
 import LpSteps from "@/components/lp/LpSteps";
 import LpStats from "@/components/lp/LpStats";
@@ -37,6 +38,7 @@ export default function StartPage() {
       <LpPain />
       <LpManifesto />
       <BeforeAfter />
+      <WhatsAppAgent />
       <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
       <LpSteps />
       <LpStats />

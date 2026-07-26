@@ -11,7 +11,6 @@ import {
   PaintBrush,
   Sparkle,
 } from "@phosphor-icons/react";
-import Link from "next/link";
 import { WHATSAPP_URL, launchPricingNote } from "@/lib/constants";
 import LaunchPricingBadge from "@/components/LaunchPricingBadge";
 import AmbientGlow from "@/components/decorative/AmbientGlow";
@@ -22,6 +21,8 @@ type Package = {
   name: string;
   icon: typeof Palette;
   tagline: string;
+  forWho: string; // "בשבילך אם…" — שורת זיהוי עצמי
+  highlights: string[]; // 3 בולטים קצרים לכרטיס עצמו
   description: string[];
   fitForLabel: string;
   fitFor: string[];
@@ -35,6 +36,12 @@ const packages: Package[] = [
     icon: Palette,
     tagline:
       "לתת לאומנות שלך להרגיש כמו עולם — לא רק כמו עוד פוסט",
+    forWho: "בשבילך אם אתה אמן או יוצר, והזהות האמנותית היא הלב של העסק.",
+    highlights: [
+      "מיתוג ונוכחות דיגיטלית שמשקפים את הסגנון שלך",
+      "אסטרטגיה שיווקית לקול האמנותי שלך — לא תבנית",
+      "סוכן שעונה בשמך — באתר, בוואטסאפ ובערוצים שלך, בקול של העסק",
+    ],
     description: [
       "יש רגע שבו אמן מבין שהיצירה שלו כבר טובה, אבל משהו בדרך שבה היא מוצגת עדיין לא מעביר את מה שהוא באמת.",
       "החבילה הזאת נבנתה בשביל לקחת את הוייב, האישיות והזהות האמנותית שלך — ולתרגם אותם לנוכחות דיגיטלית שמרגישה כמוך.",
@@ -45,7 +52,7 @@ const packages: Package[] = [
       "מיתוג מחדש או רענון זהות שמשקפת באמת את הסגנון האמנותי שלך",
       "אסטרטגיית שיווק יחודית לקול האמנותי שלך — לא תבנית גנרית של “אמן ממוצע”",
       "נוכחות דיגיטלית מעוצבת: עמוד נחיתה / אתר אישי, חומרי שיווק, ויז'ואלים לרשתות",
-      "צוות סוכנים שעוזרים לנהל את העסק ואת הקשרים העסקיים שלך עם אנשים",
+      "סוכן שעונה בשמך — באתר, בוואטסאפ ובערוצים שלך — ושומר על הקול שלך",
     ],
     group: "artists",
   },
@@ -54,6 +61,12 @@ const packages: Package[] = [
     name: "PORTAL DESIGN",
     icon: PaintBrush,
     tagline: "לגרום לעבודות שלך לדבר עוד לפני שאתה מסביר אותן",
+    forWho: "בשבילך אם העסק שלך ויזואלי — צילום, גלריה, סטודיו, סדנאות.",
+    highlights: [
+      "אתר וגלריית עבודות בשפה החזותית של העסק",
+      "מערכת תיאומים, בריפים והרשמות — כל לקוח במקום אחד",
+      "סוכן שעונה לפניות — באתר ובוואטסאפ — בזמן שהעדשה בידך",
+    ],
     description: [
       "צלמים, סטודיואים, גלריות, סדנאות, עבודת יד — כל עסק שהיצירה הויזואלית היא הלב שלו.",
       "החבילה הזאת נועדה לבנות חלל דיגיטלי שנותן מקום לעבודות לנשום. פחות רעש, יותר נוכחות.",
@@ -64,7 +77,7 @@ const packages: Package[] = [
       "אתר מעוצב בשפה החזותית של העסק — לא תבנית גנרית",
       "גלריית עבודות אונליין שמדגישה את האיכות, לא כמות",
       "מערכת קליטת בריפים, פגישות והזמנות — כל לקוח מתועד במקום אחד",
-      "צוות סוכנים שעוזרים לנהל את העסק ואת הקשרים העסקיים שלך עם אנשים",
+      "סוכן שעונה בשמך — באתר, בוואטסאפ ובערוצים שלך — ושומר על הקול שלך",
       "ניהול הרשמות מסודר לסדנאות, אירועים וקבוצות — כולל תזכורות אוטומטיות",
     ],
     group: "artists",
@@ -74,6 +87,12 @@ const packages: Package[] = [
     name: "PORTAL COMFORT",
     icon: Sparkle,
     tagline: "סדר, אוטומציה ושקט נפשי — בלי שהעסק יישמע אפילו לרגע רובוטי",
+    forWho: "בשבילך אם אתה צריך סדר, מענה ומעקב שלא תלויים בך.",
+    highlights: [
+      "סוכן שעונה בשמך — באתר, בוואטסאפ ובערוצים שלך, בקול של העסק",
+      "סינון לידים חכם — רק מי שמתאים מגיע לשיחה איתך",
+      "אוטומציות ללידים, תורים, תזכורות, מעקב וחיובים",
+    ],
     description: [
       "החבילה הזאת לעסקים שצריכים סוף סוף לקחת שליטה: ניהול לידים, מענה ללקוחות, זרימת עבודה, תורים, מעקב.",
       "החלק הקריטי שמבדיל אותנו: כל הפתרון נבנה כך שלא יחליף את הקול האנושי שלך, אלא יחזק אותו. כל סוכן, כל אוטומציה, כל הודעה — נכתבים בהתאמה אישית מלאה לעסק שלך, לטון שלך, ולערכים שמשדרת המותג שלך.",
@@ -81,7 +100,7 @@ const packages: Package[] = [
     ],
     fitForLabel: "מה אתה מקבל בחבילה:",
     fitFor: [
-      "צוות סוכנים שעוזרים לנהל את העסק ואת הקשרים העסקיים שלך עם אנשים — נבנה אחרי שאלון עומק על הטון, השפה והאופי של העסק",
+      "סוכן שעונה בשמך — באתר, בוואטסאפ ובערוצים שלך — נבנה אחרי שאלון עומק על הטון, השפה והאופי של העסק",
       "אוטומציות פנימיות לזרימת עבודה: לידים, תורים, תזכורות, מעקב אחרי לקוחות, חיובים",
       "אינטגרציה מלאה עם הכלים שכבר בשימוש (Google Calendar, Sheets, CRM, יומן, סליקה)",
       "מערכת סינון לידים חכמה — רק מי שמתאים לעסק שלך מגיע לשיחה אישית איתך",
@@ -199,16 +218,26 @@ export default function Packages() {
               דיגיטלית שמתאימה לעולם שלו.
             </p>
 
-            {/* מחירי השקה — תג + משפט הסבר */}
+            {/* מחירי השקה — נדירות בלי מספר מחיר */}
             <div className="mt-7 flex flex-col items-center gap-3">
               <LaunchPricingBadge />
               <p
                 className="text-sm font-body mx-auto"
-                style={{ color: "rgba(6,35,64,0.55)", maxWidth: "44ch" }}
+                style={{ color: "rgba(6,35,64,0.55)", maxWidth: "46ch" }}
               >
                 {launchPricingNote()}
               </p>
             </div>
+
+            {/* איך זה עובד + עוגן היברידי */}
+            <p
+              className="mt-5 text-sm md:text-base font-body mx-auto leading-relaxed"
+              style={{ color: "rgba(6,35,64,0.62)", maxWidth: "56ch" }}
+            >
+              כל חבילה מתחילה בשיחת אבחון, נבנית בהתאמה מלאה לעסק שלך, ועולה
+              לאוויר — בלי שתיגע בטכנולוגיה. לא בטוח מה מתאים? זה בדיוק מה
+              שנבין יחד — לפעמים התשובה היא שילוב.
+            </p>
           </motion.div>
         </div>
 
@@ -525,21 +554,24 @@ export default function Packages() {
                   </ul>
                 </div>
 
-                {/* CTA */}
+                {/* CTA — שיחה, לא תשלום מקוון */}
                 <div
                   className="pt-6 flex flex-col gap-4"
                   style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
                 >
-                  <LaunchPricingBadge tone="steel" className="self-start" />
                   <p
                     className="text-sm font-body"
                     style={{ color: "rgba(255,255,255,0.6)" }}
                   >
-                    כל חבילה נבנית בהתאמה אישית. המחיר נקבע לפי ההיקף ומוצג לפני התשלום.
+                    כל חבילה נבנית בהתאמה אישית — לפעמים בשילוב בין שירותים. נתחיל
+                    בשיחת אבחון קצרה שבה נבין מה באמת מתאים לך, וההיקף והמחיר
+                    נסגרים יחד, בלי הפתעות.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Link
-                      href={`/order?plan=${openPkg.id}`}
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-display font-semibold transition-all duration-200 active:scale-[0.98] hover:opacity-90"
                       style={{
                         backgroundColor:
@@ -547,17 +579,8 @@ export default function Packages() {
                         color: "#ffffff",
                       }}
                     >
-                      להזמנה ותשלום
+                      בואו נדבר — שיחת אבחון קצרה
                       <ArrowLeft size={16} />
-                    </Link>
-                    <a
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-display font-medium transition-all duration-200 active:scale-[0.98] hover:opacity-90"
-                      style={{ color: "#ffffff", border: "1px solid rgba(255,255,255,0.25)" }}
-                    >
-                      יש לי שאלה
                     </a>
                   </div>
                 </div>
@@ -638,6 +661,33 @@ function PackageCard({
         {pkg.tagline}
       </p>
 
+      {/* בשבילך אם… */}
+      <p
+        className="font-body text-sm leading-relaxed"
+        style={{ color: "rgba(6,35,64,0.6)" }}
+      >
+        {pkg.forWho}
+      </p>
+
+      {/* מה מקבלים — 3 בולטים */}
+      <ul className="flex flex-col gap-2.5">
+        {pkg.highlights.map((h) => (
+          <li
+            key={h}
+            className="flex items-start gap-2.5 font-body text-sm leading-snug"
+            style={{ color: "rgba(6,35,64,0.82)" }}
+          >
+            <Check
+              size={15}
+              weight="bold"
+              className="mt-0.5 flex-shrink-0"
+              style={{ color: "#DC5D46" }}
+            />
+            <span>{h}</span>
+          </li>
+        ))}
+      </ul>
+
       {/* CTA */}
       <div
         className="mt-auto pt-5 flex items-center justify-between"
@@ -647,7 +697,7 @@ function PackageCard({
           className="inline-flex items-center gap-2 text-sm font-display font-medium"
           style={{ color: "#DC5D46" }}
         >
-          לפרטים והזמנה
+          לפרטים מלאים
           <ArrowLeft
             size={16}
             className="transition-transform group-hover:-translate-x-1"
@@ -728,6 +778,29 @@ function BusinessCard({
           >
             {pkg.tagline}
           </p>
+          <p
+            className="font-body text-sm leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.65)" }}
+          >
+            {pkg.forWho}
+          </p>
+          <ul className="flex flex-col gap-2 mt-1">
+            {pkg.highlights.map((h) => (
+              <li
+                key={h}
+                className="flex items-start gap-2.5 font-body text-sm leading-snug"
+                style={{ color: "rgba(255,255,255,0.85)" }}
+              >
+                <Check
+                  size={15}
+                  weight="bold"
+                  className="mt-0.5 flex-shrink-0"
+                  style={{ color: "#6091B0" }}
+                />
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* CTA */}
@@ -739,7 +812,7 @@ function BusinessCard({
             border: "1px solid rgba(96,145,176,0.4)",
           }}
         >
-          לפרטים והזמנה
+          לפרטים מלאים
           <ArrowLeft
             size={16}
             className="transition-transform group-hover:-translate-x-1"
