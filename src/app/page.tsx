@@ -5,7 +5,6 @@ import PainSection from "@/components/PainSection";
 import WhatsAppAgent from "@/components/WhatsAppAgent";
 import Packages from "@/components/Packages";
 import Commitment from "@/components/Commitment";
-import StatsStrip from "@/components/StatsStrip";
 import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -19,13 +18,13 @@ export default function Home() {
       {/* subtle brand divider */}
       <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
       <ForWho />
-      <WhatsAppAgent />
       <Packages />
       <Commitment />
-      <StatsStrip />
       {/* subtle brand divider */}
       <LightTrail fromColor="#DC5D46" toColor="#6091B0" />
       <PainSection />
+      {/* הדמו של סוכן הוואטסאפ — מיד אחרי ה"למה" (ההוכחה ל"ענה לפניכם") */}
+      <WhatsAppAgent />
       <FAQ />
       {/* subtle brand divider */}
       <LightTrail fromColor="#6091B0" toColor="#DC5D46" />
