@@ -4,7 +4,6 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
-import GalleryShowcase from "@/components/gallery/GalleryShowcase";
 import { WHATSAPP_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -34,10 +33,7 @@ export default function GalleryPage() {
 
           <GalleryGrid />
 
-          {/* פס המדיה שנוצרה ב-AI — תמונות מתחלפות + סרטונים רצים */}
-          <div className="mt-16">
-            <GalleryShowcase />
-          </div>
+          {/* TODO: אזור המדיה של עידן (תמונות + סרטונים) ייכנס כאן, מתחת לכרטיסיות. */}
 
           <section className="mt-14 flex flex-col sm:flex-row sm:items-center gap-4">
             <a
