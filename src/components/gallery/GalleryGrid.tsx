@@ -55,15 +55,19 @@ function CoverCard({
       >
         {card.images.length} תמונות
       </span>
-      {/* label */}
+      {/* label — סקרים כהה וחזק כדי שהכיתוב לעולם לא ייבלע ברקע הבהיר */}
       <div
-        className="absolute inset-x-0 bottom-0 z-10 p-5"
+        className="absolute inset-x-0 bottom-0 z-10 px-5 pb-4"
         style={{
+          paddingTop: "2.75rem",
           background:
-            "linear-gradient(to top, rgba(6,35,64,0.9) 0%, rgba(6,35,64,0.4) 55%, transparent 100%)",
+            "linear-gradient(to top, rgba(6,35,64,0.97) 0%, rgba(6,35,64,0.92) 34%, rgba(6,35,64,0.5) 66%, transparent 100%)",
         }}
       >
-        <span className="font-display font-bold text-base text-white">
+        <span
+          className="font-display font-bold text-base text-white"
+          style={{ textShadow: "0 1px 5px rgba(0,0,0,0.6)" }}
+        >
           {card.label}
         </span>
       </div>

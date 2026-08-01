@@ -4,6 +4,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import MediaSection from "@/components/gallery/MediaSection";
 import { WHATSAPP_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -33,7 +34,8 @@ export default function GalleryPage() {
 
           <GalleryGrid />
 
-          {/* TODO: אזור המדיה של עידן (תמונות + סרטונים) ייכנס כאן, מתחת לכרטיסיות. */}
+          {/* אזור המדיה של עידן — תמונות (גריד + לייטבוקס) וסרטונים (נגן + סרט נע) */}
+          <MediaSection />
 
           <section className="mt-14 flex flex-col sm:flex-row sm:items-center gap-4">
             <a
