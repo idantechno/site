@@ -63,6 +63,29 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(0.98);
 }
 
+/* ─── Showcase: פס סרטונים רץ (marquee) ─── */
+@keyframes showcase-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.showcase-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: showcase-marquee 42s linear infinite;
+  will-change: transform;
+}
+.showcase-marquee-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .showcase-marquee-track {
+    animation: none;
+  }
+}
+html.a11y-no-motion .showcase-marquee-track {
+  animation: none !important;
+}
+
 /* ─── Accessibility: skip-to-content link ─── */
 .skip-link {
   position: absolute;
