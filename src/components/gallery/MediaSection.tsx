@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { X, CaretLeft, CaretRight, Play } from "@phosphor-icons/react";
 import { MEDIA_IMAGES, MEDIA_VIDEOS } from "@/lib/galleryMedia";
 
-/* ───────────────────── לייטבוקס תמונות (תצוגה מלאה) ───────────────────── */
+/* ───────────────────── לייטבוקס תמונות (איכות מלאה) ───────────────────── */
 function PhotoLightbox({
   index,
   setIndex,
@@ -94,33 +94,44 @@ function PhotoLightbox({
   );
 }
 
-/* ───────────────────── גריד תמונות (masonry) ───────────────────── */
-function ImageGrid({ onOpen }: { onOpen: (i: number) => void }) {
+/* ───────────────────── סרט תמונות אופקי ───────────────────── */
+function ImageStrip({ onOpen }: { onOpen: (i: number) => void }) {
+  const H = 224;
   return (
-    <div className="columns-2 gap-4 md:columns-3 [column-fill:_balance]">
-      {MEDIA_IMAGES.map((img, i) => (
-        <button
-          key={img.src}
-          type="button"
-          onClick={() => onOpen(i)}
-          aria-label={`הגדל תמונה ${i + 1}`}
-          className="group relative mb-4 block w-full overflow-hidden rounded-2xl break-inside-avoid"
-          style={{ border: "1px solid rgba(6,35,64,0.1)" }}
-        >
-          <Image
-            src={img.src}
-            alt="מדיה שנוצרה ב-AI"
-            width={img.w}
-            height={img.h}
-            sizes="(max-width: 768px) 50vw, 33vw"
-            className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.05]"
-          />
-          <span
-            className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            style={{ background: "rgba(6,35,64,0.18)" }}
-          />
-        </button>
-      ))}
+    <div
+      className="flex gap-4 overflow-x-auto px-1 py-5"
+      style={{ scrollbarWidth: "thin" }}
+    >
+      {MEDIA_IMAGES.map((img, i) => {
+        const ratio = img.w / img.h;
+        return (
+          <button
+            key={img.src}
+            type="button"
+            onClick={() => onOpen(i)}
+            aria-label={`הגדל תמונה ${i + 1}`}
+            className="group relative shrink-0 overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.05]"
+            style={{
+              height: H,
+              width: H * ratio,
+              border: "1px solid rgba(6,35,64,0.1)",
+              boxShadow: "0 10px 26px -14px rgba(6,35,64,0.4)",
+            }}
+          >
+            <Image
+              src={img.src}
+              alt="מדיה שנוצרה ב-AI"
+              fill
+              sizes="400px"
+              className="object-cover"
+            />
+            <span
+              className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ background: "rgba(6,35,64,0.12)" }}
+            />
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -134,7 +145,7 @@ function VideoStage() {
   const stripRef = useRef<HTMLDivElement>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // הפעל רק כשגוללים לאזור (חוסך רוחב פס)
+  // טען/נגן רק כשגוללים לאזור
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -145,19 +156,18 @@ function VideoStage() {
           obs.disconnect();
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.2 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
-  // מרכוז מדויק: הזז את הסרט כך שהתמונת-נושא הפעילה תמיד במרכז
+  // מרכוז מדויק של הסרטון הפעיל (עמיד ל-RTL)
   useEffect(() => {
     const recenter = () => {
       const strip = stripRef.current;
       const thumb = thumbRefs.current[active];
       if (!strip || !thumb) return;
-      // getBoundingClientRect כולל את ה-transform הנוכחי => מחשבים דלתא ומוסיפים.
       const s = strip.getBoundingClientRect();
       const t = thumb.getBoundingClientRect();
       const delta = s.left + s.width / 2 - (t.left + t.width / 2);
@@ -175,17 +185,13 @@ function VideoStage() {
   const current = MEDIA_VIDEOS[active];
 
   return (
-    <div ref={sectionRef} className="mt-14">
-      <h3 className="font-display font-bold text-xl mb-5" style={{ color: "#062340" }}>
-        סרטונים
-      </h3>
-
-      {/* נגן ראשי גדול — מסתגל ל-9:16 ול-16:9 */}
+    <div ref={sectionRef} className="mt-12">
+      {/* נגן ראשי — מתאים לרוחב (16:9), בלי שום שליטה */}
       <div
-        className="relative flex w-full items-center justify-center overflow-hidden rounded-2xl"
+        className="relative w-full overflow-hidden rounded-2xl"
         style={{
+          aspectRatio: "16 / 9",
           background: "#062340",
-          height: "min(68vh, 620px)",
           boxShadow: "0 24px 60px -22px rgba(6,35,64,0.5)",
         }}
       >
@@ -195,35 +201,28 @@ function VideoStage() {
             src={current.src}
             poster={current.poster}
             className="h-full w-full"
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "contain", pointerEvents: "none" }}
             autoPlay
             muted
             playsInline
-            controls
             preload="auto"
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
             onEnded={advance}
           />
         ) : (
-          <>
-            <Image
-              src={current.poster}
-              alt="תצוגה מקדימה"
-              fill
-              sizes="100vw"
-              className="object-contain"
-              priority
-            />
-            <span
-              className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full"
-              style={{ background: "rgba(220,93,70,0.95)" }}
-            >
-              <Play size={28} weight="fill" color="#fff" />
-            </span>
-          </>
+          <Image
+            src={current.poster}
+            alt="תצוגה מקדימה"
+            fill
+            sizes="100vw"
+            className="object-contain"
+            priority
+          />
         )}
       </div>
 
-      {/* סרט תמונות-נושא — הפעיל תמיד במרכז, והסרט נע */}
+      {/* סרט תמונות-נושא — הפעיל תמיד במרכז; מימין שהוצגו, משמאל הבאים */}
       <div ref={stripRef} className="relative mt-4 overflow-hidden py-3">
         <div
           className="flex items-center gap-3 transition-transform duration-500 ease-out"
@@ -232,7 +231,7 @@ function VideoStage() {
           {MEDIA_VIDEOS.map((v, i) => {
             const isActive = i === active;
             const ratio = v.w / v.h;
-            const h = isActive ? 138 : 104;
+            const h = isActive ? 128 : 92;
             return (
               <button
                 key={v.src}
@@ -252,15 +251,14 @@ function VideoStage() {
                 }}
               >
                 <Image src={v.poster} alt="" fill sizes="240px" className="object-cover" />
-                <span
-                  className="absolute inset-0 flex items-center justify-center transition-opacity"
-                  style={{
-                    background: isActive ? "transparent" : "rgba(6,35,64,0.18)",
-                    opacity: isActive ? 0 : 1,
-                  }}
-                >
-                  <Play size={20} weight="fill" color="#fff" />
-                </span>
+                {!isActive && (
+                  <span
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ background: "rgba(6,35,64,0.18)" }}
+                  >
+                    <Play size={18} weight="fill" color="#fff" />
+                  </span>
+                )}
               </button>
             );
           })}
@@ -277,24 +275,8 @@ export default function MediaSection() {
   if (MEDIA_IMAGES.length === 0 && MEDIA_VIDEOS.length === 0) return null;
 
   return (
-    <section aria-labelledby="media-heading" className="mt-16">
-      <header className="mb-7">
-        <p
-          className="text-xs font-display font-semibold tracking-[0.18em] uppercase mb-2"
-          style={{ color: "#6091B0" }}
-        >
-          מדיה
-        </p>
-        <h2
-          id="media-heading"
-          className="font-display font-black tracking-tight"
-          style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.2rem)", color: "#062340" }}
-        >
-          יצירה מקורית — תמונות וסרטונים.
-        </h2>
-      </header>
-
-      {MEDIA_IMAGES.length > 0 && <ImageGrid onOpen={(i) => setPhotoIndex(i)} />}
+    <section aria-label="מדיה" className="mt-16">
+      {MEDIA_IMAGES.length > 0 && <ImageStrip onOpen={(i) => setPhotoIndex(i)} />}
       {MEDIA_VIDEOS.length > 0 && <VideoStage />}
 
       {photoIndex !== null && (
