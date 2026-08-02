@@ -94,44 +94,83 @@ function PhotoLightbox({
   );
 }
 
-/* ───────────────────── סרט תמונות אופקי ───────────────────── */
+/* ───────────────────── סרט תמונות אופקי (ניווט בחצים) ───────────────────── */
+function ScrollArrow({
+  side,
+  onClick,
+}: {
+  side: "right" | "left";
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={side === "right" ? "הקודם" : "הבא"}
+      className="absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white transition-transform hover:scale-110"
+      style={{
+        [side]: 8,
+        background: "rgba(6,35,64,0.82)",
+        boxShadow: "0 6px 18px -6px rgba(6,35,64,0.6)",
+      }}
+    >
+      {side === "right" ? (
+        <CaretRight size={22} weight="bold" />
+      ) : (
+        <CaretLeft size={22} weight="bold" />
+      )}
+    </button>
+  );
+}
+
 function ImageStrip({ onOpen }: { onOpen: (i: number) => void }) {
   const H = 224;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollByDir = (dir: number) => {
+    const el = scrollRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.7, behavior: "smooth" });
+  };
   return (
-    <div
-      className="flex gap-4 overflow-x-auto px-1 py-5"
-      style={{ scrollbarWidth: "thin" }}
-    >
-      {MEDIA_IMAGES.map((img, i) => {
-        const ratio = img.w / img.h;
-        return (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => onOpen(i)}
-            aria-label={`הגדל תמונה ${i + 1}`}
-            className="group relative shrink-0 overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.05]"
-            style={{
-              height: H,
-              width: H * ratio,
-              border: "1px solid rgba(6,35,64,0.1)",
-              boxShadow: "0 10px 26px -14px rgba(6,35,64,0.4)",
-            }}
-          >
-            <Image
-              src={img.src}
-              alt="מדיה שנוצרה ב-AI"
-              fill
-              sizes="400px"
-              className="object-cover"
-            />
-            <span
-              className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              style={{ background: "rgba(6,35,64,0.12)" }}
-            />
-          </button>
-        );
-      })}
+    <div className="relative">
+      <div
+        ref={scrollRef}
+        dir="ltr"
+        className="no-scrollbar flex gap-4 overflow-x-auto px-1 py-5"
+      >
+        {MEDIA_IMAGES.map((img, i) => {
+          const ratio = img.w / img.h;
+          return (
+            <button
+              key={img.src}
+              type="button"
+              onClick={() => onOpen(i)}
+              aria-label={`הגדל תמונה ${i + 1}`}
+              className="group relative shrink-0 overflow-hidden rounded-2xl transition-transform duration-300 hover:scale-[1.05]"
+              style={{
+                height: H,
+                width: H * ratio,
+                border: "1px solid rgba(6,35,64,0.1)",
+                boxShadow: "0 10px 26px -14px rgba(6,35,64,0.4)",
+              }}
+            >
+              <Image
+                src={img.src}
+                alt="מדיה שנוצרה ב-AI"
+                fill
+                sizes="400px"
+                className="object-cover"
+              />
+              <span
+                className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{ background: "rgba(6,35,64,0.12)" }}
+              />
+            </button>
+          );
+        })}
+      </div>
+      {/* חצי ניווט — צד ימין (הקודם) וצד שמאל (הבא) */}
+      <ScrollArrow side="right" onClick={() => scrollByDir(1)} />
+      <ScrollArrow side="left" onClick={() => scrollByDir(-1)} />
     </div>
   );
 }
@@ -191,7 +230,7 @@ function VideoStage() {
         className="relative w-full overflow-hidden rounded-2xl"
         style={{
           aspectRatio: "16 / 9",
-          background: "#062340",
+          background: "rgba(6,35,64,0.30)",
           boxShadow: "0 24px 60px -22px rgba(6,35,64,0.5)",
         }}
       >
