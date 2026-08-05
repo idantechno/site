@@ -21,6 +21,7 @@ export async function generateMetadata({
   return {
     title: `${post.title} | Portal Studio`,
     description: post.description,
+    keywords: post.keywords,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
@@ -34,6 +35,7 @@ export async function generateMetadata({
 
 function BlockView({ block }: { block: Block }) {
   if (block.type === "h2") return <h2>{block.text}</h2>;
+  if (block.type === "h3") return <h3>{block.text}</h3>;
   if (block.type === "ul")
     return (
       <ul>
@@ -54,8 +56,7 @@ export default async function BlogPostPage({
   const post = getPost(slug);
   if (!post) notFound();
 
-  const jsonLd = {
-    "@context": "https://schema.org",
+  const blogPostingLd = {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
@@ -63,6 +64,24 @@ export default async function BlogPostPage({
     inLanguage: "he-IL",
     author: { "@type": "Organization", name: "Portal Studio" },
     publisher: { "@type": "Organization", name: "Portal Studio" },
+  };
+
+  // FAQPage schema — לתוצאות עשירות בגוגל כשיש מקטע שאלות נפוצות
+  const faqLd =
+    post.faq && post.faq.length > 0
+      ? {
+          "@type": "FAQPage",
+          mainEntity: post.faq.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: { "@type": "Answer", text: item.a },
+          })),
+        }
+      : null;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": faqLd ? [blogPostingLd, faqLd] : [blogPostingLd],
   };
 
   return (
@@ -100,6 +119,47 @@ export default async function BlogPostPage({
               <BlockView key={i} block={block} />
             ))}
           </div>
+
+          {post.faq && post.faq.length > 0 && (
+            <section
+              className="mt-12 pt-8"
+              style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}
+              aria-label="שאלות נפוצות"
+            >
+              <h2
+                className="font-display text-2xl font-bold tracking-tight mb-6"
+                style={{ color: "#062340" }}
+              >
+                שאלות נפוצות
+              </h2>
+              <div className="space-y-3">
+                {post.faq.map((item) => (
+                  <details
+                    key={item.q}
+                    className="group rounded-xl bg-white px-5 py-4"
+                    style={{ border: "1px solid rgba(6,35,64,0.1)" }}
+                  >
+                    <summary
+                      className="flex cursor-pointer items-center justify-between gap-3 font-display font-semibold list-none"
+                      style={{ color: "#062340" }}
+                    >
+                      {item.q}
+                      <span
+                        className="shrink-0 transition-transform group-open:rotate-45"
+                        style={{ color: "#DC5D46" }}
+                        aria-hidden
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-3 font-body leading-relaxed" style={{ color: "#374151" }}>
+                      {item.a}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
 
           <div className="mt-12 pt-8" style={{ borderTop: "1px solid rgba(6,35,64,0.12)" }}>
             <Link
