@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight, Clock } from "@phosphor-icons/react/dist/ssr";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { getAllSlugs, getPost, type Block } from "@/lib/blog";
+import { SITE_URL } from "@/lib/constants";
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -29,6 +31,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.date,
       locale: "he_IL",
+      images: post.coverImage ? [{ url: post.coverImage }] : undefined,
     },
   };
 }
@@ -60,6 +63,7 @@ export default async function BlogPostPage({
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
+    ...(post.coverImage ? { image: `${SITE_URL}${post.coverImage}` } : {}),
     datePublished: post.date,
     inLanguage: "he-IL",
     author: { "@type": "Organization", name: "Portal Studio" },
@@ -89,6 +93,21 @@ export default async function BlogPostPage({
       <Nav />
       <main id="main" className="pt-28 pb-20 px-6">
         <article className="max-w-3xl mx-auto">
+          {post.coverImage && (
+            <div
+              className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl mb-8"
+              style={{ border: "1px solid rgba(6,35,64,0.1)" }}
+            >
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
           <header className="mb-8">
             <span
               className="text-[11px] font-display font-semibold tracking-[0.18em] uppercase"

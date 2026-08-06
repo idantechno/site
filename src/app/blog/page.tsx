@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Clock } from "@phosphor-icons/react/dist/ssr";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -44,36 +45,49 @@ export default function BlogIndexPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="card-glow group flex flex-col p-6 rounded-2xl bg-white"
+                className="card-glow group flex flex-col rounded-2xl bg-white overflow-hidden"
                 style={{ border: "1px solid rgba(6,35,64,0.1)" }}
               >
-                <span
-                  className="text-[11px] font-display font-semibold tracking-[0.18em] uppercase mb-3"
-                  style={{ color: "#DC5D46" }}
-                >
-                  {post.tag}
-                </span>
-                <h2
-                  className="font-display font-bold text-xl leading-snug mb-2"
-                  style={{ color: "#062340" }}
-                >
-                  {post.title}
-                </h2>
-                <p className="font-body text-sm leading-relaxed mb-4 flex-1" style={{ color: "#6b7280" }}>
-                  {post.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-body" style={{ color: "rgba(6,35,64,0.5)" }}>
-                    <Clock size={14} />
-                    {post.readingMinutes} דק' קריאה
-                  </span>
+                {post.coverImage && (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-6">
                   <span
-                    className="inline-flex items-center gap-1.5 text-sm font-display font-medium"
+                    className="text-[11px] font-display font-semibold tracking-[0.18em] uppercase mb-3"
                     style={{ color: "#DC5D46" }}
                   >
-                    קריאה
-                    <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" />
+                    {post.tag}
                   </span>
+                  <h2
+                    className="font-display font-bold text-xl leading-snug mb-2"
+                    style={{ color: "#062340" }}
+                  >
+                    {post.title}
+                  </h2>
+                  <p className="font-body text-sm leading-relaxed mb-4 flex-1" style={{ color: "#6b7280" }}>
+                    {post.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-body" style={{ color: "rgba(6,35,64,0.5)" }}>
+                      <Clock size={14} />
+                      {post.readingMinutes} דק' קריאה
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1.5 text-sm font-display font-medium"
+                      style={{ color: "#DC5D46" }}
+                    >
+                      קריאה
+                      <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-1" />
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
