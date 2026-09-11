@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Portal Studio — שנה טובה</title>
+<link rel="stylesheet" href="./heebo-embedded.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #04182c; overflow: hidden; }
+  canvas { display: block; }
+  .probe { position: absolute; left: -9999px; font-family: 'Heebo'; }
+</style>
+</head>
+<body>
+<span class="probe" style="font-weight:200">שנה טובה Portal</span>
+<span class="probe" style="font-weight:300">שנה טובה Portal</span>
+<span class="probe" style="font-weight:400">שנה טובה Portal</span>
+<span class="probe" style="font-weight:500">שנה טובה Portal</span>
+<span class="probe" style="font-weight:700">שנה טובה Portal</span>
+<canvas id="c"></canvas>
+<script>
+/* ────────────────────────────────────────────────────────────────
+   Portal Studio · ברכת שנה טובה
+   הפורטל (סמל הצמצם של המותג) נפתח — והאור שבפנים הופך לברכה.
+   כל פריים הוא פונקציה טהורה של הזמן: window.__render(t)
+   ──────────────────────────────────────────────────────────────── */
+
+const params   = new URLSearchParams(location.search);
+const W        = +(params.get('w') || 1080);
+const H        = +(params.get('h') || 1080);
+const DURATION = 12.0;
+
+const canvas = document.getElementById('c');
+canvas.width = W; canvas.height = H;
+canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+const ctx = canvas.getContext('2d', { alpha: false });
+
+/* ─── מערכת עיצוב ─── */
+const NAVY_DEEP = [4, 21, 43];      // רקע הפתיחה החשוכה
+const NAVY      = [6, 35, 64];      // #062340
+const NAVY_MID  = [16, 62, 104];
+const STEEL     = [96, 145, 176];   // #6091B0
+const STEEL_LT  = [138, 178, 203];
+const CORAL     = [220, 93, 70];    // #DC5D46
+const CORAL_LT  = [240, 138, 106];
+const AMBER     = [242, 165, 65];
+const CREAM     = [240, 225, 213];  // #F0E1D5
+const TEXT      = [26, 26, 46];     // #1a1a2e
+
+const S  = Math.min(W, H);              // יחידת מידה — עצמאית ברזולוציה
+const cx = W / 2;
+const cy = H * (H > W * 1.2 ? 0.47 : 0.5);
+
+/* ─── עזרי מתמטיקה ─── */
+const clamp  = (v, a, b) => v < a ? a : v > b ? b : v;
+const seg    = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+const lerp   = (a, b, k) => a + (b - a) * k;
+const mix    = (c1, c2, k) => [lerp(c1[0],c2[0],k), lerp(c1[1],c2[1],k), lerp(c1[2],c2[2],k)];
+const rgb    = (c, a) => `rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a === undefined ? 1 : a})`;
+const outCubic  = x => 1 - Math.pow(1 - x, 3);
+const outQuint  = x => 1 - Math.pow(1 - x, 5);
+const outExpo   = x => x >= 1 ? 1 : 1 - Math.pow(2, -9 * x);
+const inOutCubic= x => x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+const smooth    = x => x * x * (3 - 2 * x);
+/* עקומת פעמון — לשיאים רגעיים (הבזק האור) */
+const bell = (t, center, width) => Math.exp(-Math.pow((t - center) / width, 2));
+
+/* ─── מחולל אקראיות עם זרע — דטרמיניסטי בין הרצות ─── */
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let z = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    z = z + Math.imul(z ^ z >>> 7, 61 | z) ^ z;
+    return ((z ^ z >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* ─── ציר הזמן ─── */
+const T = {
+  ember:     [0.3, 1.4],   // הניצוץ הראשון
+  navyIn:    [0.8, 2.3],   // הסמל נבנה מבחוץ פנימה
+  steelIn:   [1.2, 2.6],
+  coralIn:   [1.6, 2.9],
+  open:      [3.2, 5.0],   // הפורטל נפתח
+  wash:      [4.5, 5.7],   // הרקע עובר מלילה לקרם
+  flash:     4.90,
+  titleIn:   [5.2, 6.3],
+  ruleIn:    [6.1, 7.0],
+  line1In:   [6.9, 7.8],
+  line2In:   [7.3, 8.2],
+  textOut:   [9.2, 9.9],
+  logoIn:    [9.8, 10.9],
+  logoRule:  [10.5, 11.2],
+  logoText:  [11.0, 11.8],
+};
+
+/* ─── גופי אור מרחפים (בוקה) ─── */
+const rnd = mulberry32(20260911);
+const MOTES = Array.from({ length: 78 }, () => {
+  const warm = rnd();
+  return {
+    a0:    rnd() * Math.PI * 2,
+    r0:    (0.10 + Math.pow(rnd(), 0.7) * 0.92) * S,
+    size:  (0.004 + Math.pow(rnd(), 2.2) * 0.030) * S,
+    blur:  rnd(),
+    drift: (0.010 + rnd() * 0.040),
+    spin:  (rnd() - 0.5) * 0.10,
+    phase: rnd() * Math.PI * 2,
+    bob:   (0.008 + rnd() * 0.028) * S,
+    tint:  warm < 0.55 ? AMBER : warm < 0.85 ? CORAL_LT : STEEL_LT,
+    alpha: 0.14 + rnd() * 0.55,
+    born:  rnd() * 1.2,
+  };
+});
+
+/* ─── טקסטורת גרעין עדינה (8 אריחים, מתחלפים לפריים) ─── */
+const GRAIN_TILES = (() => {
+  const g = mulberry32(77);
+  return Array.from({ length: 8 }, () => {
+    const N = 220;
+    const off = document.createElement('canvas');
+    off.width = off.height = N;
+    const octx = off.getContext('2d');
+    const img = octx.createImageData(N, N);
+    for (let i = 0; i < N * N; i++) {
+      const v = 128 + (g() - 0.5) * 210;
+      img.data[i*4] = img.data[i*4+1] = img.data[i*4+2] = v;
+      img.data[i*4+3] = 255;
+    }
+    octx.putImageData(img, 0, 0);
+    return off;
+  });
+})();
+
+/* ─── הלוגו, חתוך אוטומטית לגבולות הפיקסלים הלא־שקופים ─── */
+let LOGO = null;
+const logoReady = new Promise(resolve => {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    LOGO = { img, sx: 0, sy: 0, sw: img.width, sh: img.height };
+    try {
+      const off = document.createElement('canvas');
+      off.width = img.width; off.height = img.height;
+      const o = off.getContext('2d');
+      o.drawImage(img, 0, 0);
+      const d = o.getImageData(0, 0, img.width, img.height).data;
+      let x0 = img.width, y0 = img.height, x1 = 0, y1 = 0;
+      for (let y = 0; y < img.height; y++) {
+        for (let x = 0; x < img.width; x++) {
+          if (d[(y * img.width + x) * 4 + 3] > 12) {
+            if (x < x0) x0 = x; if (x > x1) x1 = x;
+            if (y < y0) y0 = y; if (y > y1) y1 = y;
+          }
+        }
+      }
+      if (x1 > x0 && y1 > y0) {
+        const pad = 2;
+        x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad);
+        x1 = Math.min(img.width - 1, x1 + pad); y1 = Math.min(img.height - 1, y1 + pad);
+        LOGO = { img, sx: x0, sy: y0, sw: x1 - x0 + 1, sh: y1 - y0 + 1 };
+      }
+    } catch (e) {
+      // קנבס "מזוהם" (טעינה מ-file://) — נשתמש בתמונה המלאה
+    }
+    resolve();
+  };
+  img.onerror = () => resolve();           // ממשיכים גם בלי הלוגו
+  img.src = '/public/brand/portal-icon.png';
+});
+
+/* ────────────────────────────────────────────────────────────────
+   סמל המותג — שלוש "ורדים" מקוננים.
+   כל ורד הוא איחוד של חמישה עיגולים סביב המרכז; קווי השיער הלבנים
+   הם מתאר אותם עיגולים. הגדלת המרחק מהמרכז (off) פותחת את הצמצם.
+   ──────────────────────────────────────────────────────────────── */
+const LOBES = 5;
+
+function lobeCenters(off, rot) {
+  const out = [];
+  for (let i = 0; i < LOBES; i++) {
+    const a = rot + (i / LOBES) * Math.PI * 2;
+    out.push([cx + off * Math.cos(a), cy + off * Math.sin(a)]);
+  }
+  return out;
+}
+
+function rosePath(centers, lobeR) {
+  ctx.beginPath();
+  for (const [x, y] of centers) {
+    ctx.moveTo(x + lobeR, y);
+    ctx.arc(x, y, lobeR, 0, Math.PI * 2);
+  }
+}
+
+function drawRose(lobeR, off, rot, opt) {
+  const { alpha, inColor, outColor, hairline, extent } = opt;
+  if (alpha <= 0.003 || lobeR <= 0.5) return;
+  const centers = lobeCenters(off, rot);
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // מסה אחת רציפה עם גרדיאנט מלב הסמל החוצה — בדיוק כמו בלוגו.
+  // מילוי לכל עלה בנפרד היה גורם לעיגולים להיקרא כדיסקים נפרדים.
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(2, extent));
+  g.addColorStop(0.00, rgb(mix(inColor, [255, 255, 255], 0.14)));
+  g.addColorStop(0.38, rgb(inColor));
+  g.addColorStop(1.00, rgb(outColor));
+  ctx.fillStyle = g;
+  rosePath(centers, lobeR);
+  ctx.fill();
+
+  // קווי השיער — קשתות חלקיות שמסתחררות פנימה, לא עיגולים שלמים.
+  // זה מה שיוצר את תחושת הצמצם המסתובב.
+  if (hairline > 0.004) {
+    rosePath(centers, lobeR);
+    ctx.clip();
+    ctx.strokeStyle = `rgba(255,255,255,${hairline})`;
+    ctx.lineWidth = Math.max(0.9, S * 0.0016);
+    ctx.lineCap = 'round';
+    for (const [x, y] of centers) {
+      const facing = Math.atan2(cy - y, cx - x);     // הצד הפונה ללב הסמל
+      // טווח לא־סימטרי: כל הקשתות נמשכות לאותו כיוון סיבוב
+      ctx.beginPath();
+      ctx.arc(x, y, lobeR, facing - 0.85, facing + 2.55);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+/* פרופורציות שנמדדו מ-public/brand/portal-icon.png */
+const LOBE_K = 0.660;   // רדיוס עיגול ביחס לרדיוס השכבה
+const OFF_K  = 0.340;   // מרחק מרכז העיגול מהמרכז
+const LAYERS = [
+  { k: 1.000, rot: 0.00, spin: +0.085, inColor: NAVY_MID, outColor: NAVY_DEEP, hair: 0.46 },
+  { k: 0.660, rot: 0.72, spin: -0.115, inColor: STEEL_LT, outColor: mix(STEEL, NAVY, 0.45), hair: 0.62 },
+  { k: 0.320, rot: 1.45, spin: +0.150, inColor: CORAL_LT, outColor: CORAL,                  hair: 0.55 },
+];
+
+/* ─── טיפוגרפיה ─── */
+function setFont(weight, size) {
+  ctx.font = `${weight} ${size}px Heebo, sans-serif`;
+}
+
+function drawText(str, x, y, { weight, size, color, alpha, blur, track, align }) {
+  if (alpha <= 0.003) return;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  setFont(weight, size);
+  ctx.textAlign = align || 'center';
+  ctx.textBaseline = 'middle';
+  ctx.direction = 'rtl';
+  ctx.fillStyle = rgb(color);
+  if (blur > 0.05) ctx.filter = `blur(${blur}px)`;
+  if (track) ctx.letterSpacing = track + 'px';
+  ctx.fillText(str, x, y);
+  ctx.restore();
+}
+
+/* ────────────────────────────────────────────────────────────────
+   הפריים
+   ──────────────────────────────────────────────────────────────── */
+function render(t) {
+  t = clamp(t, 0, DURATION);
+
+  /* ── הרקע: מלילה לאור ── */
+  const wash   = smooth(seg(t, T.wash[0], T.wash[1]));
+  const bright = wash;                                  // 0 = לילה, 1 = קרם
+  const bg     = mix(NAVY_DEEP, CREAM, wash);
+  ctx.fillStyle = rgb(bg);
+  ctx.fillRect(0, 0, W, H);
+
+  /* הילה חמימה שמתרחבת מהמרכז */
+  const glowGrow = outQuint(seg(t, 1.0, 5.6));
+  const glowR    = lerp(0.18, 1.15, glowGrow) * S;
+  const glowStrength = lerp(0.55, 0.12, wash) * (0.25 + 0.75 * seg(t, 0.2, 3.0));
+  {
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    const core = mix(AMBER, CREAM, wash * 0.8);
+    g.addColorStop(0.0, rgb(core, 0.42 * glowStrength));
+    g.addColorStop(0.35, rgb(mix(CORAL, CREAM, wash), 0.16 * glowStrength));
+    g.addColorStop(1.0, rgb(core, 0));
+    ctx.save();
+    ctx.globalCompositeOperation = wash > 0.6 ? 'source-over' : 'lighter';
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  /* ── גופי אור מרחפים ── */
+  {
+    ctx.save();
+    ctx.globalCompositeOperation = bright > 0.55 ? 'source-over' : 'lighter';
+    const push = outCubic(seg(t, T.open[0], T.open[1] + 0.4)) * 0.42;   // דחיפה החוצה ברגע הפתיחה
+    for (const m of MOTES) {
+      const life = seg(t, m.born, m.born + 1.6);
+      if (life <= 0) continue;
+      const ang = m.a0 + m.spin * t;
+      const r   = m.r0 * (1 + push * (0.5 + m.blur)) + Math.sin(t * m.drift * 6 + m.phase) * m.bob;
+      const x   = cx + r * Math.cos(ang);
+      const y   = cy + r * Math.sin(ang) - t * m.drift * S * 0.22;
+      const rad = m.size * (1 + push * 0.5);
+      if (x < -rad * 3 || x > W + rad * 3 || y < -rad * 3 || y > H + rad * 3) continue;
+
+      const breathe = 0.65 + 0.35 * Math.sin(t * 0.9 + m.phase * 2);
+      const tint    = bright > 0.55 ? mix(m.tint, CORAL, 0.3) : m.tint;
+      const a = m.alpha * life * breathe * lerp(1, 0.30, bright);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
+      g.addColorStop(0.0, rgb(tint, a));
+      g.addColorStop(0.45, rgb(tint, a * 0.34));
+      g.addColorStop(1.0, rgb(tint, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, rad, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  /* ── קרני אור מבעד לצמצם הנפתח ── */
+  const rayA = bell(t, T.open[1] - 0.35, 0.75) * 0.10;
+  if (rayA > 0.004) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.filter = `blur(${S * 0.045}px)`;
+    ctx.translate(cx, cy);
+    ctx.rotate(t * 0.10);
+    const len = S * 1.25;
+    for (let i = 0; i < 9; i++) {
+      const a = (i / 9) * Math.PI * 2;
+      const w = (0.10 + ((i * 37) % 11) / 11 * 0.16);
+      const g = ctx.createLinearGradient(0, 0, Math.cos(a) * len, Math.sin(a) * len);
+      g.addColorStop(0, rgb(AMBER, rayA));
+      g.addColorStop(1, rgb(AMBER, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, len, a - w, a + w);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  /* ── הפורטל ── */
+  const openRaw = seg(t, T.open[0], T.open[1]);
+  const open    = inOutCubic(openRaw);
+  // הצמצם נפתח: העלים מתרחקים מספיק כדי לפתוח חור במרכז, אבל נשארים
+  // חופפים — והסמל כולו גדל אל מעבר לגבולות הפריים. ככה זה קורא כתריס
+  // שנפתח ולא כעיגולים שמתפזרים.
+  const spread  = 1 + Math.pow(open, 1.10) * 2.20;
+  const grow    = lerp(1, 2.60, Math.pow(open, 1.45));
+  const fadeOut = 1 - smooth(seg(t, 4.20, 5.05));
+  const R0      = 0.230 * S;
+
+  /* ליבת האור שמאחורי הסמל — היא שגדלה והופכת לאור שממלא את הפריים */
+  {
+    const coreR = R0 * lerp(0.30, 3.4, Math.pow(open, 1.2)) * lerp(0.25, 1, seg(t, T.ember[0], T.ember[1]));
+    // דועך ככל שהרקע מתבהר — אחרת האור שוטף את הקרם ללבן
+    const a = seg(t, T.ember[0], T.ember[1]) * lerp(0.85, 1, open)
+            * (1 - smooth(seg(t, T.open[1] - 0.25, T.wash[1])));
+    if (a > 0.004 && coreR > 1) {
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
+      g.addColorStop(0.00, rgb(mix(CORAL_LT, [255, 248, 238], 0.35 + open * 0.55), 0.95 * a));
+      g.addColorStop(0.30, rgb(mix(CORAL, AMBER, 0.30 + open * 0.45), 0.60 * a));
+      g.addColorStop(1.00, rgb(CORAL, 0));
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* שלוש שכבות הסמל — מהפנימית לחיצונית, כל אחת נכנסת בתורה */
+  {
+    const entries = [
+      { L: LAYERS[0], inSeg: T.navyIn  },   // נייבי — השכבה החיצונית
+      { L: LAYERS[1], inSeg: T.steelIn },   // פלדה
+      { L: LAYERS[2], inSeg: T.coralIn },   // קורל — לב הסמל
+    ];
+    for (const { L, inSeg } of entries) {
+      const k = outCubic(seg(t, inSeg[0], inSeg[1]));
+      const a = k * fadeOut * (L === LAYERS[2] ? 1 - open * 0.85 : 1);
+      if (a <= 0.004) continue;
+      const layerR = R0 * L.k * lerp(0.55, 1, k) * grow;
+      const rot    = L.rot + t * L.spin + open * (L.spin > 0 ? 1.05 : -0.85);
+      drawRose(
+        layerR * LOBE_K,
+        layerR * OFF_K * spread,
+        rot,
+        {
+          alpha: a,
+          inColor: L.inColor,
+          outColor: L.outColor,
+          hairline: L.hair * a,
+          extent: layerR * (LOBE_K + OFF_K * spread),
+
+        },
+      );
+    }
+  }
+
+  /* ── הבזק האור: הפורטל נפתח והכול מתמלא ── */
+  {
+    const f = bell(t, T.flash, 0.36) * 0.92;
+    if (f > 0.004) {
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.hypot(W, H) * 0.62);
+      g.addColorStop(0.0, rgb([255, 250, 243], f));
+      g.addColorStop(0.55, rgb([255, 238, 222], f * 0.78));
+      g.addColorStop(1.0, rgb([255, 232, 212], f * 0.35));
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  /* ── הברכה ── */
+  const textOut  = 1 - smooth(seg(t, T.textOut[0], T.textOut[1]));
+  const titleK   = outExpo(seg(t, T.titleIn[0], T.titleIn[1]));
+  const titleK2  = outExpo(seg(t, T.titleIn[0] + 0.22, T.titleIn[1] + 0.22));
+  const titleA   = textOut;
+
+  if (titleA > 0.004 && titleK > 0) {
+    const size  = 0.132 * S;
+    const gap   = size * 0.34;
+    const yBase = cy - 0.095 * S;
+
+    setFont(200, size);
+    ctx.letterSpacing = '0px';
+    const w1 = ctx.measureText('שנה').width;
+    const w2 = ctx.measureText('טובה').width;
+    const total  = w1 + gap + w2;
+    const xRight = cx + total / 2;
+
+    const words = [
+      { s: 'שנה',  k: titleK,  x: xRight },
+      { s: 'טובה', k: titleK2, x: xRight - w1 - gap },
+    ];
+    for (const wd of words) {
+      drawText(wd.s, wd.x, yBase + (1 - wd.k) * 0.05 * S, {
+        weight: 200, size,
+        color: mix(TEXT, NAVY, 0.6),
+        alpha: wd.k * titleA,
+        blur: (1 - wd.k) * 16,
+        align: 'right',
+      });
+    }
+  }
+
+  /* קו־שיער קורל מתחת לכותרת */
+  {
+    const k = inOutCubic(seg(t, T.ruleIn[0], T.ruleIn[1]));
+    const a = k * textOut;
+    if (a > 0.004) {
+      const half = 0.115 * S * k;
+      const y = cy + 0.018 * S;
+      const g = ctx.createLinearGradient(cx - half, 0, cx + half, 0);
+      g.addColorStop(0.0, rgb(CORAL, 0));
+      g.addColorStop(0.5, rgb(CORAL, 0.85 * a));
+      g.addColorStop(1.0, rgb(CORAL, 0));
+      ctx.fillStyle = g;
+      ctx.fillRect(cx - half, y, half * 2, Math.max(1, S * 0.0016));
+    }
+  }
+
+  /* שתי שורות הברכה */
+  {
+    const lines = [
+      { s: 'שתהיה שנה של יצירה, אור והתחלות טובות.',   seg: T.line1In, y: cy + 0.088 * S },
+      { s: 'ושכל שער שייפתח — יוביל בדיוק לאן שצריך.', seg: T.line2In, y: cy + 0.150 * S },
+    ];
+    for (const ln of lines) {
+      const k = outExpo(seg(t, ln.seg[0], ln.seg[1]));
+      drawText(ln.s, cx, ln.y + (1 - k) * 0.022 * S, {
+        weight: 300, size: 0.0355 * S,
+        color: mix(TEXT, STEEL, 0.30),
+        alpha: k * textOut * 0.92,
+        blur: (1 - k) * 5,
+      });
+    }
+  }
+
+  /* ── כרטיס הסיום: הנעילה של המותג ──
+     אותו הרכב שמופיע ב-Nav וב-Footer של האתר: הסמל + "Portal / STUDIO" ב-Heebo */
+  {
+    const k = outExpo(seg(t, T.logoIn[0], T.logoIn[1]));
+    if (k > 0.004) {
+      const iconS = 0.125 * S;
+      const gap   = 0.030 * S;
+      const nameSize   = 0.055 * S;
+      const studioSize = 0.0165 * S;
+      const track      = studioSize * 0.32;
+
+      setFont(600, nameSize);
+      ctx.letterSpacing = '0px';
+      ctx.direction = 'ltr';
+      const wName = ctx.measureText('Portal').width;
+      setFont(500, studioSize);
+      ctx.letterSpacing = track + 'px';
+      const wStudio = ctx.measureText('STUDIO').width;
+      ctx.letterSpacing = '0px';
+
+      const wText = Math.max(wName, wStudio);
+      const total = iconS + gap + wText;
+      const left  = cx - total / 2;
+      const ly    = cy - 0.045 * S;
+
+      ctx.save();
+      ctx.globalAlpha = k;
+      if (k < 0.995) ctx.filter = `blur(${(1 - k) * 9}px)`;
+      ctx.translate(cx, ly);
+      ctx.scale(lerp(0.94, 1, k), lerp(0.94, 1, k));
+      ctx.translate(-cx, -ly);
+
+      if (LOGO) {
+        ctx.drawImage(LOGO.img, LOGO.sx, LOGO.sy, LOGO.sw, LOGO.sh,
+                      left, ly - iconS / 2, iconS, iconS);
+      }
+
+      const tx = left + iconS + gap;
+      ctx.direction = 'ltr';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+
+      setFont(600, nameSize);
+      ctx.fillStyle = rgb(NAVY);
+      ctx.fillText('Portal', tx, ly + nameSize * 0.10);
+
+      setFont(500, studioSize);
+      ctx.letterSpacing = track + 'px';
+      ctx.fillStyle = rgb(NAVY, 0.60);
+      ctx.fillText('STUDIO', tx + 1, ly + nameSize * 0.10 + studioSize * 1.85);
+      ctx.restore();
+    }
+
+    const rk = inOutCubic(seg(t, T.logoRule[0], T.logoRule[1]));
+    if (rk > 0.004) {
+      const half = 0.070 * S * rk;
+      const y = cy + 0.062 * S;
+      const g = ctx.createLinearGradient(cx - half, 0, cx + half, 0);
+      g.addColorStop(0.0, rgb(CORAL, 0));
+      g.addColorStop(0.5, rgb(CORAL, 0.70 * rk));
+      g.addColorStop(1.0, rgb(CORAL, 0));
+      ctx.fillStyle = g;
+      ctx.fillRect(cx - half, y, half * 2, Math.max(1, S * 0.0015));
+    }
+
+    const tk = outExpo(seg(t, T.logoText[0], T.logoText[1]));
+    drawText('מאחלים לכם שנה טובה ומבורכת', cx, cy + 0.118 * S, {
+      weight: 300, size: 0.0335 * S,
+      color: mix(TEXT, STEEL, 0.35),
+      alpha: tk * 0.92,
+      blur: (1 - tk) * 4,
+    });
+    drawText('תשפ״ז', cx, cy + 0.175 * S, {
+      weight: 400, size: 0.0205 * S,
+      color: STEEL,
+      alpha: outExpo(seg(t, T.logoText[0] + 0.35, T.logoText[1] + 0.35)) * 0.70,
+      blur: 0, track: S * 0.006,
+    });
+  }
+
+  /* ── ויניאטה ── */
+  {
+    const g = ctx.createRadialGradient(cx, cy, S * 0.30, cx, cy, Math.hypot(W, H) * 0.60);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(1, `rgba(${bright > 0.5 ? '120,92,74' : '0,4,10'},${lerp(0.62, 0.16, bright)})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /* ── גרעין פילם ── */
+  {
+    const tile = GRAIN_TILES[Math.floor(t * 30) % GRAIN_TILES.length];
+    ctx.save();
+    ctx.globalAlpha = lerp(0.040, 0.022, bright);
+    ctx.globalCompositeOperation = 'overlay';
+    const pat = ctx.createPattern(tile, 'repeat');
+    ctx.fillStyle = pat;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  /* ── פייד־אין בפתיחה (הסיום נשאר על כרטיס המותג — גם כתמונה ממוזערת) ── */
+  {
+    const f = 1 - seg(t, 0, 0.5);
+    if (f > 0.003) {
+      ctx.fillStyle = `rgba(4,21,43,${f})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+}
+
+/* ─── ממשק ─── */
+window.__DURATION = DURATION;
+window.__render = render;
+window.__ready = (async () => {
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load('200 200px Heebo', 'שנה טובה'),
+    document.fonts.load('300 40px Heebo',  'שתהיה שנה של יצירה'),
+    document.fonts.load('400 30px Heebo',  'תשפז'),
+  ]);
+  await logoReady;
+  render(0);
+  return true;
+})();
+
+/* תצוגה מקדימה חיה בדפדפן (לא בשימוש בזמן הרינדור) */
+if (params.get('play') === '1') {
+  window.__ready.then(() => {
+    const t0 = performance.now();
+    (function loop() {
+      render(((performance.now() - t0) / 1000) % DURATION);
+      requestAnimationFrame(loop);
+    })();
+  });
+}
+</script>
+</body>
+</html>
