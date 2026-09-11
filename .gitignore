@@ -42,3 +42,6 @@ next-env.d.ts
 
 # claude code local settings
 .claude/
+
+# greeting video: audio bed is regenerated from audio.py
+/scripts/greeting/audio.wav
