@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Portal Studio — כרטיס ברכה</title>
+<link rel="stylesheet" href="./heebo-embedded.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #F0E1D5; overflow: hidden; }
+  canvas { display: block; }
+  .probe { position: absolute; left: -9999px; font-family: 'Heebo'; }
+</style>
+</head>
+<body>
+<span class="probe" style="font-weight:200">שנה טובה Portal</span>
+<span class="probe" style="font-weight:300">שנה טובה Portal</span>
+<span class="probe" style="font-weight:500">שנה טובה Portal</span>
+<span class="probe" style="font-weight:600">שנה טובה Portal</span>
+<canvas id="c"></canvas>
+<script>
+/* ────────────────────────────────────────────────────────────────
+   כרטיס ברכה לראש השנה — באותה שפה חזותית של הסרטון.
+   הלב הקורלי של הסמל הוא כבר עיגול כתום־אדום; כאן הוא רימון.
+   אלמנט החג והמותג מתאחדים במקום להתנגש.
+
+   הערה: הגאומטריה של הסמל משוכפלת כאן מ-scene.html במכוון, כדי לא
+   לגעת בסרטון שכבר אומת. אם משנים את הסמל — צריך לעדכן את שני הקבצים.
+   ──────────────────────────────────────────────────────────────── */
+
+const params = new URLSearchParams(location.search);
+const W = +(params.get('w') || 1080);
+const H = +(params.get('h') || 1080);
+
+const canvas = document.getElementById('c');
+canvas.width = W; canvas.height = H;
+canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+const ctx = canvas.getContext('2d', { alpha: false });
+
+/* ─── פלטת המותג ─── */
+const NAVY_DEEP = [4, 21, 43];
+const NAVY      = [6, 35, 64];
+const NAVY_MID  = [16, 62, 104];
+const STEEL     = [96, 145, 176];
+const STEEL_LT  = [138, 178, 203];
+const CORAL     = [220, 93, 70];
+const CREAM     = [240, 225, 213];
+const TEXT      = [26, 26, 46];
+
+/* גווני דבש */
+const HONEY_LIGHT = [248, 198, 112];
+const HONEY_MID   = [234, 157,  58];
+const HONEY_DEEP  = [193, 114,  28];
+
+/* גווני הרימון — נבנים סביב הקורל של המותג */
+const POM_LIGHT = [232, 129,  99];
+const POM_MID   = [186,  58,  44];
+const POM_DEEP  = [130,  36,  30];
+const POM_CROWN = [162,  48,  38];
+
+// יחידת המידה היא הצלע הקצרה. בפורמט גבוה במיוחד (סטורי) ההרכב נראה
+// אבוד באמצע הפריים, ולכן מוגדל מעט — הגבול הוא רוחב שורת הברכה.
+const S  = Math.min(W, H) * (H / W > 1.5 ? 1.10 : 1);
+const cx = W / 2;
+const cy = H / 2;
+
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp  = (a, b, k) => a + (b - a) * k;
+const mix   = (c1, c2, k) => [lerp(c1[0],c2[0],k), lerp(c1[1],c2[1],k), lerp(c1[2],c2[2],k)];
+const rgb   = (c, a) => `rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a === undefined ? 1 : a})`;
+
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let z = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    z = z + Math.imul(z ^ z >>> 7, 61 | z) ^ z;
+    return ((z ^ z >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* ─── סמל המותג: איחוד של חמישה עיגולים סביב המרכז ─── */
+const LOBES  = 5;
+const LOBE_K = 0.660;
+const OFF_K  = 0.340;
+
+let cy0 = cy;   // מרכז הסמל — נקבע ב-render() לפני הציור
+
+function lobeCenters(off, rot) {
+  const out = [];
+  for (let i = 0; i < LOBES; i++) {
+    const a = rot + (i / LOBES) * Math.PI * 2;
+    out.push([cx + off * Math.cos(a), cy0 + off * Math.sin(a)]);
+  }
+  return out;
+}
+
+function rosePath(centers, lobeR) {
+  ctx.beginPath();
+  for (const [x, y] of centers) {
+    ctx.moveTo(x + lobeR, y);
+    ctx.arc(x, y, lobeR, 0, Math.PI * 2);
+  }
+}
+
+function drawRose(lobeR, off, rot, opt) {
+  const { inColor, outColor, hairline, extent } = opt;
+  const centers = lobeCenters(off, rot);
+  ctx.save();
+
+  const g = ctx.createRadialGradient(cx, cy0, 0, cx, cy0, Math.max(2, extent));
+  g.addColorStop(0.00, rgb(mix(inColor, [255, 255, 255], 0.14)));
+  g.addColorStop(0.38, rgb(inColor));
+  g.addColorStop(1.00, rgb(outColor));
+  ctx.fillStyle = g;
+  rosePath(centers, lobeR);
+  ctx.fill();
+
+  rosePath(centers, lobeR);
+  ctx.clip();
+  ctx.strokeStyle = `rgba(255,255,255,${hairline})`;
+  ctx.lineWidth = Math.max(1.0, S * 0.0016);
+  ctx.lineCap = 'round';
+  for (const [x, y] of centers) {
+    const facing = Math.atan2(cy0 - y, cx - x);
+    ctx.beginPath();
+    ctx.arc(x, y, lobeR, facing - 0.85, facing + 2.55);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* ────────────────────────────────────────────────────────────────
+   הרימון — במקום הלב הקורלי של הסמל
+   ──────────────────────────────────────────────────────────────── */
+function pomegranate(x, y, r) {
+  ctx.save();
+
+  // הילה חמימה מאחור — הרימון זוהר מתוך הפורטל
+  const halo = ctx.createRadialGradient(x, y, r * 0.5, x, y, r * 2.9);
+  halo.addColorStop(0.0, rgb(CORAL, 0.26));
+  halo.addColorStop(0.5, rgb(CORAL, 0.10));
+  halo.addColorStop(1.0, rgb(CORAL, 0));
+  ctx.fillStyle = halo;
+  ctx.beginPath();
+  ctx.arc(x, y, r * 2.9, 0, Math.PI * 2);
+  ctx.fill();
+
+  // ── הכתר ──
+  // זה מה שמבדיל רימון מעגבנייה: לא עוקץ קטן אלא צינור זקוף
+  // שנפתח בקצוות מחודדים. מצויר לפני הגוף, כך שהגוף מכסה את בסיסו.
+  const tubeBase = y - r * 0.80;
+  const tubeTop  = tubeBase - r * 0.34;
+  const wBase = r * 0.30, wTop = r * 0.35;
+
+  const tubeGrad = ctx.createLinearGradient(x - wTop, 0, x + wTop, 0);
+  tubeGrad.addColorStop(0.0, rgb(mix(POM_CROWN, POM_LIGHT, 0.28)));
+  tubeGrad.addColorStop(0.5, rgb(POM_CROWN));
+  tubeGrad.addColorStop(1.0, rgb(mix(POM_CROWN, POM_DEEP, 0.55)));
+  ctx.fillStyle = tubeGrad;
+  ctx.beginPath();
+  ctx.moveTo(x - wBase, tubeBase);
+  ctx.quadraticCurveTo(x - wBase * 0.88, tubeBase - r * 0.22, x - wTop, tubeTop);
+  ctx.lineTo(x + wTop, tubeTop);
+  ctx.quadraticCurveTo(x + wBase * 0.88, tubeBase - r * 0.22, x + wBase, tubeBase);
+  ctx.closePath();
+  ctx.fill();
+
+  // הקוצים — חמישה, כמו עלי הסמל
+  ctx.fillStyle = rgb(mix(POM_CROWN, POM_DEEP, 0.25));
+  for (let i = -2; i <= 2; i++) {
+    const ang = i * 0.46;
+    const len = r * (0.36 - Math.abs(i) * 0.060);
+    const bx  = x + (i / 2) * wTop * 0.88;
+    const by  = tubeTop + r * 0.03;
+    const tx  = bx + Math.sin(ang) * len;
+    const ty  = by - Math.cos(ang) * len;
+    const hw  = r * 0.072 * (1 - Math.abs(i) * 0.16);
+    ctx.beginPath();
+    ctx.moveTo(bx - hw, by);
+    ctx.quadraticCurveTo(bx - hw * 0.35 + (tx - bx) * 0.55, by + (ty - by) * 0.55, tx, ty);
+    ctx.quadraticCurveTo(bx + hw * 0.35 + (tx - bx) * 0.55, by + (ty - by) * 0.55, bx + hw, by);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // ── הגוף ──
+  const body = ctx.createRadialGradient(
+    x - r * 0.34, y - r * 0.36, r * 0.04,
+    x, y, r * 1.32,
+  );
+  body.addColorStop(0.00, rgb(POM_LIGHT));
+  body.addColorStop(0.30, rgb(CORAL));
+  body.addColorStop(0.62, rgb(POM_MID));
+  body.addColorStop(1.00, rgb(POM_DEEP));
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.ellipse(x, y, r, r * 0.97, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // נצנוץ רך בפינה העליונה
+  ctx.globalAlpha = 0.20;
+  ctx.filter = `blur(${r * 0.17}px)`;
+  ctx.fillStyle = 'rgba(255,244,236,1)';
+  ctx.beginPath();
+  ctx.ellipse(x - r * 0.37, y - r * 0.41, r * 0.25, r * 0.16, -0.6, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+/* ────────────────────────────────────────────────────────────────
+   תפוח בדבש — קישוט מפריד.
+   קו־אמנות דק ולא איור מלא, באותה שפה של קווי השיער בסמל: ככה הוא
+   משתלב במקום להתחרות ברימון שכבר נושא את הכובד החזותי.
+   ──────────────────────────────────────────────────────────────── */
+function appleInHoney(x, y, u) {
+  const w = u, h = u * 0.94;
+  const line = Math.max(1.3, S * 0.0028);
+  const surface = y + h * 0.14;            // גובה הדבש בתוך התפוח
+
+  // מתאר התפוח — גומה רדודה למעלה ותחתית עגולה ומלאה.
+  // גומה עמוקה מדי, או דבש שמכסה את התחתית, והצורה נקראת כלב.
+  const applePath = () => {
+    ctx.beginPath();
+    ctx.moveTo(x, y - h * 0.38);
+    ctx.bezierCurveTo(x - w * 0.14, y - h * 0.47, x - w * 0.46, y - h * 0.44,
+                      x - w * 0.52, y - h * 0.04);
+    ctx.bezierCurveTo(x - w * 0.52, y + h * 0.30, x - w * 0.28, y + h * 0.50,
+                      x,            y + h * 0.50);
+    ctx.bezierCurveTo(x + w * 0.28, y + h * 0.50, x + w * 0.52, y + h * 0.30,
+                      x + w * 0.52, y - h * 0.04);
+    ctx.bezierCurveTo(x + w * 0.46, y - h * 0.44, x + w * 0.14, y - h * 0.47,
+                      x,            y - h * 0.38);
+    ctx.closePath();
+  };
+
+  ctx.save();
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  // ── עוקץ ועלה, מעל התפוח ──
+  ctx.strokeStyle = rgb(CORAL, 0.88);
+  ctx.lineWidth = line;
+  ctx.beginPath();
+  ctx.moveTo(x + w * 0.01, y - h * 0.40);
+  ctx.quadraticCurveTo(x + w * 0.05, y - h * 0.56, x + w * 0.12, y - h * 0.68);
+  ctx.stroke();
+
+  ctx.strokeStyle = rgb(STEEL, 0.62);
+  ctx.fillStyle   = rgb(STEEL, 0.10);
+  ctx.lineWidth   = line * 0.85;
+  ctx.beginPath();
+  ctx.moveTo(x + w * 0.115, y - h * 0.675);
+  ctx.quadraticCurveTo(x + w * 0.31, y - h * 0.81, x + w * 0.36, y - h * 0.62);
+  ctx.quadraticCurveTo(x + w * 0.22, y - h * 0.57, x + w * 0.115, y - h * 0.675);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // ── הדבש: ממלא את שליש התפוח התחתון, חתוך לצורתו ──
+  ctx.save();
+  applePath();
+  ctx.clip();
+  const pool = ctx.createLinearGradient(0, surface, 0, y + h * 0.52);
+  pool.addColorStop(0.0, rgb(HONEY_LIGHT));
+  pool.addColorStop(0.5, rgb(HONEY_MID));
+  pool.addColorStop(1.0, rgb(HONEY_DEEP));
+  ctx.fillStyle = pool;
+  ctx.beginPath();
+  ctx.moveTo(x - w, surface);
+  ctx.quadraticCurveTo(x, surface - h * 0.085, x + w, surface);   // מניסקוס
+  ctx.lineTo(x + w, y + h * 0.62);
+  ctx.lineTo(x - w, y + h * 0.62);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  // ── מתאר התפוח, מעל הכול ──
+  ctx.strokeStyle = rgb(CORAL, 0.90);
+  ctx.lineWidth = line;
+  applePath();
+  ctx.stroke();
+
+  // טיפה אחת נוטפת — הפרט שהופך צורה לדבש
+  ctx.fillStyle = rgb(HONEY_MID);
+  ctx.beginPath();
+  ctx.moveTo(x + w * 0.15, y + h * 0.47);
+  ctx.bezierCurveTo(x + w * 0.22, y + h * 0.59, x + w * 0.215, y + h * 0.71,
+                    x + w * 0.15, y + h * 0.725);
+  ctx.bezierCurveTo(x + w * 0.085, y + h * 0.71, x + w * 0.08, y + h * 0.59,
+                    x + w * 0.15, y + h * 0.47);
+  ctx.closePath();
+  ctx.fill();
+
+  // נצנוץ על פני הדבש
+  ctx.strokeStyle = rgb([255, 248, 228], 0.75);
+  ctx.lineWidth = line * 0.6;
+  ctx.beginPath();
+  ctx.moveTo(x - w * 0.26, surface + h * 0.10);
+  ctx.quadraticCurveTo(x - w * 0.08, surface + h * 0.155, x + w * 0.10, surface + h * 0.125);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+/* ─── טיפוגרפיה ─── *//* ─── טיפוגרפיה ─── */
+function setFont(weight, size) { ctx.font = `${weight} ${size}px Heebo, sans-serif`; }
+
+function drawText(str, x, y, { weight, size, color, alpha = 1, track, align = 'center', dir = 'rtl' }) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  setFont(weight, size);
+  ctx.textAlign = align;
+  ctx.textBaseline = 'middle';
+  ctx.direction = dir;
+  ctx.fillStyle = rgb(color);
+  if (track) ctx.letterSpacing = track + 'px';
+  ctx.fillText(str, x, y);
+  ctx.restore();
+}
+
+/* שני קטעי קו שנמוגים החוצה, עם פתח באמצע לקישוט */
+function flankingRules(y, inner, outer) {
+  const t = Math.max(1, S * 0.0016);
+  for (const dir of [-1, 1]) {
+    const a = cx + dir * inner, b = cx + dir * outer;
+    const g = ctx.createLinearGradient(a, 0, b, 0);
+    g.addColorStop(0.0, rgb(CORAL, 0.75));
+    g.addColorStop(1.0, rgb(CORAL, 0));
+    ctx.fillStyle = g;
+    ctx.fillRect(Math.min(a, b), y, Math.abs(b - a), t);
+  }
+}
+
+/* ─── הכרטיס ─── */
+function render() {
+  const markY = cy - 0.250 * S;
+  cy0 = markY;
+
+  // רקע קרם + הילה חמימה מאחורי הסמל
+  ctx.fillStyle = rgb(CREAM);
+  ctx.fillRect(0, 0, W, H);
+  {
+    const g = ctx.createRadialGradient(cx, markY, 0, cx, markY, S * 0.78);
+    g.addColorStop(0.0, 'rgba(255,250,242,0.85)');
+    g.addColorStop(0.45, 'rgba(252,240,228,0.35)');
+    g.addColorStop(1.0, 'rgba(250,236,222,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // גופי אור מרחפים — עדינים מאוד, רק כדי שהרקע לא יהיה מת
+  {
+    const rnd = mulberry32(5787);
+    for (let i = 0; i < 26; i++) {
+      const x = rnd() * W, y = rnd() * H;
+      const rad = (0.004 + Math.pow(rnd(), 2.2) * 0.017) * S;
+      const tint = CORAL;
+      const a = (0.010 + rnd() * 0.020);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
+      g.addColorStop(0.0, rgb(tint, a));
+      g.addColorStop(1.0, rgb(tint, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, rad, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // ── הסמל, עם רימון בלב ──
+  const R = 0.140 * S;
+  drawRose(R * LOBE_K, R * OFF_K, 0.00, {
+    inColor: NAVY_MID, outColor: NAVY_DEEP, hairline: 0.46, extent: R,
+  });
+  drawRose(R * 0.66 * LOBE_K, R * 0.66 * OFF_K, 0.72, {
+    inColor: STEEL_LT, outColor: mix(STEEL, NAVY, 0.45), hairline: 0.62, extent: R * 0.66,
+  });
+  pomegranate(cx, markY, R * 0.320);
+
+  // ── הברכה ──
+  drawText('שנה טובה', cx, cy + 0.005 * S, {
+    weight: 200, size: 0.124 * S, color: mix(TEXT, NAVY, 0.6),
+  });
+
+  appleInHoney(cx, cy + 0.128 * S, 0.056 * S);
+  flankingRules(cy + 0.135 * S, 0.055 * S, 0.160 * S);
+
+  drawText('שתהיה שנה של יצירה, אור והתחלות טובות.', cx, cy + 0.202 * S, {
+    weight: 300, size: 0.0365 * S, color: mix(TEXT, STEEL, 0.30), alpha: 0.94,
+  });
+  drawText('ושכל שער שייפתח — יוביל בדיוק לאן שצריך.', cx, cy + 0.255 * S, {
+    weight: 300, size: 0.0365 * S, color: mix(TEXT, STEEL, 0.30), alpha: 0.94,
+  });
+
+  // ── החתימה: שם המותג בלבד. הסמל כבר משמש ככותרת ──
+  drawText('Portal', cx, cy + 0.338 * S, {
+    weight: 600, size: 0.044 * S, color: NAVY, dir: 'ltr',
+  });
+  drawText('STUDIO', cx, cy + 0.374 * S, {
+    weight: 500, size: 0.0155 * S, color: NAVY, alpha: 0.60,
+    track: S * 0.0155 * 0.32, dir: 'ltr',
+  });
+  drawText('תשפ״ז', cx, cy + 0.420 * S, {
+    weight: 400, size: 0.0195 * S, color: STEEL, alpha: 0.72, track: S * 0.006,
+  });
+
+  // ── ויניאטה חמימה ועדינה ──
+  {
+    const g = ctx.createRadialGradient(cx, cy, S * 0.34, cx, cy, Math.hypot(W, H) * 0.60);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(1, 'rgba(120,92,74,0.115)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // ── גרעין פילם — מוציא מהכרטיס את המראה הדיגיטלי השטוח ──
+  {
+    const g = mulberry32(77);
+    const N = 220;
+    const off = document.createElement('canvas');
+    off.width = off.height = N;
+    const octx = off.getContext('2d');
+    const img = octx.createImageData(N, N);
+    for (let i = 0; i < N * N; i++) {
+      const v = 128 + (g() - 0.5) * 210;
+      img.data[i*4] = img.data[i*4+1] = img.data[i*4+2] = v;
+      img.data[i*4+3] = 255;
+    }
+    octx.putImageData(img, 0, 0);
+    ctx.save();
+    ctx.globalAlpha = 0.022;
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.fillStyle = ctx.createPattern(off, 'repeat');
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+}
+
+window.__render = render;
+window.__ready = (async () => {
+  await document.fonts.ready;
+  await Promise.all([
+    document.fonts.load('200 200px Heebo', 'שנה טובה'),
+    document.fonts.load('300 40px Heebo',  'שתהיה שנה של יצירה'),
+    document.fonts.load('600 50px Heebo',  'Portal'),
+    document.fonts.load('500 20px Heebo',  'STUDIO'),
+    document.fonts.load('400 25px Heebo',  'תשפז'),
+  ]);
+  render();
+  return true;
+})();
+</script>
+</body>
+</html>
