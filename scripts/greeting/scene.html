@@ -27,7 +27,7 @@
 const params   = new URLSearchParams(location.search);
 const W        = +(params.get('w') || 1080);
 const H        = +(params.get('h') || 1080);
-const DURATION = 12.0;
+const DURATION = 15.0;
 
 const canvas = document.getElementById('c');
 canvas.width = W; canvas.height = H;
@@ -87,10 +87,10 @@ const T = {
   ruleIn:    [6.1, 7.0],
   line1In:   [6.9, 7.8],
   line2In:   [7.3, 8.2],
-  textOut:   [9.2, 9.9],
-  logoIn:    [9.8, 10.9],
-  logoRule:  [10.5, 11.2],
-  logoText:  [11.0, 11.8],
+  textOut:   [12.2, 12.9],   // הברכה נשארת על המסך זמן קריאה מלא
+  logoIn:    [12.8, 13.9],
+  logoRule:  [13.5, 14.2],
+  logoText:  [14.0, 14.8],
 };
 
 /* ─── גופי אור מרחפים (בוקה) ─── */
@@ -424,9 +424,9 @@ function render(t) {
   const titleA   = textOut;
 
   if (titleA > 0.004 && titleK > 0) {
-    const size  = 0.132 * S;
+    const size  = 0.150 * S;
     const gap   = size * 0.34;
-    const yBase = cy - 0.095 * S;
+    const yBase = cy - 0.105 * S;
 
     setFont(200, size);
     ctx.letterSpacing = '0px';
@@ -456,7 +456,7 @@ function render(t) {
     const a = k * textOut;
     if (a > 0.004) {
       const half = 0.115 * S * k;
-      const y = cy + 0.018 * S;
+      const y = cy + 0.024 * S;
       const g = ctx.createLinearGradient(cx - half, 0, cx + half, 0);
       g.addColorStop(0.0, rgb(CORAL, 0));
       g.addColorStop(0.5, rgb(CORAL, 0.85 * a));
@@ -469,13 +469,13 @@ function render(t) {
   /* שתי שורות הברכה */
   {
     const lines = [
-      { s: 'שתהיה שנה של יצירה, אור והתחלות טובות.',   seg: T.line1In, y: cy + 0.088 * S },
-      { s: 'ושכל שער שייפתח — יוביל בדיוק לאן שצריך.', seg: T.line2In, y: cy + 0.150 * S },
+      { s: 'שתהיה שנה של יצירה, אור והתחלות טובות.',   seg: T.line1In, y: cy + 0.098 * S },
+      { s: 'ושכל שער שייפתח — יוביל בדיוק לאן שצריך.', seg: T.line2In, y: cy + 0.168 * S },
     ];
     for (const ln of lines) {
       const k = outExpo(seg(t, ln.seg[0], ln.seg[1]));
       drawText(ln.s, cx, ln.y + (1 - k) * 0.022 * S, {
-        weight: 300, size: 0.0355 * S,
+        weight: 300, size: 0.0415 * S,
         color: mix(TEXT, STEEL, 0.30),
         alpha: k * textOut * 0.92,
         blur: (1 - k) * 5,
@@ -488,10 +488,10 @@ function render(t) {
   {
     const k = outExpo(seg(t, T.logoIn[0], T.logoIn[1]));
     if (k > 0.004) {
-      const iconS = 0.125 * S;
-      const gap   = 0.030 * S;
-      const nameSize   = 0.055 * S;
-      const studioSize = 0.0165 * S;
+      const iconS = 0.155 * S;
+      const gap   = 0.036 * S;
+      const nameSize   = 0.068 * S;
+      const studioSize = 0.0205 * S;
       const track      = studioSize * 0.32;
 
       setFont(600, nameSize);
@@ -506,7 +506,7 @@ function render(t) {
       const wText = Math.max(wName, wStudio);
       const total = iconS + gap + wText;
       const left  = cx - total / 2;
-      const ly    = cy - 0.045 * S;
+      const ly    = cy - 0.058 * S;
 
       ctx.save();
       ctx.globalAlpha = k;
@@ -539,7 +539,7 @@ function render(t) {
     const rk = inOutCubic(seg(t, T.logoRule[0], T.logoRule[1]));
     if (rk > 0.004) {
       const half = 0.070 * S * rk;
-      const y = cy + 0.062 * S;
+      const y = cy + 0.078 * S;
       const g = ctx.createLinearGradient(cx - half, 0, cx + half, 0);
       g.addColorStop(0.0, rgb(CORAL, 0));
       g.addColorStop(0.5, rgb(CORAL, 0.70 * rk));
@@ -549,14 +549,14 @@ function render(t) {
     }
 
     const tk = outExpo(seg(t, T.logoText[0], T.logoText[1]));
-    drawText('מאחלים לכם שנה טובה ומבורכת', cx, cy + 0.118 * S, {
-      weight: 300, size: 0.0335 * S,
+    drawText('מאחלים לכם שנה טובה ומבורכת', cx, cy + 0.140 * S, {
+      weight: 300, size: 0.0400 * S,
       color: mix(TEXT, STEEL, 0.35),
       alpha: tk * 0.92,
       blur: (1 - tk) * 4,
     });
-    drawText('תשפ״ז', cx, cy + 0.175 * S, {
-      weight: 400, size: 0.0205 * S,
+    drawText('תשפ״ז', cx, cy + 0.203 * S, {
+      weight: 400, size: 0.0240 * S,
       color: STEEL,
       alpha: outExpo(seg(t, T.logoText[0] + 0.35, T.logoText[1] + 0.35)) * 0.70,
       blur: 0, track: S * 0.006,
