@@ -42,3 +42,6 @@ next-env.d.ts
 
 # claude code local settings
 .claude/
+
+# rendered ad frames / video exports
+ads/out/
