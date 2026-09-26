@@ -85,11 +85,21 @@ export default function CreationPage() {
       <main id="main">
         {/* ─────────── HERO — this is the frame that gets screenshotted ─────────── */}
         <section className="min-h-[100svh] flex items-center pt-24 pb-20 px-6">
-          <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-start">
             {/* ─ צד הטקסט ─ */}
             <div>
+            <Image
+              src="/brand/portal-icon.svg"
+              alt="Portal Studio"
+              width={150}
+              height={150}
+              priority
+              className="w-[92px] sm:w-[120px] md:w-[150px] h-auto mb-7"
+            />
+
             <p
-              className="text-[11px] font-display font-semibold tracking-[0.3em] mb-6"
+              className="text-[15px] sm:text-[17px] font-display font-semibold tracking-[0.3em] mb-6"
               style={{ color: CORAL }}
             >
               PORTAL STUDIO
@@ -97,7 +107,7 @@ export default function CreationPage() {
 
             <h1
               className="font-display font-black tracking-tight leading-[1.12] max-w-[18ch]"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3.4rem)", color: NAVY }}
+              style={{ fontSize: "clamp(2.05rem, 4.7vw, 4rem)", color: NAVY }}
             >
               לקחת את מה שבוער בך
               <br />
@@ -106,29 +116,11 @@ export default function CreationPage() {
 
             <p
               className="mt-6 font-body leading-relaxed max-w-[44ch]"
-              style={{ fontSize: "clamp(1rem, 1.7vw, 1.35rem)", color: "#374151" }}
+              style={{ fontSize: "clamp(1.15rem, 3vw, 2rem)", color: "#374151" }}
             >
               מדיה, אתרים, נוכחות דיגיטלית, וסוכנים חכמים — לעסקים וליוצרים.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-glow inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-display font-semibold text-white text-[1.05rem]"
-                style={{ backgroundColor: STEEL }}
-              >
-                <WhatsappLogo size={24} weight="fill" color={WHATSAPP_GREEN} />
-                בואו לדבר
-              </a>
-              <p
-                className="font-body leading-relaxed max-w-[36ch]"
-                style={{ fontSize: "0.98rem", color: "#4b5563" }}
-              >
-                רוצים לקבל טיפים והדרכות על איך ליצור בעצמכם? כתבו לנו 😊
-              </p>
-            </div>
             </div>
 
             {/* ─ צד התמונות — שתיים, שתיים, ואחת ממורכזת ─ */}
@@ -139,6 +131,27 @@ export default function CreationPage() {
               <div className="col-span-2 mx-auto w-[calc(50%-8px)]">
                 <WorldCard w={WORLDS[4]} />
               </div>
+            </div>
+            </div>
+
+            {/* ─ הסיום: המשפט, ומתחתיו הכפתור — ברוחב מלא ─ */}
+            <div className="mt-10 md:mt-12 flex flex-col items-center text-center gap-4">
+              <p
+                className="font-body leading-relaxed max-w-[42ch]"
+                style={{ fontSize: "clamp(1.1rem, 2.6vw, 1.75rem)", color: "#4b5563" }}
+              >
+                רוצים לקבל טיפים והדרכות על איך ליצור בעצמכם? כתבו לנו 😊
+              </p>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-glow inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-full font-display font-semibold text-white text-[1.05rem]"
+                style={{ backgroundColor: STEEL }}
+              >
+                <WhatsappLogo size={24} weight="fill" color={WHATSAPP_GREEN} />
+                בואו נדבר
+              </a>
             </div>
           </div>
         </section>
